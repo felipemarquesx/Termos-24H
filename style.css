@@ -1,0 +1,518 @@
+/* Importação de fontes institucionais do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+html,
+body {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer e Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari e Opera */
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    /* Configuração de background com gradiente radial e profundidade visual */
+    background: #f4f8fc;
+    background-image:
+        radial-gradient(at 0% 0%, rgba(13, 110, 253, 0.07) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(25, 135, 84, 0.05) 0px, transparent 50%);
+    min-height: 100vh;
+    color: #2b3e51;
+    display: flex;
+    flex-direction: column;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+}
+
+/* Estilização para o título principal da aplicação */
+.titulo-principal {
+    background: linear-gradient(135deg, #1e3a5f 0%, #0d6efd 50%, #198754 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1.5px;
+    font-weight: 800;
+}
+
+/* Marcadores institucionais das forças armadas */
+.sub-forca {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #8c9ba5;
+    text-transform: uppercase;
+}
+
+/* Alinhamento e dimensões da tela de seleção inicial */
+#tela-inicial {
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Definição de estilo dos cards de seleção (layout glassmorphic) */
+.card-opcao {
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 28px;
+    padding: 35px 25px 25px 25px;
+    margin: 12px;
+    /* Margem de segurança para prevenir empilhamento involuntário */
+    /* Curva de transição e animação baseada em cubic-bezier */
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+        box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+        border-color 0.3s ease;
+    box-shadow: 0 10px 40px rgba(30, 58, 95, 0.04);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Elemento decorativo superior dos cards */
+.card-opcao::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    border-radius: 28px 28px 0 0;
+    transition: height 0.3s ease;
+}
+
+/* Gradiente temático para o convênio FUSMA (Marinha) */
+.card-fusma::before {
+    background: linear-gradient(90deg, #0d6efd 0%, #0056b3 100%);
+}
+
+/* Gradiente temático para o convênio FUSEX (Exército) */
+.card-fusex::before {
+    background: linear-gradient(90deg, #198754 0%, #146c43 100%);
+}
+
+/* Efeitos de sombra e elevação no estado hover */
+.card-opcao:hover {
+    transform: translateY(-15px) scale(1.02);
+}
+
+.card-fusma:hover {
+    border-color: rgba(13, 110, 253, 0.3);
+    box-shadow: 0 30px 60px rgba(13, 110, 253, 0.08),
+        0 0 40px rgba(13, 110, 253, 0.04) !important;
+}
+
+.card-fusex:hover {
+    border-color: rgba(25, 135, 84, 0.3);
+    box-shadow: 0 30px 60px rgba(25, 135, 84, 0.08),
+        0 0 40px rgba(25, 135, 84, 0.04) !important;
+}
+
+/* Transição de cores do cabeçalho do card no estado hover */
+.card-opcao h2 {
+    color: #1e3a5f;
+    font-size: 1.8rem;
+    transition: color 0.3s ease;
+}
+
+.card-fusma:hover h2 {
+    color: #0d6efd;
+}
+
+.card-fusex:hover h2 {
+    color: #198754;
+}
+
+/* --- Elemento de Pré-visualização da Folha A4 --- */
+.imagem-a4-completa {
+    width: 100%;
+    aspect-ratio: 1 / 1.414;
+    object-fit: contain;
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    /* Sombra de elevação tridimensional simulando profundidade de papel */
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.02),
+        0 10px 20px rgba(0, 0, 0, 0.05),
+        0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Animação de escala do preview no estado hover */
+.card-opcao:hover .imagem-a4-completa {
+    transform: scale(1.015);
+    box-shadow:
+        0 15px 30px rgba(0, 0, 0, 0.09),
+        0 5px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* --- Componentes do Formulário --- */
+.card {
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 15px 35px rgba(30, 58, 95, 0.08) !important;
+}
+
+.card-header {
+    border-radius: 20px 20px 0 0 !important;
+    background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%) !important;
+    padding: 20px !important;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #4a5c70;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 10px 14px;
+    border: 1.5px solid #dce4ec;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.15);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #198754 0%, #146c43 100%);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(25, 135, 84, 0.3);
+}
+
+.btn-secondary {
+    background-color: #ffffff;
+    color: #4a5c70;
+    border: 1.5px solid #dce4ec;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, color 0.2s ease !important;
+}
+
+.btn-secondary:hover {
+    background-color: #f1f3f5;
+    color: #2b3e51;
+    border-color: #cfd9e1;
+    transform: translateX(-4px);
+}
+
+/* --- DROPDOWN PERSONALIZADO DE ESPECIALIDADES --- */
+.position-relative {
+    position: relative;
+}
+
+.dropdown-custom {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid rgba(13, 110, 253, 0.15);
+    border-radius: 14px;
+    margin-top: 6px;
+    z-index: 1000;
+    box-shadow: 0 12px 30px rgba(30, 58, 95, 0.15) !important;
+    overflow: hidden;
+    animation: fadeInDropdown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Animação de transição do dropdown customizado */
+@keyframes fadeInDropdown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-item-custom {
+    padding: 12px 18px;
+    font-weight: 500;
+    color: #4a5c70;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Estilização de hover nos itens do dropdown */
+.dropdown-item-custom:hover {
+    background-color: #e2eeff;
+    color: #0d6efd;
+}
+
+/* Estado ativo para dispositivos móveis */
+.dropdown-item-custom:active {
+    background-color: #bcd7ff;
+}
+
+/* --- Seções do Formulário --- */
+.secao-formulario {
+    background-color: #f8fafc;
+    border: 1px solid rgba(13, 110, 253, 0.04);
+    border-radius: 16px;
+    padding: 16px;
+}
+
+@media (min-width: 768px) {
+    .secao-formulario {
+        padding: 24px;
+    }
+}
+
+.secao-titulo {
+    font-size: 1.05rem;
+    color: #1e3a5f;
+    font-weight: 700;
+    border-bottom: 2px solid rgba(13, 110, 253, 0.08);
+    padding-bottom: 8px;
+    margin-bottom: 18px !important;
+}
+
+/* --- Feedback Visual de Validação de Campo --- */
+.form-control.valido {
+    border-color: #198754 !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.188rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    padding-right: calc(1.5em + 0.75rem) !important;
+    box-shadow: none;
+}
+
+.form-control.valido:focus {
+    box-shadow: 0 0 0 4px rgba(25, 135, 84, 0.12) !important;
+}
+
+
+/* --- Responsividade de Inputs (Mobile) --- */
+@media (max-width: 576px) {
+    .input-group {
+        flex-direction: column;
+        border: none;
+    }
+
+    .input-group>.form-control {
+        width: 100% !important;
+        border-radius: 10px !important;
+        margin-bottom: 8px;
+        border-right-width: 1.5px !important;
+    }
+
+    .input-group>.btn {
+        width: 100% !important;
+        border-radius: 10px !important;
+        margin-left: 0 !important;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+/* --- Notificação Flutuante (Toast) --- */
+.toast-whatsapp {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    background-color: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(13, 110, 253, 0.15);
+    border-radius: 16px;
+    padding: 16px 24px;
+    z-index: 9999;
+    box-shadow: 0 15px 35px rgba(30, 58, 95, 0.15) !important;
+    display: flex;
+    align-items: center;
+    /* Animação combinada de entrada (slide-in) e saída (fade-out) */
+    animation: slideInToast 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        fadeOutToast 0.4s ease 5.6s forwards;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+@keyframes slideInToast {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeOutToast {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+        visibility: hidden;
+    }
+}
+
+/* --- Rodapé da Aplicação (Sticky Footer) --- */
+.footer-corporativo {
+    margin-top: auto;
+    width: 100%;
+    z-index: 10;
+}
+
+.linha-gradiente-footer {
+    height: 4px;
+    background: linear-gradient(90deg, #1e3a5f 0%, #0d6efd 50%, #198754 100%);
+    width: 100%;
+}
+
+.footer-conteudo {
+    background-color: #112233;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* --- Botão do Repositório GitHub --- */
+.btn-github-projeto {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(13, 110, 253, 0.15);
+    border-radius: 12px;
+    padding: 10px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #1e3a5f;
+    font-weight: 700;
+    font-size: 0.85rem;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 4px 15px rgba(30, 58, 95, 0.04);
+}
+
+.btn-github-projeto i {
+    font-size: 1.15rem;
+    color: #0d6efd;
+    transition: color 0.3s ease;
+}
+
+.btn-github-projeto:hover {
+    transform: translateY(-2px);
+    border-color: rgba(13, 110, 253, 0.3);
+    box-shadow: 0 8px 25px rgba(13, 110, 253, 0.1) !important;
+    background: #ffffff;
+    color: #0d6efd;
+}
+
+.btn-github-projeto:hover i {
+    color: #198754;
+}
+
+/* Responsividade do botão do GitHub (Mobile) */
+@media (max-width: 768px) {
+    .btn-github-projeto {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+}
+
+/* --- BOTÃO ADENDUS DO PROJETO (AO LADO DO GITHUB) --- */
+.btn-adendus-projeto {
+    position: fixed;
+    top: 24px;
+    /* Mesma altura do botão GitHub no desktop */
+    left: 175px;
+    /* Posicionado à direita (GitHub tem ~136px de largura + 15px de gap) */
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(13, 110, 253, 0.15);
+    border-radius: 12px;
+    padding: 10px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #1e3a5f;
+    font-weight: 700;
+    font-size: 0.85rem;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 4px 15px rgba(30, 58, 95, 0.04);
+}
+
+.btn-adendus-projeto i {
+    font-size: 1.15rem;
+    color: #0d6efd;
+    /* Azul Marinha */
+    transition: color 0.3s ease;
+}
+
+.btn-adendus-projeto:hover {
+    transform: translateY(-2px);
+    border-color: rgba(13, 110, 253, 0.3);
+    box-shadow: 0 8px 25px rgba(13, 110, 253, 0.1) !important;
+    background: #ffffff;
+    color: #0d6efd;
+}
+
+.btn-adendus-projeto:hover i {
+    color: #198754;
+    /* Verde Exército ao passar o mouse */
+}
+
+/* Responsividade do botão Adendus para celulares */
+@media (max-width: 768px) {
+    .btn-adendus-projeto {
+        position: absolute;
+        /* Rola com a página em celulares para não cobrir elementos */
+        top: 16px;
+        /* Mesma altura do botão GitHub em celulares */
+        left: 145px;
+        /* Posicionado à direita do botão GitHub em celulares */
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+}
