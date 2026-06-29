@@ -68,8 +68,7 @@ termos-24h/
 
 **Felipe Marques Argemiro**  
 Matrícula: 14660  
-Setor: Emergência 24H  
-Hospital Militar / FUSMA-FUSEX
+Setor: Emergência 24H
 ## Capturas de Tela
 
 ### Página inicial
