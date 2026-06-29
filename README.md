@@ -9,9 +9,6 @@ O sistema **Termos 24H** foi desenvolvido para otimizar esse processo e reduzir 
 
 O sistema está hospedado no **GitHub Pages** e pode ser acessado diretamente de qualquer computador da recepção:
 
-> **Acesse o Termos 24H:** `https://SEU-USUARIO.github.io/NOME-DO-REPOSITORIO`  
-> *(substitua `SEU-USUARIO` pelo seu usuário do GitHub e `NOME-DO-REPOSITORIO` pelo nome do repositório)*
-
 ## O que o projeto faz
 
 1. **Preenchimento Automatizado de PDFs**  

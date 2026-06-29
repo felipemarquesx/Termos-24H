@@ -109,7 +109,8 @@ function preencherHoraAtual() {
 
 // --- Processamento de Protocolo e Emissão de PDF ---
 // Apresentação do checklist de conformidade administrativa
-function abrirModalConfirmacao() {
+// Abre o modal de checklist real (ex: FUSMA ou FUSEX)
+function exibirModalChecklistReal() {
     const modalEl = document.getElementById('modal-atencao');
     if (modalEl) {
         // Reset do estado dos checkboxes do checklist
@@ -150,6 +151,48 @@ function abrirModalConfirmacao() {
 
         const meuModal = new bootstrap.Modal(modalEl);
         meuModal.show();
+    }
+}
+
+// Apresentação do checklist de conformidade administrativa
+function abrirModalConfirmacao() {
+    // 1. Buscamos todos os campos obrigatórios
+    const camposObrigatorios = Array.from(document.querySelectorAll('.campo-obrigatorio'));
+    
+    // 2. Filtramos apenas os que estão visíveis na tela no momento
+    const camposVisiveisIncompletos = camposObrigatorios.filter(input => {
+        const parentFusex = input.closest('.campos-fusex');
+        if (parentFusex && parentFusex.style.display === 'none') {
+            return false; // Ignora se o campo for específico do outro convênio e estiver oculto
+        }
+        return !input.classList.contains('valido'); // Pega se não estiver preenchido corretamente
+    });
+
+    // 3. Se houver algum campo incompleto, mostramos o modal de alerta personalizado
+    if (camposVisiveisIncompletos.length > 0) {
+        const modalAlertaEl = document.getElementById('modal-alerta-preenchimento');
+        if (modalAlertaEl) {
+            const modalAlerta = new bootstrap.Modal(modalAlertaEl);
+            
+            // Configura o clique do botão de prosseguir mesmo incompleto
+            const btnProsseguir = document.getElementById('btn-prosseguir-incompleto');
+            if (btnProsseguir) {
+                btnProsseguir.onclick = function() {
+                    modalAlerta.hide();
+                    
+                    // Pequeno atraso para o Bootstrap terminar a animação de esconder antes de abrir o outro
+                    modalAlertaEl.addEventListener('hidden.bs.modal', function handler() {
+                        exibirModalChecklistReal();
+                        modalAlertaEl.removeEventListener('hidden.bs.modal', handler);
+                    });
+                };
+            }
+            
+            modalAlerta.show();
+        }
+    } else {
+        // Se tudo estiver 100% preenchido, abre direto o checklist de confirmação
+        exibirModalChecklistReal();
     }
 }
 

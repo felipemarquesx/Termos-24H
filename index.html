@@ -220,6 +220,39 @@
         </div>
     </div>
 
+    <!-- Modal de Alerta de Preenchimento Incompleto -->
+    <div class="modal fade" id="modal-alerta-preenchimento" tabindex="-1" aria-labelledby="modalAlertaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg border-0" style="border-radius: 20px;">
+                <div class="modal-header border-0 bg-warning text-dark" style="border-radius: 20px 20px 0 0; padding: 20px;">
+                    <h5 class="modal-title fw-bold" id="modalAlertaLabel">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i> Atenção: Campos Pendentes!
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <div class="mb-3">
+                        <i class="bi bi-pencil-square text-warning" style="font-size: 3.5rem;"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3" style="color: #1e3a5f; font-family: 'Outfit', sans-serif;">
+                        Tem certeza que quer imprimir sem todos os dados preenchidos?
+                    </h5>
+                    <p class="text-muted mb-0" style="font-size: 0.95rem;">
+                        Caso decida não preencher agora, você terá que completar as informações restantes <strong>com caneta</strong> no papel impresso.
+                    </p>
+                </div>
+                <div class="modal-footer border-0 p-3" style="background-color: #f8f9fa; border-radius: 0 0 20px 20px; gap: 10px;">
+                    <button type="button" class="btn btn-secondary flex-grow-1 py-2" data-bs-dismiss="modal" style="border-radius: 10px;">
+                        Voltar e Preencher
+                    </button>
+                    <button type="button" class="btn btn-warning flex-grow-1 py-2 fw-bold text-dark" id="btn-prosseguir-incompleto" style="border-radius: 10px;">
+                        Imprimir mesmo assim
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal de Finalização: Protocolo de Segurança e Checklist -->
     <div class="modal fade" id="modal-atencao" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="modalAtencaoLabel" aria-hidden="true">
