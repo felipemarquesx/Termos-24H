@@ -5,13 +5,13 @@ let termoAtual = '';
 // Atualização dinâmica de título e ícone de aba baseado na navegação interna
 function atualizarAbaNavegador(titulo, faviconPath) {
     document.title = titulo;
-    
+
     // Remoção de favicon anterior para evitar problemas de cache de renderização
     const faviconExistente = document.getElementById('favicon');
     if (faviconExistente) {
         faviconExistente.remove();
     }
-    
+
     // Instanciação do novo favicon
     const novoFavicon = document.createElement('link');
     novoFavicon.id = 'favicon';
@@ -19,7 +19,7 @@ function atualizarAbaNavegador(titulo, faviconPath) {
     novoFavicon.type = 'image/png';
     // Anexo de timestamp (?t=...) para prevenção de cache do navegador
     novoFavicon.href = faviconPath + '?t=' + new Date().getTime();
-    
+
     // Inserção do novo favicon no DOM
     document.head.appendChild(novoFavicon);
 }
@@ -55,7 +55,7 @@ function abrirFormulario(tipo) {
         });
         atualizarAbaNavegador('Termo FUSEX', './assets/FusexPage.png');
     }
-    
+
     // Validação de integridade inicial após navegação
     atualizarConformidadeFormulario();
 }
@@ -130,10 +130,10 @@ function exibirModalChecklistReal() {
         if (containerCodigo && chkCodigo) {
             if (termoAtual === 'fusma') {
                 containerCodigo.style.setProperty('display', 'none', 'important');
-                chkCodigo.checked = true; 
+                chkCodigo.checked = true;
             } else {
                 containerCodigo.style.setProperty('display', 'flex', 'important');
-                chkCodigo.checked = false; 
+                chkCodigo.checked = false;
             }
         }
 
@@ -144,7 +144,7 @@ function exibirModalChecklistReal() {
         }
 
         // Atualização de elementos textuais do modal com base no termo ativo
-        const nomeForcaText = termoAtual.toUpperCase(); 
+        const nomeForcaText = termoAtual.toUpperCase();
         document.querySelectorAll('.nome-forca').forEach(el => {
             el.innerText = nomeForcaText;
         });
@@ -158,7 +158,7 @@ function exibirModalChecklistReal() {
 function abrirModalConfirmacao() {
     // 1. Buscamos todos os campos obrigatórios
     const camposObrigatorios = Array.from(document.querySelectorAll('.campo-obrigatorio'));
-    
+
     // 2. Filtramos apenas os que estão visíveis na tela no momento
     const camposVisiveisIncompletos = camposObrigatorios.filter(input => {
         const parentFusex = input.closest('.campos-fusex');
@@ -173,13 +173,13 @@ function abrirModalConfirmacao() {
         const modalAlertaEl = document.getElementById('modal-alerta-preenchimento');
         if (modalAlertaEl) {
             const modalAlerta = new bootstrap.Modal(modalAlertaEl);
-            
+
             // Configura o clique do botão de prosseguir mesmo incompleto
             const btnProsseguir = document.getElementById('btn-prosseguir-incompleto');
             if (btnProsseguir) {
-                btnProsseguir.onclick = function() {
+                btnProsseguir.onclick = function () {
                     modalAlerta.hide();
-                    
+
                     // Pequeno atraso para o Bootstrap terminar a animação de esconder antes de abrir o outro
                     modalAlertaEl.addEventListener('hidden.bs.modal', function handler() {
                         exibirModalChecklistReal();
@@ -187,7 +187,7 @@ function abrirModalConfirmacao() {
                     });
                 };
             }
-            
+
             modalAlerta.show();
         }
     } else {
@@ -200,7 +200,7 @@ function abrirModalConfirmacao() {
 function verificarChecklist() {
     const checks = document.querySelectorAll('.check-protocolo');
     let todosMarcados = true;
-    
+
     checks.forEach(chk => {
         const parentDiv = chk.closest('.form-check');
         if (chk.checked) {
@@ -216,7 +216,7 @@ function verificarChecklist() {
             }
         }
     });
-    
+
     const btnFinalizar = document.getElementById('btn-concluir-atendimento');
     if (btnFinalizar) {
         if (todosMarcados) {
@@ -279,7 +279,7 @@ async function executarDownloadPDFReal() {
     try {
         // 1. Carrega o arquivo PDF que está na sua pasta assets
         const resposta = await fetch(urlPDF);
-        
+
         if (!resposta.ok) {
             throw new Error(`Não foi possível carregar o arquivo PDF do ${nomeTermoFormatado}. Status: ${resposta.status}`);
         }
@@ -289,7 +289,7 @@ async function executarDownloadPDFReal() {
         // 2. Desembrulha a biblioteca global PDFLib carregada via CDN
         const { PDFDocument } = PDFLib;
         const documentoPDF = await PDFDocument.load(arrayBufferPDF);
-        
+
         // 3. Resgata o formulário interativo de dentro do arquivo PDF
         const formulario = documentoPDF.getForm();
 
@@ -300,7 +300,7 @@ async function executarDownloadPDFReal() {
                 if (elementoInput) {
                     const valorDigitado = elementoInput.value.trim();
                     const campoTextoPDF = formulario.getTextField(idCampo);
-                    
+
                     if (campoTextoPDF) {
                         campoTextoPDF.setText(valorDigitado);
                     }
@@ -355,7 +355,7 @@ function configurarMascarasData() {
                 let valor = evento.target.value;
                 // Filtragem numérica e formatação estrutural do input
                 let apenasNumeros = valor.replace(/\D/g, '').slice(0, 8);
-                
+
                 let formatado = '';
                 if (apenasNumeros.length > 0) {
                     formatado += apenasNumeros.slice(0, 2);
@@ -366,9 +366,9 @@ function configurarMascarasData() {
                 if (apenasNumeros.length > 4) {
                     formatado += '/' + apenasNumeros.slice(4, 8);
                 }
-                
+
                 evento.target.value = formatado;
-                
+
             });
         }
     });
@@ -381,7 +381,7 @@ configurarMascarasData();
 function configurarDropdownEspecialidades() {
     const input = document.getElementById('especialidade');
     const dropdown = document.getElementById('dropdown-especialidades');
-    
+
     if (!input || !dropdown) return;
 
     // Controle de exibição no evento focus
@@ -394,7 +394,7 @@ function configurarDropdownEspecialidades() {
         item.addEventListener('mousedown', (evento) => {
             const valor = evento.target.getAttribute('data-valor');
             input.value = valor;
-            
+
             dropdown.style.display = 'none';
             atualizarConformidadeFormulario();
         });
@@ -422,7 +422,7 @@ function configurarMonitoramentoConformidade() {
 // Processamento da métrica de preenchimento obrigatório
 function atualizarConformidadeFormulario() {
     const campos = Array.from(document.querySelectorAll('.campo-obrigatorio'));
-    
+
     // Filtragem dos inputs ativos sob a regra de exibição de cada convênio
     const camposVisiveis = campos.filter(input => {
         const parentFusex = input.closest('.campos-fusex');
@@ -433,7 +433,7 @@ function atualizarConformidadeFormulario() {
     });
 
     let preenchidosValidos = 0;
-    
+
     camposVisiveis.forEach(input => {
         const valor = input.value.trim();
         let campoValido = false;
@@ -466,15 +466,15 @@ function atualizarConformidadeFormulario() {
     if (progressBar) {
         progressBar.style.width = `${percentual}%`;
         progressBar.setAttribute('aria-valuenow', percentual);
-        
+
         if (percentual < 50) {
-            progressBar.className = 'progress-bar bg-danger'; 
+            progressBar.className = 'progress-bar bg-danger';
             progressBar.style.backgroundColor = '';
         } else if (percentual < 100) {
-            progressBar.className = 'progress-bar bg-warning text-dark'; 
+            progressBar.className = 'progress-bar bg-warning text-dark';
             progressBar.style.backgroundColor = '';
         } else {
-            progressBar.className = 'progress-bar bg-success'; 
+            progressBar.className = 'progress-bar bg-success';
             progressBar.style.backgroundColor = '';
         }
     }
@@ -507,9 +507,9 @@ function atualizarConformidadeFormulario() {
         if (nomeValido && nascimentoValido && precCpValido && especialidadeValida) {
             btnCopiar.removeAttribute('disabled');
             btnCopiar.classList.remove('btn-secondary');
-            btnCopiar.classList.add('btn-success'); 
+            btnCopiar.classList.add('btn-success');
             btnCopiar.title = "Clique para copiar os dados";
-            
+
             const iconeSpan = document.getElementById('icone-copiar-whatsapp');
             if (iconeSpan) {
                 iconeSpan.innerHTML = `<i class="bi bi-copy"></i>`;
@@ -517,9 +517,9 @@ function atualizarConformidadeFormulario() {
         } else {
             btnCopiar.setAttribute('disabled', 'true');
             btnCopiar.classList.remove('btn-success');
-            btnCopiar.classList.add('btn-secondary'); 
+            btnCopiar.classList.add('btn-secondary');
             btnCopiar.title = "Preencha Nome, Nascimento, Prec-CP e Especialidade para liberar";
-            
+
             const iconeSpan = document.getElementById('icone-copiar-whatsapp');
             if (iconeSpan) {
                 iconeSpan.innerHTML = `<i class="bi bi-lock-fill"></i>`;
@@ -541,18 +541,19 @@ function copiarDadosWhatsAppFUSEX() {
 
     // Valida se os campos mínimos exigidos pelo soldado foram preenchidos
     if (!nome || !nascimento || !precCp || !especialidade) {
-        exibirToastAvisoPreenchimento(); 
+        exibirToastAvisoPreenchimento();
         return;
     }
 
-    const mensagemWhatsApp = `*Solicitação de Guia de Encaminhamento (GE) - FUSEX*\n\n` +
-                             `• *Nome completo:* ${nome}\n` +
-                             `• *Data de nascimento:* ${nascimento}\n` +
-                             `• *Prec-CP:* ${precCp}\n` +
-                             `• *Especialidade:* ${especialidade}`;
+    const mensagemWhatsApp = `*Solicitação de senha (GE) - FUSEX*\n\n` +
+        `• *Nome completo:* ${nome}\n` +
+        `• *Data de nascimento:* ${nascimento}\n` +
+        `• *Prec-CP:* ${precCp}\n` +
+        `• *Especialidade:* ${especialidade}\n` +
+        `• *Nome do militar autorizador por favor?* `;
 
     navigator.clipboard.writeText(mensagemWhatsApp).then(() => {
-        exibirToastWhatsApp(); 
+        exibirToastWhatsApp();
     }).catch(err => {
         console.error('Erro ao copiar dados: ', err);
         alert("Não foi possível copiar automaticamente. Selecione e copie o texto abaixo:\n\n" + mensagemWhatsApp);
@@ -568,7 +569,7 @@ function exibirToastWhatsApp() {
 
     const toast = document.createElement('div');
     toast.className = 'toast-whatsapp';
-    
+
     toast.innerHTML = `
         <span style="font-size: 0.9rem; color: #1e3a5f; font-weight: 600; text-align: left;">
             Dados coletados! Enviar para pedir senha pro FUSEX.
@@ -591,7 +592,7 @@ function exibirToastAvisoPreenchimento() {
 
     const toast = document.createElement('div');
     toast.className = 'toast-whatsapp';
-    
+
     toast.innerHTML = `
         <span style="font-size: 0.9rem; color: #a05000; font-weight: 600; text-align: left; display: flex; align-items: center; gap: 8px;">
             <i class="bi bi-exclamation-triangle-fill" style="color: #a05000; font-size: 1.1rem; flex-shrink: 0;"></i>

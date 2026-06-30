@@ -48,6 +48,10 @@ h6 {
     font-weight: 800;
 }
 
+.container-titulo {
+    margin-bottom: 70px !important;
+}
+
 /* Marcadores institucionais das forças armadas */
 .sub-forca {
     font-size: 0.72rem;
@@ -517,3 +521,104 @@ h6 {
         font-size: 0.8rem;
     }
 }
+
+/* ==========================================================================
+   RESPONSIVIDADE PARA MONITORES AOC
+   ========================================================================== */
+
+/* --- 1. Monitores AOC 19.5" e 17" Widescreen (1600x900 e 1440x900) --- */
+@media screen and (max-height: 950px) and (min-width: 992px) {
+    #tela-inicial {
+        min-height: 80vh;
+    }
+    
+    .container-titulo {
+        margin-bottom: 30px !important;
+    }
+
+    .titulo-principal {
+        font-size: 2.4rem !important;
+    }
+
+    .card-opcao {
+        padding: 20px 15px 15px 15px;
+        margin: 8px;
+        border-radius: 22px;
+    }
+    
+    .card-opcao::before {
+        border-radius: 22px 22px 0 0;
+    }
+
+    .card-opcao h2 {
+        font-size: 1.45rem;
+        margin-bottom: 12px !important;
+    }
+
+    .imagem-a4-completa {
+        max-height: 250px;
+    }
+}
+
+/* --- 2. Monitores AOC 15.6" e 18.5" (1366x768) --- */
+@media screen and (max-height: 800px) and (min-width: 992px) {
+    #tela-inicial {
+        min-height: 78vh;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    
+    .container-titulo {
+        margin-bottom: 20px !important;
+    }
+
+    .titulo-principal {
+        font-size: 2.1rem !important;
+    }
+
+    .card-opcao {
+        padding: 16px 12px 12px 12px;
+        margin: 6px;
+        border-radius: 20px;
+    }
+
+    .card-opcao::before {
+        border-radius: 20px 20px 0 0;
+    }
+
+    .card-opcao h2 {
+        font-size: 1.25rem;
+        margin-bottom: 8px !important;
+    }
+
+    .sub-forca {
+        font-size: 0.65rem;
+        letter-spacing: 1px;
+    }
+
+    .imagem-a4-completa {
+        max-height: 190px;
+    }
+
+    /* Reduz o topo dos botões flutuantes para não sobrepor o título */
+    .btn-github-projeto,
+    .btn-adendus-projeto {
+        position: absolute;
+        top: 12px;
+    }
+}
+
+/* --- 3. Monitores AOC 17" Quadrado (1280x1024) --- */
+@media screen and (max-width: 1300px) and (min-width: 992px) {
+    #tela-inicial .row {
+        max-width: 860px !important;
+    }
+
+    .card-opcao {
+        padding: 24px 18px 18px 18px;
+    }
+
+    .imagem-a4-completa {
+        max-height: 270px;
+    }
+}
