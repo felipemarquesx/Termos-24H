@@ -22,26 +22,36 @@
 
         <!-- Tela de Seleção Inicial -->
         <div id="tela-inicial" class="text-center py-4">
-            <!-- Acesso ao Repositório -->
-            <a href="https://github.com/felipemarquesx/Termos-24H" target="_blank" class="btn-github-projeto shadow-sm">
-                <i class="bi bi-github"></i>
-                <span>Termos 24H</span>
-            </a>
+            <!-- Container dos Botões Flutuantes no Topo -->
+            <div class="container-botoes-topo">
+                <!-- Acesso ao Repositório -->
+                <a href="https://github.com/felipemarquesx/Termos-24H" target="_blank"
+                    class="btn-github-projeto shadow-sm">
+                    <i class="bi bi-github"></i>
+                    <span>Termos 24H</span>
+                </a>
 
-            <!-- Botão Adendus -->
-            <button type="button" class="btn-adendus-projeto shadow-sm" data-bs-toggle="modal"
-                data-bs-target="#modal-adendus">
-                <i class="bi bi-info-circle"></i>
-                <span>ADENDOS</span>
-            </button>
+                <!-- Botão Guias SADT -->
+                <button type="button" class="btn-guias-projeto shadow-sm" data-bs-toggle="modal"
+                    data-bs-target="#modal-guias-sadt">
+                    <i class="bi bi-wrench"></i>
+                    <span>GUIAS SADT</span>
+                </button>
+
+                <!-- Botão Adendos -->
+                <button type="button" class="btn-adendos-projeto shadow-sm" data-bs-toggle="modal"
+                    data-bs-target="#modal-adendos">
+                    <i class="bi bi-info-circle"></i>
+                    <span>ADENDOS</span>
+                </button>
+            </div>
 
             <div class="container-titulo">
                 <h1 class="titulo-principal display-5">Qual termo vamos preencher hoje?</h1>
             </div>
 
-            <div class="row justify-content-center align-items-center g-5 w-100"
-                style="max-width: 960px; margin: 0 auto;">
-
+            <div class="row justify-content-center align-items-center g-5 w-100 container-cards"
+                style="margin: 0 auto;">
                 <!-- Card de Seleção FUSMA -->
                 <div class="col-12 col-md-6 col-lg-5 col-xl-5 card-opcao card-fusma text-center"
                     onclick="abrirFormulario('fusma')">
@@ -221,10 +231,12 @@
     </div>
 
     <!-- Modal de Alerta de Preenchimento Incompleto -->
-    <div class="modal fade" id="modal-alerta-preenchimento" tabindex="-1" aria-labelledby="modalAlertaLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-alerta-preenchimento" tabindex="-1" aria-labelledby="modalAlertaLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content shadow-lg border-0" style="border-radius: 20px;">
-                <div class="modal-header border-0 bg-warning text-dark" style="border-radius: 20px 20px 0 0; padding: 20px;">
+                <div class="modal-header border-0 bg-warning text-dark"
+                    style="border-radius: 20px 20px 0 0; padding: 20px;">
                     <h5 class="modal-title fw-bold" id="modalAlertaLabel">
                         <i class="bi bi-exclamation-triangle-fill me-2"></i> Atenção: Campos Pendentes!
                     </h5>
@@ -238,14 +250,18 @@
                         Tem certeza que quer imprimir sem todos os dados preenchidos?
                     </h5>
                     <p class="text-muted mb-0" style="font-size: 0.95rem;">
-                        Caso decida não preencher agora, você terá que completar as informações restantes <strong>com caneta</strong> no papel impresso.
+                        Caso decida não preencher agora, você terá que completar as informações restantes <strong>com
+                            caneta</strong> no papel impresso.
                     </p>
                 </div>
-                <div class="modal-footer border-0 p-3" style="background-color: #f8f9fa; border-radius: 0 0 20px 20px; gap: 10px;">
-                    <button type="button" class="btn btn-secondary flex-grow-1 py-2" data-bs-dismiss="modal" style="border-radius: 10px;">
+                <div class="modal-footer border-0 p-3"
+                    style="background-color: #f8f9fa; border-radius: 0 0 20px 20px; gap: 10px;">
+                    <button type="button" class="btn btn-secondary flex-grow-1 py-2" data-bs-dismiss="modal"
+                        style="border-radius: 10px;">
                         Voltar e Preencher
                     </button>
-                    <button type="button" class="btn btn-warning flex-grow-1 py-2 fw-bold text-dark" id="btn-prosseguir-incompleto" style="border-radius: 10px;">
+                    <button type="button" class="btn btn-warning flex-grow-1 py-2 fw-bold text-dark"
+                        id="btn-prosseguir-incompleto" style="border-radius: 10px;">
                         Imprimir mesmo assim
                     </button>
                 </div>
@@ -321,13 +337,13 @@
         </div>
     </div>
 
-    <!-- Modal Adendus: Informações Legais e Privacidade -->
-    <div class="modal fade" id="modal-adendus" tabindex="-1" aria-labelledby="modalAdendusLabel" aria-hidden="true">
+    <!-- Modal Adendos: Informações Legais e Privacidade -->
+    <div class="modal fade" id="modal-adendos" tabindex="-1" aria-labelledby="modalAdendosLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content shadow-lg border-0" style="border-radius: 20px;">
                 <div class="modal-header border-0 bg-light text-dark"
                     style="border-radius: 20px 20px 0 0; padding: 20px;">
-                    <h5 class="modal-title fw-bold" id="modalAdendusLabel"
+                    <h5 class="modal-title fw-bold" id="modalAdendosLabel"
                         style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; color: #1e3a5f;">ADENDOS</h5>
                 </div>
                 <div class="modal-body p-4"
@@ -338,6 +354,30 @@
                         aplicação funciona de forma 100% local. Não há banco de dados e nenhuma informação pessoal é
                         armazenada ou enviada pela internet. Ao concluir ou limpar a ficha, todos os dados são
                         descartados permanentemente.</p>
+                </div>
+                <div class="modal-footer border-0 p-3" style="background-color: #f8f9fa; border-radius: 0 0 20px 20px;">
+                    <button type="button" class="btn btn-secondary w-100 py-2" data-bs-dismiss="modal"
+                        style="border-radius: 10px; font-size: 0.85rem;">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Guias SADT: Funcionalidade em Desenvolvimento -->
+    <div class="modal fade" id="modal-guias-sadt" tabindex="-1" aria-labelledby="modalGuiasLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content shadow-lg border-0" style="border-radius: 20px;">
+                <div class="modal-header border-0 bg-light text-dark"
+                    style="border-radius: 20px 20px 0 0; padding: 20px;">
+                    <h5 class="modal-title fw-bold" id="modalGuiasLabel"
+                        style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; color: #1e3a5f;">EM BREVE!</h5>
+                </div>
+                <div class="modal-body p-4"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; line-height: 1.6; color: #4a5c70;">
+                    <p class="mb-0">Mais agilidade na sua rotina!</p>
+                    <p class="mb-0">Em breve, bastará preencher um formulário e selecionar o ícone do plano
+                        correspondente. O documento será gerado automaticamente na tela, preenchido e pronto para
+                        impressão.</p>
                 </div>
                 <div class="modal-footer border-0 p-3" style="background-color: #f8f9fa; border-radius: 0 0 20px 20px;">
                     <button type="button" class="btn btn-secondary w-100 py-2" data-bs-dismiss="modal"

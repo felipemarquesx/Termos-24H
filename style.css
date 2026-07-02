@@ -52,6 +52,11 @@ h6 {
     margin-bottom: 70px !important;
 }
 
+.container-cards {
+    max-width: 1100px !important;
+    transition: max-width 0.3s ease;
+}
+
 /* Marcadores institucionais das forças armadas */
 .sub-forca {
     font-size: 0.72rem;
@@ -66,8 +71,9 @@ h6 {
     min-height: 85vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Alinha o conteúdo a partir do topo */
     align-items: center;
+    padding-top: 40px; /* Dá um respiro elegante no topo da tela */
 }
 
 /* Definição de estilo dos cards de seleção (layout glassmorphic) */
@@ -78,8 +84,9 @@ h6 {
     border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 28px;
     padding: 35px 25px 25px 25px;
-    margin: 12px;
-    /* Margem de segurança para prevenir empilhamento involuntário */
+    margin: 15px; /* Espaçamento de segurança maior entre os cards */
+    max-width: 360px; /* Largura padrão grande confortável */
+    width: 100%;
     /* Curva de transição e animação baseada em cubic-bezier */
     transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
         box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
@@ -145,7 +152,8 @@ h6 {
 
 /* --- Elemento de Pré-visualização da Folha A4 --- */
 .imagem-a4-completa {
-    width: 100%;
+    height: 480px; /* Altura padrão grande para computadores normais */
+    width: auto; /* Mantém a proporção A4 vertical */
     aspect-ratio: 1 / 1.414;
     object-fit: contain;
     background-color: #ffffff;
@@ -410,14 +418,24 @@ h6 {
 .footer-conteudo {
     background-color: #112233;
     font-family: 'Plus Jakarta Sans', sans-serif;
+    padding-bottom: 48px !important; /* Espaço extra de segurança para a barra de tarefas do Windows (Safe Area) */
 }
 
-/* --- Botão do Repositório GitHub --- */
-.btn-github-projeto {
+/* --- CONTAINER DOS BOTÕES FLUTUANTES NO TOPO --- */
+.container-botoes-topo {
     position: fixed;
     top: 24px;
     left: 24px;
+    display: flex;
+    gap: 12px;
     z-index: 1000;
+    transition: top 0.3s ease;
+}
+
+/* --- ESTILO PADRÃO DOS BOTÕES FLUTUANTES (Estética unificada) --- */
+.btn-github-projeto,
+.btn-adendos-projeto,
+.btn-guias-projeto {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(13, 110, 253, 0.15);
@@ -433,15 +451,20 @@ h6 {
     font-family: 'Outfit', sans-serif;
     transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
     box-shadow: 0 4px 15px rgba(30, 58, 95, 0.04);
+    cursor: pointer;
 }
 
-.btn-github-projeto i {
+.btn-github-projeto i,
+.btn-adendos-projeto i,
+.btn-guias-projeto i {
     font-size: 1.15rem;
     color: #0d6efd;
     transition: color 0.3s ease;
 }
 
-.btn-github-projeto:hover {
+.btn-github-projeto:hover,
+.btn-adendos-projeto:hover,
+.btn-guias-projeto:hover {
     transform: translateY(-2px);
     border-color: rgba(13, 110, 253, 0.3);
     box-shadow: 0 8px 25px rgba(13, 110, 253, 0.1) !important;
@@ -449,74 +472,29 @@ h6 {
     color: #0d6efd;
 }
 
-.btn-github-projeto:hover i {
-    color: #198754;
+.btn-github-projeto:hover i,
+.btn-adendos-projeto:hover i,
+.btn-guias-projeto:hover i {
+    color: #198754; /* Verde ao passar o mouse */
 }
 
-/* Responsividade do botão do GitHub (Mobile) */
+/* Responsividade dos botões para celulares */
 @media (max-width: 768px) {
-    .btn-github-projeto {
-        position: absolute;
-        top: 16px;
-        left: 16px;
-        padding: 8px 12px;
-        font-size: 0.8rem;
+    .container-botoes-topo {
+        position: relative;
+        top: 0 !important;
+        left: 0 !important;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 24px;
+        width: 100%;
     }
-}
 
-/* --- BOTÃO ADENDUS DO PROJETO (AO LADO DO GITHUB) --- */
-.btn-adendus-projeto {
-    position: fixed;
-    top: 24px;
-    /* Mesma altura do botão GitHub no desktop */
-    left: 175px;
-    /* Posicionado à direita (GitHub tem ~136px de largura + 15px de gap) */
-    z-index: 1000;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(13, 110, 253, 0.15);
-    border-radius: 12px;
-    padding: 10px 16px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #1e3a5f;
-    font-weight: 700;
-    font-size: 0.85rem;
-    font-family: 'Outfit', sans-serif;
-    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-    box-shadow: 0 4px 15px rgba(30, 58, 95, 0.04);
-}
-
-.btn-adendus-projeto i {
-    font-size: 1.15rem;
-    color: #0d6efd;
-    /* Azul Marinha */
-    transition: color 0.3s ease;
-}
-
-.btn-adendus-projeto:hover {
-    transform: translateY(-2px);
-    border-color: rgba(13, 110, 253, 0.3);
-    box-shadow: 0 8px 25px rgba(13, 110, 253, 0.1) !important;
-    background: #ffffff;
-    color: #0d6efd;
-}
-
-.btn-adendus-projeto:hover i {
-    color: #198754;
-    /* Verde Exército ao passar o mouse */
-}
-
-/* Responsividade do botão Adendus para celulares */
-@media (max-width: 768px) {
-    .btn-adendus-projeto {
-        position: absolute;
-        /* Rola com a página em celulares para não cobrir elementos */
-        top: 16px;
-        /* Mesma altura do botão GitHub em celulares */
-        left: 145px;
-        /* Posicionado à direita do botão GitHub em celulares */
+    .btn-github-projeto,
+    .btn-adendos-projeto,
+    .btn-guias-projeto {
         padding: 8px 12px;
         font-size: 0.8rem;
     }
@@ -530,10 +508,15 @@ h6 {
 @media screen and (max-height: 950px) and (min-width: 992px) {
     #tela-inicial {
         min-height: 80vh;
+        padding-top: 30px;
     }
     
     .container-titulo {
-        margin-bottom: 30px !important;
+        margin-bottom: 60px !important; /* Espaçamento grande elegante */
+    }
+
+    .container-cards {
+        max-width: 1000px !important; /* Afasta mais os cards pros lados */
     }
 
     .titulo-principal {
@@ -541,13 +524,15 @@ h6 {
     }
 
     .card-opcao {
-        padding: 20px 15px 15px 15px;
-        margin: 8px;
-        border-radius: 22px;
+        padding: 25px 20px 20px 20px;
+        margin: 15px;
+        border-radius: 24px;
+        max-width: 310px; /* Card mais robusto na largura */
+        width: 100%;
     }
     
     .card-opcao::before {
-        border-radius: 22px 22px 0 0;
+        border-radius: 24px 24px 0 0;
     }
 
     .card-opcao h2 {
@@ -556,7 +541,8 @@ h6 {
     }
 
     .imagem-a4-completa {
-        max-height: 250px;
+        height: 380px; /* Imagem A4 alta e elegante */
+        width: auto;
     }
 }
 
@@ -564,12 +550,15 @@ h6 {
 @media screen and (max-height: 800px) and (min-width: 992px) {
     #tela-inicial {
         min-height: 78vh;
-        padding-top: 20px;
-        padding-bottom: 20px;
+        padding-top: 25px;
     }
     
     .container-titulo {
-        margin-bottom: 20px !important;
+        margin-bottom: 45px !important; /* Afastamento bacana e bem visível */
+    }
+
+    .container-cards {
+        max-width: 900px !important; /* Espalha os cards nas laterais */
     }
 
     .titulo-principal {
@@ -577,13 +566,15 @@ h6 {
     }
 
     .card-opcao {
-        padding: 16px 12px 12px 12px;
-        margin: 6px;
-        border-radius: 20px;
+        padding: 20px 15px 15px 15px;
+        margin: 12px;
+        border-radius: 22px;
+        max-width: 270px; /* Card substancialmente maior para preencher a tela */
+        width: 100%;
     }
 
     .card-opcao::before {
-        border-radius: 20px 20px 0 0;
+        border-radius: 22px 22px 0 0;
     }
 
     .card-opcao h2 {
@@ -597,13 +588,12 @@ h6 {
     }
 
     .imagem-a4-completa {
-        max-height: 190px;
+        height: 320px; /* Altura generosa que preenche cerca de metade da tela */
+        width: auto;
     }
 
-    /* Reduz o topo dos botões flutuantes para não sobrepor o título */
-    .btn-github-projeto,
-    .btn-adendus-projeto {
-        position: absolute;
+    /* Reduz o topo do contêiner de botões para não sobrepor o título */
+    .container-botoes-topo {
         top: 12px;
     }
 }
@@ -611,14 +601,21 @@ h6 {
 /* --- 3. Monitores AOC 17" Quadrado (1280x1024) --- */
 @media screen and (max-width: 1300px) and (min-width: 992px) {
     #tela-inicial .row {
-        max-width: 860px !important;
+        max-width: 950px !important; /* Aumentado para espalhar os cards */
+    }
+
+    .container-titulo {
+        margin-bottom: 70px !important;
     }
 
     .card-opcao {
-        padding: 24px 18px 18px 18px;
+        padding: 30px 22px 22px 22px;
+        max-width: 330px; /* Card premium largo */
+        width: 100%;
     }
 
     .imagem-a4-completa {
-        max-height: 270px;
+        height: 410px; /* Imagem bem grande e de fácil leitura */
+        width: auto;
     }
 }
