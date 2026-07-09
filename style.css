@@ -71,9 +71,11 @@ h6 {
     min-height: 85vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Alinha o conteúdo a partir do topo */
+    justify-content: flex-start;
+    /* Alinha o conteúdo a partir do topo */
     align-items: center;
-    padding-top: 40px; /* Dá um respiro elegante no topo da tela */
+    padding-top: 40px;
+    /* Dá um respiro elegante no topo da tela */
 }
 
 /* Definição de estilo dos cards de seleção (layout glassmorphic) */
@@ -84,8 +86,10 @@ h6 {
     border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 28px;
     padding: 35px 25px 25px 25px;
-    margin: 15px; /* Espaçamento de segurança maior entre os cards */
-    max-width: 360px; /* Largura padrão grande confortável */
+    margin: 15px;
+    /* Espaçamento de segurança maior entre os cards */
+    max-width: 360px;
+    /* Largura padrão grande confortável */
     width: 100%;
     /* Curva de transição e animação baseada em cubic-bezier */
     transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
@@ -152,8 +156,10 @@ h6 {
 
 /* --- Elemento de Pré-visualização da Folha A4 --- */
 .imagem-a4-completa {
-    height: 480px; /* Altura padrão grande para computadores normais */
-    width: auto; /* Mantém a proporção A4 vertical */
+    height: 480px;
+    /* Altura padrão grande para computadores normais */
+    width: auto;
+    /* Mantém a proporção A4 vertical */
     aspect-ratio: 1 / 1.414;
     object-fit: contain;
     background-color: #ffffff;
@@ -418,8 +424,10 @@ h6 {
 .footer-conteudo {
     background-color: #112233;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    padding-bottom: 48px !important; /* Espaço extra de segurança para a barra de tarefas do Windows (Safe Area) */
+    padding-bottom: 48px !important;
 }
+
+
 
 /* --- CONTAINER DOS BOTÕES FLUTUANTES NO TOPO --- */
 .container-botoes-topo {
@@ -475,7 +483,8 @@ h6 {
 .btn-github-projeto:hover i,
 .btn-adendos-projeto:hover i,
 .btn-guias-projeto:hover i {
-    color: #198754; /* Verde ao passar o mouse */
+    color: #198754;
+    /* Verde ao passar o mouse */
 }
 
 /* Responsividade dos botões para celulares */
@@ -510,13 +519,15 @@ h6 {
         min-height: 80vh;
         padding-top: 30px;
     }
-    
+
     .container-titulo {
-        margin-bottom: 60px !important; /* Espaçamento grande elegante */
+        margin-bottom: 60px !important;
+        /* Espaçamento grande elegante */
     }
 
     .container-cards {
-        max-width: 1000px !important; /* Afasta mais os cards pros lados */
+        max-width: 1000px !important;
+        /* Afasta mais os cards pros lados */
     }
 
     .titulo-principal {
@@ -527,10 +538,11 @@ h6 {
         padding: 25px 20px 20px 20px;
         margin: 15px;
         border-radius: 24px;
-        max-width: 310px; /* Card mais robusto na largura */
+        max-width: 310px;
+        /* Card mais robusto na largura */
         width: 100%;
     }
-    
+
     .card-opcao::before {
         border-radius: 24px 24px 0 0;
     }
@@ -541,7 +553,8 @@ h6 {
     }
 
     .imagem-a4-completa {
-        height: 380px; /* Imagem A4 alta e elegante */
+        height: 380px;
+        /* Imagem A4 alta e elegante */
         width: auto;
     }
 }
@@ -552,13 +565,15 @@ h6 {
         min-height: 78vh;
         padding-top: 25px;
     }
-    
+
     .container-titulo {
-        margin-bottom: 45px !important; /* Afastamento bacana e bem visível */
+        margin-bottom: 45px !important;
+        /* Afastamento bacana e bem visível */
     }
 
     .container-cards {
-        max-width: 900px !important; /* Espalha os cards nas laterais */
+        max-width: 900px !important;
+        /* Espalha os cards nas laterais */
     }
 
     .titulo-principal {
@@ -569,7 +584,8 @@ h6 {
         padding: 20px 15px 15px 15px;
         margin: 12px;
         border-radius: 22px;
-        max-width: 270px; /* Card substancialmente maior para preencher a tela */
+        max-width: 270px;
+        /* Card substancialmente maior para preencher a tela */
         width: 100%;
     }
 
@@ -588,7 +604,8 @@ h6 {
     }
 
     .imagem-a4-completa {
-        height: 320px; /* Altura generosa que preenche cerca de metade da tela */
+        height: 320px;
+        /* Altura generosa que preenche cerca de metade da tela */
         width: auto;
     }
 
@@ -601,7 +618,8 @@ h6 {
 /* --- 3. Monitores AOC 17" Quadrado (1280x1024) --- */
 @media screen and (max-width: 1300px) and (min-width: 992px) {
     #tela-inicial .row {
-        max-width: 950px !important; /* Aumentado para espalhar os cards */
+        max-width: 950px !important;
+        /* Aumentado para espalhar os cards */
     }
 
     .container-titulo {
@@ -610,12 +628,146 @@ h6 {
 
     .card-opcao {
         padding: 30px 22px 22px 22px;
-        max-width: 330px; /* Card premium largo */
+        max-width: 330px;
+        /* Card premium largo */
         width: 100%;
     }
 
     .imagem-a4-completa {
-        height: 410px; /* Imagem bem grande e de fácil leitura */
+        height: 410px;
+        /* Imagem bem grande e de fácil leitura */
         width: auto;
     }
-}
+}
+
+/* ==========================================================================
+   ESTILOS PARA A FUNCIONALIDADE DE GUIAS SADT
+   ========================================================================== */
+
+/* --- Estilos Gerais do Modal SADT --- */
+#modal-guias-sadt .modal-content {
+    border-radius: 20px !important;
+    overflow: hidden !important; /* CORREÇÃO: Corta o vazamento do fundo e arredonda embaixo também! */
+    box-shadow: 0 20px 45px rgba(30, 58, 95, 0.18) !important;
+    border: none !important;
+}
+
+#modal-guias-sadt .modal-body {
+    background-color: #f4f6f9 !important; /* Fundo cinza azulado suave moderno */
+    padding: 24px !important;
+}
+
+/* Formulário SADT */
+.sadt-form {
+    background: #ffffff;
+    border-radius: 16px !important;
+    padding: 20px !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(30, 58, 95, 0.04) !important;
+}
+
+.sadt-form .form-label {
+    font-size: 0.85rem;
+    color: #4a5c70;
+    margin-bottom: 6px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.sadt-form .form-control {
+    border-radius: 10px;
+    border: 1.5px solid rgba(30, 58, 95, 0.1);
+    background-color: #f8fafc;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    color: #1e3a5f;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.sadt-form .form-control:focus {
+    background-color: #ffffff;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.08);
+    outline: none;
+}
+
+
+/* Container de Operadoras */
+.sadt-operadoras-container {
+    background: #ffffff;
+    border-radius: 16px !important;
+    padding: 20px !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(30, 58, 95, 0.04) !important;
+}
+
+/* Grade de Operadoras (Sem rolagem, exibindo todas as 16 juntas) */
+#sadt-grid-operadoras {
+    max-height: none !important;
+    overflow-y: visible !important;
+    padding-right: 0px;
+}
+
+/* Barra de rolagem customizada para a grade */
+#sadt-grid-operadoras::-webkit-scrollbar {
+    width: 6px;
+}
+
+#sadt-grid-operadoras::-webkit-scrollbar-track {
+    background: rgba(30, 58, 95, 0.03);
+    border-radius: 10px;
+}
+
+#sadt-grid-operadoras::-webkit-scrollbar-thumb {
+    background: rgba(30, 58, 95, 0.15);
+    border-radius: 10px;
+}
+
+#sadt-grid-operadoras::-webkit-scrollbar-thumb:hover {
+    background: rgba(30, 58, 95, 0.25);
+}
+
+/* Estilo Direto no Logotipo das Operadoras (Sem caixas ou containers extras) */
+.sadt-logo {
+    height: 96px; /* Tamanho consideravelmente maior e mais imponente */
+    width: 100%;
+    object-fit: contain;
+    background-color: #ffffff; /* Fundo branco para que as arestas do JPG fiquem arredondadas e integradas */
+    border-radius: 16px !important; /* Arredonda as arestas da imagem de forma muito elegante */
+    padding: 12px; /* Preenchimento ideal para logos maiores */
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    user-select: none;
+    cursor: not-allowed;
+}
+
+/* Estado Desabilitado (Apenas a imagem em escala de cinza pura) */
+.sadt-logo.disabled {
+    opacity: 0.25;
+    background-color: #f1f3f5; /* Fundo ligeiramente acinzentado quando inativo */
+    filter: grayscale(100%) brightness(0.9) !important; /* Escala de cinza pura, remove qualquer tom rosado/colorido */
+}
+
+/* Estado Habilitado (Liberado para clique - Sombra Marcante no Contorno) */
+.sadt-logo:not(.disabled) {
+    cursor: pointer;
+    opacity: 1;
+    background-color: #ffffff;
+    /* Sombra inteligente intensificada e bem visível em volta do ícone */
+    filter: drop-shadow(0 6px 10px rgba(30, 58, 95, 0.22));
+}
+
+/* Hover no logotipo puro habilitado (Zoom, elevação de flutuação e sombra brilhante bem marcada) */
+.sadt-logo:not(.disabled):hover {
+    transform: scale(1.1) translateY(-4px);
+    /* Sombra de flutuação 3D muito mais visível, nítida e na cor azul da marca */
+    filter: drop-shadow(0 12px 18px rgba(13, 110, 253, 0.48));
+}
+
+.sadt-logo:not(.disabled):active {
+    transform: scale(1.03) translateY(-1px);
+    filter: drop-shadow(0 4px 8px rgba(13, 110, 253, 0.25));
+}
+
+
+
+
