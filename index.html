@@ -34,7 +34,7 @@
                 <!-- Botão Guias SADT -->
                 <button type="button" class="btn-guias-projeto shadow-sm" data-bs-toggle="modal"
                     data-bs-target="#modal-guias-sadt">
-                    <i class="bi bi-wrench"></i>
+                    <i class="bi bi-file-earmark-medical"></i>
                     <span>GUIAS SADT</span>
                 </button>
 
@@ -363,25 +363,122 @@
         </div>
     </div>
 
-    <!-- Modal Guias SADT: Funcionalidade em Desenvolvimento -->
+    <!-- Modal Guias SADT: Formulário e Grade de Emissão de Operadoras -->
     <div class="modal fade" id="modal-guias-sadt" tabindex="-1" aria-labelledby="modalGuiasLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content shadow-lg border-0" style="border-radius: 20px;">
-                <div class="modal-header border-0 bg-light text-dark"
-                    style="border-radius: 20px 20px 0 0; padding: 20px;">
+                <div class="modal-header border-0 text-white"
+                    style="border-radius: 20px 20px 0 0; padding: 20px; background: linear-gradient(135deg, #1e3a5f 0%, #112233 100%); border-bottom: 3.5px solid #0d6efd !important;">
                     <h5 class="modal-title fw-bold" id="modalGuiasLabel"
-                        style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; color: #1e3a5f;">EM BREVE!</h5>
+                        style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; letter-spacing: 0.5px;">Guias SADT</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body p-4"
-                    style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; line-height: 1.6; color: #4a5c70;">
-                    <p class="mb-0">Mais agilidade na sua rotina!</p>
-                    <p class="mb-0">Em breve, bastará preencher um formulário e selecionar o ícone do plano
-                        correspondente. O documento será gerado automaticamente na tela, preenchido e pronto para
-                        impressão.</p>
-                </div>
-                <div class="modal-footer border-0 p-3" style="background-color: #f8f9fa; border-radius: 0 0 20px 20px;">
-                    <button type="button" class="btn btn-secondary w-100 py-2" data-bs-dismiss="modal"
-                        style="border-radius: 10px; font-size: 0.85rem;">Fechar</button>
+                <div class="modal-body p-4" style="font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fafbfc;">
+                    
+                    <!-- Estrutura do Formulário Estilizada -->
+                    <div class="sadt-form mb-4 p-3 bg-white rounded-4 border" style="border-color: rgba(30, 58, 95, 0.08) !important;">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label for="sadt-carteirinha" class="form-label fw-semibold" style="color: #1e3a5f;">Carteirinha do Beneficiário</label>
+                                <input type="text" id="sadt-carteirinha" class="form-control" placeholder="Digite o número">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="sadt-validade" class="form-label fw-semibold" style="color: #1e3a5f;">Validade da Carteirinha</label>
+                                <input type="text" id="sadt-validade" class="form-control" placeholder="DD/MM/AAAA" maxlength="10">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="sadt-nome" class="form-label fw-semibold" style="color: #1e3a5f;">Nome do Beneficiário</label>
+                                <input type="text" id="sadt-nome" class="form-control" placeholder="Nome completo">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sadt-operadoras-container p-3 bg-white rounded-4 border" style="border-color: rgba(30, 58, 95, 0.08) !important;">
+                        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4" id="sadt-grid-operadoras" style="padding: 10px 5px;">
+                            
+                            <!-- AMIL -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/AMIL.png" alt="AMIL" class="sadt-logo disabled" data-operadora="AMIL" data-pdf="AMIL.pdf">
+                            </div>
+                            
+                            <!-- ASFAL -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/ASFAL.png" alt="ASFAL" class="sadt-logo disabled" data-operadora="ASFAL" data-pdf="ASFAL.pdf">
+                            </div>
+                            
+                            <!-- ASSEFAZ -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/ASSEFAZ.jpg" alt="ASSEFAZ" class="sadt-logo disabled" data-operadora="ASSEFAZ" data-pdf="ASSEFAZ.pdf">
+                            </div>
+                            
+                            <!-- BRADESCO -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/BRADESCO.png" alt="BRADESCO" class="sadt-logo disabled" data-operadora="BRADESCO" data-pdf="BRADESCO.pdf">
+                            </div>
+                            
+                            <!-- CAMED -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/CAMED.png" alt="CAMED" class="sadt-logo disabled" data-operadora="CAMED" data-pdf="CAMED.pdf">
+                            </div>
+                            
+                            <!-- CAPESESP -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/CAPESESP.jpg" alt="CAPESESP" class="sadt-logo disabled" data-operadora="CAPESESP" data-pdf="CAPESESP.pdf">
+                            </div>
+                            
+                            <!-- CASSI -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/CASSI.png" alt="CASSI" class="sadt-logo disabled" data-operadora="CASSI" data-pdf="CASSI.pdf">
+                            </div>
+                            
+                            <!-- FUNCEF -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/FUNCEF.png" alt="FUNCEF" class="sadt-logo disabled" data-operadora="FUNCEF" data-pdf="FUNCEF.pdf">
+                            </div>
+                            
+                            <!-- GEAP -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/GEAP.png" alt="GEAP" class="sadt-logo disabled" data-operadora="GEAP" data-pdf="GEAP.pdf">
+                            </div>
+                            
+                            <!-- LIFE -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/LIFE.jpg" alt="LIFE" class="sadt-logo disabled" data-operadora="LIFE" data-pdf="LIFE.pdf">
+                            </div>
+                            
+                            <!-- MEDSERVICE -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/MEDSERVICE.jpg" alt="MEDSERVICE" class="sadt-logo disabled" data-operadora="MEDSERVICE" data-pdf="MEDSERVICE.pdf">
+                            </div>
+                            
+                            <!-- PADRAO -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/PADRAO.png" alt="PADRAO" class="sadt-logo disabled" data-operadora="PADRAO" data-pdf="PADRAO.pdf">
+                            </div>
+                            
+                            <!-- PETROBRAS -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/PETROBRAS.png" alt="PETROBRAS" class="sadt-logo disabled" data-operadora="PETROBRAS" data-pdf="PETROBRAS.pdf">
+                            </div>
+                            
+                            <!-- SMILE -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/SMILE.jpg" alt="SMILE" class="sadt-logo disabled" data-operadora="SMILE" data-pdf="SMILE.pdf">
+                            </div>
+                            
+                            <!-- SULAMERICA -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/SULAMERICA.png" alt="SULAMERICA" class="sadt-logo disabled" data-operadora="SULAMERICA" data-pdf="SULAMERICA.pdf">
+                            </div>
+                            
+                            <!-- UNIMED -->
+                            <div class="col text-center">
+                                <img src="assets/icons_operadoras_de_saude/UNIMED.jpg" alt="UNIMED" class="sadt-logo disabled" data-operadora="UNIMED" data-pdf="UNIMED.pdf">
+                            </div>
+                            
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -396,9 +493,9 @@
                     style="letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.7rem; font-weight: 700;">
                     Desenvolvimento & Automação</p>
                 <h6 class="text-white fw-bold mb-1"
-                    style="font-family: 'Outfit', sans-serif; font-size: 1.05rem; letter-spacing: 0.5px;">Felipe Marques
-                    Argemiro</h6>
-                <p class="mb-0 text-white-50" style="font-size: 0.85rem; font-weight: 500;">Matrícula: 14660</p>
+                    style="font-family: 'Outfit', sans-serif; font-size: 1.05rem; letter-spacing: 0.5px;">Felipe Marques Argemiro</h6>
+                <p class="mb-1 text-white-50" style="font-size: 0.85rem; font-weight: 500;">Matrícula: 14660</p>
+                <p class="mb-0 text-white-50 small" style="font-size: 0.78rem; font-weight: 500; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.5px;">Emergência 24H — Hospital Santa Casa de Misericórdia de Maceió</p>
             </div>
         </div>
     </footer>
