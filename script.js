@@ -606,3 +606,251 @@ function exibirToastAvisoPreenchimento() {
         toast.remove();
     }, 6000);
 }
+
+// ==========================================================================
+// 🚀 LÓGICA E INTERATIVIDADE DO MODAL GUIAS SADT
+// ==========================================================================
+
+function inicializarSadt() {
+    const inputCarteirinha = document.getElementById('sadt-carteirinha');
+    const inputValidade = document.getElementById('sadt-validade');
+    const inputNome = document.getElementById('sadt-nome');
+    const cardsOperadoras = document.querySelectorAll('.sadt-logo');
+
+    if (!inputCarteirinha || !inputValidade || !inputNome) {
+        console.warn("[SADT] Elementos do formulário não encontrados na página.");
+        return;
+    }
+
+    // 1. MÁSCARA AUTOMÁTICA DE DATA (Validade)
+    inputValidade.addEventListener('input', (e) => {
+        let valor = e.target.value.replace(/\D/g, ''); // Remove tudo que não é número
+        
+        if (valor.length > 8) {
+            valor = valor.substring(0, 8);
+        }
+        
+        if (valor.length > 2 && valor.length <= 4) {
+            valor = valor.substring(0, 2) + '/' + valor.substring(2);
+        } else if (valor.length > 4) {
+            valor = valor.substring(0, 2) + '/' + valor.substring(2, 4) + '/' + valor.substring(4, 8);
+        }
+        
+        e.target.value = valor;
+        verificarCamposSadt();
+    });
+
+    // Escuta eventos nos outros inputs para liberar os planos
+    inputCarteirinha.addEventListener('input', verificarCamposSadt);
+    inputNome.addEventListener('input', verificarCamposSadt);
+
+    // 2. DETECTOR DE CLIQUES NOS CARDS
+    cardsOperadoras.forEach(card => {
+        card.addEventListener('click', async () => {
+            if (card.classList.contains('disabled')) {
+                // Se estiver bloqueado, dá o aviso toast explicativo de pendência
+                exibirToastAvisoSadtBloqueado();
+                return;
+            }
+
+            const nomeOperadora = card.getAttribute('data-operadora');
+            const nomeArquivoPDF = card.getAttribute('data-pdf');
+
+            if (nomeOperadora && nomeArquivoPDF) {
+                await gerarPdfSadt(card, nomeOperadora, nomeArquivoPDF);
+            }
+        });
+    });
+
+    // Limpa os campos quando o modal for fechado para começar limpo na próxima vez
+    const modalElemento = document.getElementById('modal-guias-sadt');
+    if (modalElemento) {
+        modalElemento.addEventListener('hidden.bs.modal', () => {
+            [inputCarteirinha, inputValidade, inputNome].forEach(input => {
+                input.value = '';
+            });
+            verificarCamposSadt();
+        });
+    }
+}
+
+// 3. AUDITORIA DE PREENCHIMENTO DOS CAMPOS
+function verificarCamposSadt() {
+    const inputCarteirinha = document.getElementById('sadt-carteirinha');
+    const inputValidade = document.getElementById('sadt-validade');
+    const inputNome = document.getElementById('sadt-nome');
+    const cardsOperadoras = document.querySelectorAll('.sadt-logo');
+
+    if (!inputCarteirinha || !inputValidade || !inputNome) return;
+
+    const carteirinha = inputCarteirinha.value.trim();
+    const validade = inputValidade.value.trim();
+    const nome = inputNome.value.trim();
+
+    // Regras de validação:
+    // - Carteirinha: Pelo menos 1 caractere
+    // - Validade: Exatamente 10 caracteres (DD/MM/AAAA)
+    // - Nome: Pelo menos 3 caracteres
+    const carteirinhaValida = carteirinha.length > 0;
+    const validadeValida = validade.length === 10;
+    const nomeValido = nome.length >= 3;
+
+    if (carteirinhaValida && validadeValida && nomeValido) {
+        // Desbloqueia todos os planos (luzes acesas! 🟢)
+        cardsOperadoras.forEach(card => {
+            card.classList.remove('disabled');
+        });
+    } else {
+        // Bloqueia todos os planos (luzes apagadas/azuladas 🔵)
+        cardsOperadoras.forEach(card => {
+            card.classList.add('disabled');
+        });
+    }
+}
+
+// 4. PREENCHIMENTO INTELIGENTE DO PDF E IMPRESSÃO DIRETA (IFRAME OCULTO)
+async function gerarPdfSadt(logoElemento, nomeOperadora, nomeArquivoPDF) {
+    const urlPDF = `./assets/guias sadt/${nomeArquivoPDF}`;
+    
+    try {
+        // Mostra estado de carregamento sutil na imagem do logotipo (opacidade piscando)
+        logoElemento.style.pointerEvents = 'none';
+        logoElemento.style.opacity = '0.3';
+
+        // A. Carrega o arquivo template PDF da operadora de saúde
+        const resposta = await fetch(urlPDF);
+        if (!resposta.ok) {
+            throw new Error(`Não foi possível carregar o arquivo '${nomeArquivoPDF}' na pasta 'assets/guias sadt'.`);
+        }
+
+        const arrayBufferPDF = await resposta.arrayBuffer();
+
+        // B. Instancia a biblioteca PDF-Lib e inicializa o formulário
+        const { PDFDocument } = PDFLib;
+        const documentoPDF = await PDFDocument.load(arrayBufferPDF);
+        const formulario = documentoPDF.getForm();
+        const campos = formulario.getFields();
+
+        // Valores digitados
+        const valorCarteirinha = document.getElementById('sadt-carteirinha').value.trim();
+        const valorValidade = document.getElementById('sadt-validade').value.trim();
+        const valorNome = document.getElementById('sadt-nome').value.trim();
+
+        // Garante que a data de validade seja enviada perfeitamente formatada (DD/MM/AAAA) para o PDF
+        const apenasNumeros = valorValidade.replace(/\D/g, '');
+        let valorValidadeFormatada = valorValidade;
+        if (apenasNumeros.length === 8) {
+            valorValidadeFormatada = apenasNumeros.substring(0, 2) + '/' + apenasNumeros.substring(2, 4) + '/' + apenasNumeros.substring(4, 8);
+        }
+
+        // C. Mapeamento Flexível Inteligente (evita que o usuário dependa de IDs exatos nos PDFs)
+        campos.forEach(campo => {
+            try {
+                if (campo.constructor.name === 'PDFTextField' || typeof campo.setText === 'function') {
+                    const nomeCampoRaw = campo.getName().toLowerCase();
+                    // Remove acentos e caracteres especiais para comparação segura
+                    const nomeCampo = nomeCampoRaw.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+                    // CASO 1: Nome do beneficiário (procura por "nome", "beneficiario", "paciente", "nomecompleto")
+                    if (nomeCampo.includes('nome') || nomeCampo.includes('beneficiario') || nomeCampo.includes('paciente') || nomeCampo.includes('nomecompleto')) {
+                        campo.setText(valorNome);
+                    } 
+                    // CASO 2: Validade da carteirinha (procura por "valid", "venc", "vcto", "val", "expira", "data_val")
+                    // Colocado primeiro que o caso da carteirinha para não dar conflito com nomes compostos como "validade_carteira"
+                    else if (nomeCampo.includes('valid') || nomeCampo.includes('venc') || nomeCampo.includes('vcto') || nomeCampo.includes('val') || nomeCampo.includes('expira')) {
+                        campo.setText(valorValidadeFormatada);
+                    } 
+                    // CASO 3: Carteirinha (procura por "carteira", "num", "matricula", "codigo", "registro", "benef", "cartao")
+                    // Evitamos que dê match em campos que tenham termos de nome ou validade
+                    else if (nomeCampo.includes('carteira') || nomeCampo.includes('num') || nomeCampo.includes('matricula') || nomeCampo.includes('codigo') || nomeCampo.includes('registro') || nomeCampo.includes('benef') || nomeCampo.includes('cartao')) {
+                        if (!nomeCampo.includes('nome') && !nomeCampo.includes('valid') && !nomeCampo.includes('venc') && !nomeCampo.includes('vcto') && !nomeCampo.includes('val')) {
+                            campo.setText(valorCarteirinha);
+                        }
+                    }
+                }
+            } catch (erroCampo) {
+                console.warn(`[PDF-LIB] Erro sutil ao tentar preencher o campo "${campo.getName()}":`, erroCampo);
+            }
+        });
+
+        // D. Salva o PDF modificado na memória e gera o Blob URL
+        const bytesFinaisPDF = await documentoPDF.save();
+        const blobPDF = new Blob([bytesFinaisPDF], { type: 'application/pdf' });
+        const urlBlobFinal = URL.createObjectURL(blobPDF);
+
+        // Aponta para a imagem estática de documento fornecida pelo usuário na pasta de ícones
+        const urlFavicon = `${window.location.origin}/assets/icons_operadoras_de_saude/DOCUMENTO.png`;
+
+        // E. Impressão sem abrir nova janela/aba: Injeta um iframe invisível na página atual
+        const iframeOculto = document.createElement('iframe');
+        iframeOculto.style.position = 'fixed';
+        iframeOculto.style.right = '0';
+        iframeOculto.style.bottom = '0';
+        iframeOculto.style.width = '0';
+        iframeOculto.style.height = '0';
+        iframeOculto.style.border = 'none';
+        iframeOculto.style.visibility = 'hidden';
+        iframeOculto.src = urlBlobFinal;
+
+        // Dispara a impressão assim que o PDF for carregado no iframe oculto
+        iframeOculto.onload = function() {
+            setTimeout(function() {
+                try {
+                    iframeOculto.contentWindow.focus();
+                    iframeOculto.contentWindow.print();
+                } catch (e) {
+                    console.error("[SADT] Falha ao tentar imprimir diretamente pelo iframe:", e);
+                    // Fallback em caso extremo de bloqueio: abre em nova aba
+                    window.open(urlBlobFinal, '_blank');
+                }
+                
+                // Limpa o elemento do DOM depois de um tempo seguro (5 segundos)
+                setTimeout(() => {
+                    if (document.body.contains(iframeOculto)) {
+                        document.body.removeChild(iframeOculto);
+                    }
+                }, 5000);
+            }, 300);
+        };
+
+        document.body.appendChild(iframeOculto);
+
+    } catch (erroGeral) {
+        console.error("Erro no processamento do PDF da Guia SADT:", erroGeral);
+        alert(`Opa! Ocorreu um erro ao preencher a guia da ${nomeOperadora}.\n\nDetalhes: ${erroGeral.message}`);
+    } finally {
+        // Restaura o estado visual original do logotipo limpando as propriedades inline
+        logoElemento.style.pointerEvents = '';
+        logoElemento.style.opacity = '';
+    }
+}
+
+// 5. TOAST DE AVISO QUANDO TENTA CLICAR BLOQUEADO
+function exibirToastAvisoSadtBloqueado() {
+    const toastAntigo = document.querySelector('.toast-whatsapp');
+    if (toastAntigo) {
+        toastAntigo.remove();
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'toast-whatsapp';
+    toast.style.border = '1.5px solid rgba(220, 53, 69, 0.15)'; // Borda leve vermelha de atenção
+
+    toast.innerHTML = `
+        <span style="font-size: 0.9rem; color: #dc3545; font-weight: 600; text-align: left; display: flex; align-items: center; gap: 8px;">
+            <i class="bi bi-exclamation-circle-fill" style="color: #dc3545; font-size: 1.1rem; flex-shrink: 0;"></i>
+            Insira a Carteirinha, Validade e Nome para desbloquear os planos de saúde!
+        </span>
+    `;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 5000);
+}
+
+// Inicializar a lógica da SADT quando o DOM estiver pronto
+document.addEventListener('DOMContentLoaded', () => {
+    inicializarSadt();
+});
