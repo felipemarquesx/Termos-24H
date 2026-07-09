@@ -23,6 +23,9 @@ O sistema está hospedado no **GitHub Pages** e pode ser acessado diretamente de
 4. **Checklist de Protocolo de Segurança**  
    Modal de fechamento que impede o encerramento do atendimento até que o operador confirme o envio de e-mails e anexos exigidos, garantindo a conformidade com os protocolos internos.
 
+5. **Painel de Emissão de Guias SADT (Novo!)**  
+   Painel inteligente que permite o preenchimento de guias SADT de 16 operadoras de saúde diferentes. Ao preencher a carteirinha, validade e nome do beneficiário, o sistema desbloqueia os planos. O clique em uma operadora aciona a **impressão silenciosa direta e automática** via iframe oculto, abrindo o prompt do Ctrl+P por cima do site atual sem abrir abas adicionais.
+
 ## Tecnologias Utilizadas
 
 - **PDF24 Toolbox** — Ferramenta utilizada para criar e configurar os campos editáveis (formulários interativos) nos PDFs oficiais.
@@ -49,11 +52,15 @@ O sistema foi projetado para garantir a privacidade dos dados sensíveis dos pac
 ```
 termos-24h/
 ├── index.html          # Página principal
-├── script.js           # Lógica de preenchimento, validação e geração de PDF
+├── script.js           # Lógica de preenchimento, validação, geração de PDF e impressão
 ├── style.css           # Estilos e responsividade
 └── assets/
-    ├── imagens/        # Logos, ícones e prints
-    └── pdfs/           # Templates oficiais FUSMA e FUSEX (com campos editáveis)
+    ├── FUSEX.jpg       # Imagens de fundo
+    ├── FUSMA.jpg       # Imagens de fundo
+    ├── Initial.png     # Logotipo/Favicon padrão do site
+    ├── guias sadt/     # Templates oficiais PDF preenchíveis das 16 operadoras de saúde
+    ├── icons_operadoras_de_saude/ # Logotipos das operadoras de saúde
+    └── screenshots/    # Capturas de tela da aplicação para o README
 ```
 
 ## Como executar localmente
@@ -68,7 +75,9 @@ termos-24h/
 
 **Felipe Marques Argemiro**  
 Matrícula: 14660  
-Setor: Emergência 24H
+Setor: Emergência 24H 
+HOSPITAL SANTA CASA DE MISERICORDIA DE MACEIÓ
+
 ## Capturas de Tela
 
 ### Página inicial
@@ -82,6 +91,14 @@ Setor: Emergência 24H
 ### Página FUSMA
 
 ![Página Fusma](assets/screenshots/PageFusma.png)
+
+### Modal Guias SADT
+
+![Modal Guias SADT](assets/screenshots/SadtModal.png)
+
+### Prompt de Impressão Direta (Exemplo Unimed)
+
+![Prompt de Impressão Direta](assets/screenshots/SadtPrintPreview.png)
 ---
 
 *Ferramenta desenvolvida para uso interno no Setor de Emergência 24H, com foco na otimização de processos e na proteção de dados sensíveis.*
