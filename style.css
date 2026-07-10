@@ -435,7 +435,9 @@ h6 {
     top: 24px;
     left: 24px;
     display: flex;
-    gap: 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
     z-index: 1000;
     transition: top 0.3s ease;
 }
@@ -443,7 +445,8 @@ h6 {
 /* --- ESTILO PADRÃO DOS BOTÕES FLUTUANTES (Estética unificada) --- */
 .btn-github-projeto,
 .btn-adendos-projeto,
-.btn-guias-projeto {
+.btn-guias-projeto,
+.btn-internacao-projeto {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(13, 110, 253, 0.15);
@@ -464,7 +467,8 @@ h6 {
 
 .btn-github-projeto i,
 .btn-adendos-projeto i,
-.btn-guias-projeto i {
+.btn-guias-projeto i,
+.btn-internacao-projeto i {
     font-size: 1.15rem;
     color: #0d6efd;
     transition: color 0.3s ease;
@@ -472,7 +476,8 @@ h6 {
 
 .btn-github-projeto:hover,
 .btn-adendos-projeto:hover,
-.btn-guias-projeto:hover {
+.btn-guias-projeto:hover,
+.btn-internacao-projeto:hover {
     transform: translateY(-2px);
     border-color: rgba(13, 110, 253, 0.3);
     box-shadow: 0 8px 25px rgba(13, 110, 253, 0.1) !important;
@@ -482,7 +487,8 @@ h6 {
 
 .btn-github-projeto:hover i,
 .btn-adendos-projeto:hover i,
-.btn-guias-projeto:hover i {
+.btn-guias-projeto:hover i,
+.btn-internacao-projeto:hover i {
     color: #198754;
     /* Verde ao passar o mouse */
 }
@@ -494,8 +500,10 @@ h6 {
         top: 0 !important;
         left: 0 !important;
         display: flex;
+        flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
+        align-items: center;
         gap: 8px;
         margin-bottom: 24px;
         width: 100%;
@@ -503,7 +511,8 @@ h6 {
 
     .btn-github-projeto,
     .btn-adendos-projeto,
-    .btn-guias-projeto {
+    .btn-guias-projeto,
+    .btn-internacao-projeto {
         padding: 8px 12px;
         font-size: 0.8rem;
     }
@@ -612,6 +621,23 @@ h6 {
     /* Reduz o topo do contêiner de botões para não sobrepor o título */
     .container-botoes-topo {
         top: 12px;
+    }
+
+    /* Ajuste dos logotipos SADT para caber na tela curta dos monitores AOC */
+    .sadt-logo {
+        height: 70px !important;
+        padding: 8px !important;
+        border-radius: 12px !important;
+    }
+    .sadt-form {
+        padding: 12px !important;
+        margin-bottom: 12px !important;
+    }
+    .sadt-operadoras-container {
+        padding: 12px !important;
+    }
+    #modal-guias-sadt .modal-body {
+        padding: 16px !important;
     }
 }
 
