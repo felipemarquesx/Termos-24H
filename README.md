@@ -5,6 +5,9 @@
 O preenchimento manual dessas guias no dia a dia da recepção hospitalar exige atenção constante e consome tempo que poderia ser dedicado ao atendimento do paciente.  
 O sistema **Termos 24H** foi desenvolvido para otimizar esse processo e reduzir erros de digitação em campos críticos, como número do cartão, data de nascimento e dados do atendimento, proporcionando maior agilidade e confiabilidade ao fluxo de trabalho.
 
+> [!NOTE]
+> **Visão de Futuro e Evolução:** Embora a ferramenta tenha sido concebida inicialmente para os fluxos exclusivos de **FUSMA** e **FUSEX**, ela acabou abrindo as portas para novas ideias de otimização administrativa no setor. Outras automações já estão sendo ativamente trabalhadas e implementadas para integrar e simplificar cada vez mais os processos do faturamento e atendimento.
+
 ## Acesso / Demo ao Vivo
 
 O sistema está hospedado no **GitHub Pages** e pode ser acessado diretamente de qualquer computador da recepção:
@@ -26,6 +29,12 @@ O sistema está hospedado no **GitHub Pages** e pode ser acessado diretamente de
 5. **Painel de Emissão de Guias SADT (Novo!)**  
    Painel inteligente que permite o preenchimento de guias SADT de 16 operadoras de saúde diferentes. Ao preencher a carteirinha, validade e nome do beneficiário, o sistema desbloqueia os planos. O clique em uma operadora aciona a **impressão silenciosa direta e automática** via iframe oculto, abrindo o prompt do Ctrl+P por cima do site atual sem abrir abas adicionais.
 
+6. **Assistente Postal e Integração de E-mail (Novo!)**  
+   Mecanismo integrado ao checklist que detecta dinamicamente o convênio ativo (FUSMA com Valentin ou FUSEX com Gmail) e preenche os endereços de destino. Um clique no botão dispara a abertura do Webmail Seguro (Roundcube) em uma nova aba com o assunto formatado de forma profissional (identificando o nome do paciente, data, hora e período correspondente ao plantão: Manhã, Tarde, Noite ou Madrugada) e marca automaticamente a conclusão da tarefa no checklist.
+
+7. **Módulo de Internação (Em Construção / Futuro!)**  
+   Atalho pré-configurado com visual de manutenção no menu flutuante. Um clique no botão abre o modal informativo avisando que a funcionalidade está sendo ativamente desenvolvida para integrar no futuro o fluxo de guias de internação.
+
 ## Tecnologias Utilizadas
 
 - **PDF24 Toolbox** — Ferramenta utilizada para criar e configurar os campos editáveis (formulários interativos) nos PDFs oficiais.
@@ -46,6 +55,7 @@ O sistema foi projetado para garantir a privacidade dos dados sensíveis dos pac
 - **Sem banco de dados** — Nenhum dado é enviado ou armazenado em servidor.
 - **Memória volátil** — Toda geração de PDF acontece apenas na memória do navegador.
 - **Sem localStorage clínico** — Os dados são descartados assim que a página é recarregada ou o atendimento é concluído.
+- **Criptografia HTTPS de ponta a ponta** — A integração de e-mail e comunicação com o Webmail é feita exclusivamente através do protocolo seguro HTTPS.
 
 ## Estrutura do Projeto
 
