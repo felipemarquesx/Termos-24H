@@ -149,6 +149,18 @@ function exibirModalChecklistReal() {
             el.innerText = nomeForcaText;
         });
 
+        // Atualização dinâmica do e-mail destinatário do convênio no Checklist
+        const emailDestinoTexto = document.getElementById('email-destino-texto');
+        if (emailDestinoTexto) {
+            if (termoAtual === 'fusma') {
+                emailDestinoTexto.innerText = 'valentin.thiago@marinha.mil.br';
+            } else if (termoAtual === 'fusex') {
+                emailDestinoTexto.innerText = 'p.afusex59bimtz2026@gmail.com';
+            } else {
+                emailDestinoTexto.innerText = 'E-mail não configurado';
+            }
+        }
+
         const meuModal = new bootstrap.Modal(modalEl);
         meuModal.show();
     }
@@ -848,6 +860,85 @@ function exibirToastAvisoSadtBloqueado() {
     setTimeout(() => {
         toast.remove();
     }, 5000);
+}
+
+// --- Função: Abrir Webmail Seguro e Enviar E-mail do Convênio ---
+function abrirWebmailAutomatico() {
+    // 1. Coleta o e-mail do destinatário correto dependendo do termo atual
+    let emailDestinatario = '';
+    if (termoAtual === 'fusma') {
+        emailDestinatario = 'valentin.thiago@marinha.mil.br';
+    } else if (termoAtual === 'fusex') {
+        emailDestinatario = 'p.afusex59bimtz2026@gmail.com';
+    } else {
+        alert("Nenhum termo ativo foi detectado!");
+        return;
+    }
+
+    // 2. Coleta as variáveis do formulário na tela
+    const nomeInput = document.getElementById('nome_paciente');
+    const dataInput = document.getElementById('data_atendimento');
+    const horaInput = document.getElementById('hora_atendimento');
+
+    // Nome com fallback caso não esteja preenchido
+    const nome = (nomeInput && nomeInput.value.trim()) ? nomeInput.value.trim() : 'Paciente não identificado';
+
+    // Gerador de data e hora do sistema para caso os inputs estejam em branco
+    const agora = new Date();
+    const dia = String(agora.getDate()).padStart(2, '0');
+    const mes = String(agora.getMonth() + 1).padStart(2, '0');
+    const ano = agora.getFullYear();
+    const horas = String(agora.getHours()).padStart(2, '0');
+    const minutos = String(agora.getMinutes()).padStart(2, '0');
+
+    const dataSistema = `${dia}/${mes}/${ano}`;
+    const horaSistema = `${horas}:${minutos}`;
+
+    const data = (dataInput && dataInput.value.trim()) ? dataInput.value.trim() : dataSistema;
+    const hora = (horaInput && horaInput.value.trim()) ? horaInput.value.trim() : horaSistema;
+
+    // 3. Descobre o período do dia com base nos plantões:
+    // - Manhã: das 04:00 às 11:59
+    // - Tarde: das 12:00 às 17:59
+    // - Noite: das 18:00 às 23:59
+    // - Madrugada: das 00:00 às 03:59
+    let periodo = 'Dia';
+    if (hora) {
+        const partesHora = hora.split(':');
+        const horaNum = parseInt(partesHora[0], 10);
+        if (!isNaN(horaNum)) {
+            if (horaNum >= 4 && horaNum < 12) {
+                periodo = 'Manhã';
+            } else if (horaNum >= 12 && horaNum < 18) {
+                periodo = 'Tarde';
+            } else if (horaNum >= 18 && horaNum < 24) {
+                periodo = 'Noite';
+            } else {
+                periodo = 'Madrugada';
+            }
+        }
+    }
+
+    // 4. Monta o assunto: "Termo e Documentação - (Nome) - Atendido em [Data] às [Hora]H da/do [Período]"
+    const artigo = (periodo === 'Dia') ? 'do' : 'da';
+    const assuntoStr = `Termo e Documentação - (${nome}) - Atendido em ${data} às ${hora}H ${artigo} ${periodo}`;
+
+    // 5. Codifica as informações de forma segura para caber na URL do e-mail
+    const emailCodificado = encodeURIComponent(emailDestinatario);
+    const assuntoCodificado = encodeURIComponent(assuntoStr);
+
+    // URL do Webmail Seguro (Roundcube) conforme o exemplo fornecido
+    const urlFinal = `https://webmail-seguro.com.br/v2/?_task=mail&_action=compose&_to=${emailCodificado}&_subject=${assuntoCodificado}`;
+
+    // 5. Abre a aba com o webmail carregado e pronto
+    window.open(urlFinal, '_blank');
+
+    // 6. Automatização Extra: Marca o checklist de e-mail enviado automaticamente
+    const chkEmail = document.getElementById('chk-email-enviado');
+    if (chkEmail) {
+        chkEmail.checked = true;
+        verificarChecklist(); // Atualiza a cor verde e valida o botão final de conclusão
+    }
 }
 
 // Inicializar a lógica da SADT quando o DOM estiver pronto
