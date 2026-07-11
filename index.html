@@ -18,170 +18,380 @@
 
 <body class="bg-light">
 
-    <div class="container mt-5">
+    <!-- Layout Central do Sistema (Sidebar + Conteúdo Principal) -->
+    <div class="layout-sistema">
 
-        <!-- Tela de Seleção Inicial -->
-        <div id="tela-inicial" class="text-center py-4">
-            <!-- Container dos Botões Flutuantes no Topo -->
-            <div class="container-botoes-topo">
-                <!-- Acesso ao Repositório -->
-                <a href="https://github.com/felipemarquesx/Termos-24H" target="_blank"
-                    class="btn-github-projeto shadow-sm">
+        <!-- Sidebar de Navegação -->
+        <aside class="sidebar-sistema">
+            <nav class="sidebar-menu">
+                <!-- Botão de Destaque GitHub -->
+                <a href="https://github.com/felipemarquesx/Termos-24H" target="_blank" class="btn-github-sidebar mb-4">
                     <i class="bi bi-github"></i>
                     <span>Termos 24H</span>
                 </a>
+                <a href="#" id="menu-inicio" class="menu-item active" onclick="navegarMenu('tela-menu-principal')">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" id="menu-sadt" class="menu-item" onclick="navegarMenu('tela-sadt')">
+                    <i class="bi bi-file-earmark-medical-fill"></i>
+                    <span>Guias SADT</span>
+                </a>
+                <a href="#" id="menu-termos" class="menu-item" onclick="navegarMenu('tela-selecao-termos')">
+                    <i class="bi bi-file-earmark-text-fill"></i>
+                    <span>Termos Militares</span>
+                </a>
 
-                <!-- Botão Guias SADT -->
-                <button type="button" class="btn-guias-projeto shadow-sm" data-bs-toggle="modal"
-                    data-bs-target="#modal-guias-sadt">
-                    <i class="bi bi-file-earmark-medical"></i>
-                    <span>GUIAS SADT</span>
-                </button>
+                <div class="menu-divider"></div>
 
-                <!-- Botão Guias Internação -->
-                <button type="button" class="btn-internacao-projeto shadow-sm" data-bs-toggle="modal"
-                    data-bs-target="#modal-internacao-manutencao">
+                <a href="#" class="menu-item" data-bs-toggle="modal" data-bs-target="#modal-internacao-manutencao">
                     <i class="bi bi-wrench-adjustable"></i>
-                    <span>GUIAS DE INTERNAÇÃO</span>
-                </button>
+                    <span>Guia Internação</span>
+                    <span class="badge bg-warning text-dark ms-auto font-monospace"
+                        style="font-size: 0.6rem;">MANUT</span>
+                </a>
+                <a href="#" class="menu-item" data-bs-toggle="modal" data-bs-target="#modal-adendos">
+                    <i class="bi bi-info-circle-fill"></i>
+                    <span>Adendos / LGPD</span>
+                </a>
+            </nav>
 
-                <!-- Botão Adendos -->
-                <button type="button" class="btn-adendos-projeto shadow-sm" data-bs-toggle="modal"
-                    data-bs-target="#modal-adendos">
-                    <i class="bi bi-info-circle"></i>
-                    <span>ADENDOS</span>
-                </button>
+
+            <div class="sidebar-footer">
+                <span class="text-white-50 small mb-1"
+                    style="font-size: 0.65rem; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 700;">Desenvolvimento
+                    & Automação</span>
+                <span class="fw-bold text-white" style="font-size: 0.85rem; font-family: 'Outfit', sans-serif;">Felipe
+                    Marques Argemiro</span>
+                <span class="small opacity-75">Matrícula: 14660</span>
+                <span class="small opacity-50 mt-1" style="font-size: 0.7rem; line-height: 1.3;">Emergência 24H —
+                    Hospital Santa Casa de Misericórdia de Maceió</span>
             </div>
+        </aside>
 
-            <div class="container-titulo">
-                <h1 class="titulo-principal display-5">Qual termo vamos preencher hoje?</h1>
-            </div>
+        <!-- Área de Conteúdo Principal -->
+        <main class="conteudo-principal">
+            <div class="container-paginas">
 
-            <div class="row justify-content-center align-items-center g-5 w-100 container-cards"
-                style="margin: 0 auto;">
-                <!-- Card de Seleção FUSMA -->
-                <div class="col-12 col-md-6 col-lg-5 col-xl-5 card-opcao card-fusma text-center"
-                    onclick="abrirFormulario('fusma')">
-                    <div class="d-flex flex-column align-items-center">
-                        <span class="sub-forca mb-2">Marinha do Brasil</span>
-                        <h2 class="mb-4 fw-bold">FUSMA</h2>
-                        <img src="./assets/FUSMA.jpg" alt="Termo FUSMA" class="imagem-a4-completa">
-                    </div>
-                </div>
-
-                <!-- Card de Seleção FUSEX -->
-                <div class="col-12 col-md-6 col-lg-5 col-xl-5 card-opcao card-fusex text-center"
-                    onclick="abrirFormulario('fusex')">
-                    <div class="d-flex flex-column align-items-center">
-                        <span class="sub-forca mb-2">Exército Brasileiro</span>
-                        <h2 class="mb-4 fw-bold">FUSEX</h2>
-                        <img src="./assets/FUSEX.jpg" alt="Termo FUSEX" class="imagem-a4-completa">
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Tela de Preenchimento do Formulário -->
-        <div id="tela-formulario" style="display: none;">
-            <button class="btn btn-secondary mb-4" onclick="voltarInicio()"><i class="bi bi-arrow-left"></i>
-                Voltar</button>
-
-            <div class="card shadow">
-                <div class="card-header text-white d-flex align-items-center justify-content-between"
-                    style="padding: 16px 20px !important;">
-                    <h3 id="titulo-form" class="mb-0">Preenchendo Termo</h3>
-                    <div class="d-flex align-items-center gap-2">
-                        <!-- Ação de exportação FUSEX -->
-                        <button
-                            class="btn btn-secondary btn-sm campos-fusex text-white shadow-sm d-flex align-items-center gap-2 px-3 py-2"
-                            id="btn-copiar-whatsapp" type="button" onclick="copiarDadosWhatsAppFUSEX()"
-                            title="Preencha os dados do paciente para liberar a cópia"
-                            style="display: none; border-radius: 8px; font-size: 0.8rem; font-weight: 700;" disabled>
-                            <span id="icone-copiar-whatsapp" class="d-flex align-items-center"><i
-                                    class="bi bi-lock-fill"></i></span>
-                            Copiar Dados
-                        </button>
-                        <span class="badge bg-light text-primary fw-bold px-3 py-2" id="status-conformidade"
-                            style="border-radius: 8px; font-size: 0.85rem;">Conformidade: 0%</span>
-                    </div>
-                </div>
-
-                <!-- Indicador de Conformidade de Preenchimento -->
-                <div class="progress" style="height: 6px; border-radius: 0; background-color: rgba(0, 0, 0, 0.05);">
-                    <div id="barra-progresso-form" class="progress-bar bg-danger" role="progressbar"
-                        style="width: 0%; transition: width 0.3s ease;" aria-valuenow="0" aria-valuemin="0"
-                        aria-valuemax="100"></div>
-                </div>
-
-                <div class="card-body p-4">
-                    <form id="form-termos" autocomplete="off">
-
-                        <!-- Seção 1: Registro de Entrada -->
-                        <div class="secao-formulario mb-4">
-                            <h5 class="secao-titulo mb-3">1. Dados do Registro de Entrada</h5>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label id="label-cartao" class="form-label">N° do Cartão</label>
-                                    <input type="text" class="form-control salva-local campo-obrigatorio"
-                                        id="numero_cartao" placeholder="" readonly
-                                        onfocus="this.removeAttribute('readonly');"
-                                        onblur="this.setAttribute('readonly', 'readonly');">
+                <!-- 1. Tela de Menu Principal -->
+                <div id="tela-menu-principal" class="tela-app text-center pt-0 pb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-5 w-100 flex-wrap gap-3">
+                        <div class="text-start">
+                            <h1 class="titulo-principal display-5 mb-1"
+                                style="font-size: 2.2rem !important; font-family: 'Outfit', sans-serif;">Painel de
+                                Controle</h1>
+                            <p class="text-muted mb-0">Recepção Emergência 24H — Hospital Santa Casa de Misericórdia de
+                                Maceió</p>
+                        </div>
+                        <!-- Relógio Digital da Recepção -->
+                        <div class="card card-relogio border-0 shadow-sm px-4 py-3 rounded-4 text-end bg-white">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="text-end">
+                                    <span id="dashboard-relogio" class="d-block fw-bold text-primary font-monospace"
+                                        style="font-size: 1.8rem; line-height: 1;">00:00:00</span>
+                                    <span id="dashboard-data" class="d-block text-secondary small fw-semibold mt-1"
+                                        style="font-size: 0.75rem;">Carregando data...</span>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">N° do Atendimento</label>
-                                    <input type="text" class="form-control salva-local campo-obrigatorio"
-                                        id="numero_atendimento" placeholder="" readonly
-                                        onfocus="this.removeAttribute('readonly');"
-                                        onblur="this.setAttribute('readonly', 'readonly');">
-                                </div>
-                                <!-- Campos Exclusivos FUSEX -->
-                                <div class="col-md-6 campos-fusex" style="display: none;">
-                                    <label class="form-label">N° da GE</label>
-                                    <input type="text" class="form-control salva-local campo-obrigatorio" id="numero_ge"
-                                        placeholder="" readonly onfocus="this.removeAttribute('readonly');"
-                                        onblur="this.setAttribute('readonly', 'readonly');">
-                                </div>
-                                <div class="col-md-6 campos-fusex" style="display: none;">
-                                    <label class="form-label">Militar Que Autorizou</label>
-                                    <input type="text" class="form-control salva-local campo-obrigatorio"
-                                        id="militar_autorizou" placeholder="" readonly
-                                        onfocus="this.removeAttribute('readonly');"
-                                        onblur="this.setAttribute('readonly', 'readonly');">
+                                <div class="icon-circle bg-primary-subtle text-primary m-0">
+                                    <i class="bi bi-clock-fill"></i>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Seção 2: Identificação do Paciente e Especialidade -->
-                        <div class="secao-formulario mb-4">
-                            <h5 class="secao-titulo mb-3">2. Identificação do Paciente e Especialidade</h5>
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <label class="form-label">Nome completo do paciente</label>
+                    <div class="row justify-content-center align-items-center g-5 w-100 container-cards gap-md-5"
+                        style="margin: 0 auto;">
+                        <!-- Card Guias SADT -->
+                        <div class="col-12 col-md-6 col-lg-5 col-xl-5 card-opcao card-sadt-menu text-center"
+                            onclick="navegarMenu('tela-sadt')">
+                            <div class="d-flex flex-column align-items-center">
+                                <span class="sub-forca mb-2">Operadoras de Saúde</span>
+                                <h2 class="mb-4 fw-bold">GUIAS SADT</h2>
+                                <div class="menu-icon-wrapper mb-3">
+                                    <i class="bi bi-file-earmark-medical display-1 text-primary"></i>
+                                </div>
+                                <p class="text-muted small px-3">Emissão e impressão inteligente de guias de exames e
+                                    consultas para operadoras de saúde</p>
+                            </div>
+                        </div>
+
+                        <!-- Card Termos Militares -->
+                        <div class="col-12 col-md-6 col-lg-5 col-xl-5 card-opcao card-termos-menu text-center"
+                            onclick="navegarMenu('tela-selecao-termos')">
+                            <div class="d-flex flex-column align-items-center">
+                                <span class="sub-forca mb-2">Convênios Militares</span>
+                                <h2 class="mb-4 fw-bold">TERMOS</h2>
+                                <div class="menu-icon-wrapper mb-3">
+                                    <i class="bi bi-file-earmark-text display-1 text-success"></i>
+                                </div>
+                                <p class="text-muted small px-3">Preenchimento automatizado de termos de
+                                    responsabilidade para FUSMA e FUSEX</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- 2. Tela de Seleção de Termos (FUSMA / FUSEX) -->
+                <div id="tela-selecao-termos" class="tela-app escondida" style="display: none; padding: 0 0 24px 0;">
+                    <div class="d-flex align-items-center mb-5 w-100 gap-3">
+                        <button class="btn btn-link text-secondary p-0 me-1"
+                            onclick="mudarTela('tela-selecao-termos', 'tela-menu-principal')"
+                            style="font-size: 1.8rem; text-decoration: none; line-height: 1;" title="Voltar ao início">
+                            <i class="bi bi-arrow-left-circle-fill text-secondary hover-primary"></i>
+                        </button>
+                        <div class="text-start">
+                            <h1 class="titulo-principal display-5 mb-1"
+                                style="font-size: 2.2rem !important; font-family: 'Outfit', sans-serif; text-align: left;">
+                                Qual termo vamos preencher hoje?</h1>
+                            <p class="text-muted mb-0" style="text-align: left;">Selecione o convênio militar
+                                correspondente para iniciar</p>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center align-items-center g-5 w-100 container-cards gap-md-5"
+                        style="margin: 0 auto;">
+                        <!-- Card de Seleção FUSMA -->
+                        <div class="col-12 col-md-6 col-lg-5 col-xl-5 card-opcao card-fusma text-center"
+                            onclick="abrirFormulario('fusma')">
+                            <div class="d-flex flex-column align-items-center">
+                                <span class="sub-forca mb-2">Marinha do Brasil</span>
+                                <h2 class="mb-4 fw-bold">FUSMA</h2>
+                                <img src="./assets/FUSMA.jpg" alt="Termo FUSMA" class="imagem-a4-completa">
+                            </div>
+                        </div>
+
+                        <!-- Card de Seleção FUSEX -->
+                        <div class="col-12 col-md-6 col-lg-5 col-xl-5 card-opcao card-fusex text-center"
+                            onclick="abrirFormulario('fusex')">
+                            <div class="d-flex flex-column align-items-center">
+                                <span class="sub-forca mb-2">Exército Brasileiro</span>
+                                <h2 class="mb-4 fw-bold">FUSEX</h2>
+                                <img src="./assets/FUSEX.jpg" alt="Termo FUSEX" class="imagem-a4-completa">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Tela Guias SADT -->
+                <div id="tela-sadt" class="tela-app escondida" style="display: none; padding: 0 0 24px 0;">
+                    <div class="card shadow border-0 rounded-4 overflow-hidden">
+                        <div class="card-header text-white d-flex align-items-center justify-content-between"
+                            style="padding: 16px 20px !important; background: linear-gradient(135deg, #1e3a5f 0%, #112233 100%); border-bottom: 3.5px solid #0d6efd !important;">
+                            <div class="d-flex align-items-center gap-3">
+                                <button class="btn btn-link text-white p-0 me-1 d-flex align-items-center"
+                                    onclick="mudarTela('tela-sadt', 'tela-menu-principal')"
+                                    style="font-size: 1.8rem; text-decoration: none; line-height: 1;"
+                                    title="Voltar ao início">
+                                    <i class="bi bi-arrow-left-short text-white-50 hover-white"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body p-4 bg-light">
+                            <!-- Estrutura do Formulário Estilizada -->
+                            <div class="sadt-form mb-4 p-3 bg-white rounded-4 border"
+                                style="border-color: rgba(30, 58, 95, 0.08) !important;">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <input type="text" id="sadt-carteirinha" class="form-control"
+                                            placeholder="Carteirinha do Beneficiário" autocomplete="one-time-code">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" id="sadt-vld-cart" class="form-control"
+                                            placeholder="Vigência da Carteirinha" maxlength="10"
+                                            autocomplete="one-time-code">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" id="sadt-nome" class="form-control"
+                                            placeholder="Nome do Beneficiário" autocomplete="one-time-code">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sadt-operadoras-container p-3 bg-white rounded-4 border"
+                                style="border-color: rgba(30, 58, 95, 0.08) !important;">
+                                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4"
+                                    id="sadt-grid-operadoras" style="padding: 10px 5px;">
+
+                                    <!-- AMIL -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/AMIL.png" alt="AMIL"
+                                            class="sadt-logo disabled" data-operadora="AMIL" data-pdf="AMIL.pdf">
+                                    </div>
+
+                                    <!-- ASFAL -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/ASFAL.png" alt="ASFAL"
+                                            class="sadt-logo disabled" data-operadora="ASFAL" data-pdf="ASFAL.pdf">
+                                    </div>
+
+                                    <!-- ASSEFAZ -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/ASSEFAZ.jpg" alt="ASSEFAZ"
+                                            class="sadt-logo disabled" data-operadora="ASSEFAZ" data-pdf="ASSEFAZ.pdf">
+                                    </div>
+
+                                    <!-- BRADESCO -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/BRADESCO.png" alt="BRADESCO"
+                                            class="sadt-logo disabled" data-operadora="BRADESCO"
+                                            data-pdf="BRADESCO.pdf">
+                                    </div>
+
+                                    <!-- CAMED -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/CAMED.png" alt="CAMED"
+                                            class="sadt-logo disabled" data-operadora="CAMED" data-pdf="CAMED.pdf">
+                                    </div>
+
+                                    <!-- CAPESESP -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/CAPESESP.jpg" alt="CAPESESP"
+                                            class="sadt-logo disabled" data-operadora="CAPESESP"
+                                            data-pdf="CAPESESP.pdf">
+                                    </div>
+
+                                    <!-- CASSI -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/CASSI.png" alt="CASSI"
+                                            class="sadt-logo disabled" data-operadora="CASSI" data-pdf="CASSI.pdf">
+                                    </div>
+
+                                    <!-- FUNCEF -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/FUNCEF.png" alt="FUNCEF"
+                                            class="sadt-logo disabled" data-operadora="FUNCEF" data-pdf="FUNCEF.pdf">
+                                    </div>
+
+                                    <!-- GEAP -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/GEAP.png" alt="GEAP"
+                                            class="sadt-logo disabled" data-operadora="GEAP" data-pdf="GEAP.pdf">
+                                    </div>
+
+                                    <!-- LIFE -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/LIFE.jpg" alt="LIFE"
+                                            class="sadt-logo disabled" data-operadora="LIFE" data-pdf="LIFE.pdf">
+                                    </div>
+
+                                    <!-- MEDSERVICE -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/MEDSERVICE.jpg" alt="MEDSERVICE"
+                                            class="sadt-logo disabled" data-operadora="MEDSERVICE"
+                                            data-pdf="MEDSERVICE.pdf">
+                                    </div>
+
+                                    <!-- PADRAO -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/PADRAO.png" alt="PADRAO"
+                                            class="sadt-logo disabled" data-operadora="PADRAO" data-pdf="PADRAO.pdf">
+                                    </div>
+
+                                    <!-- PETROBRAS -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/PETROBRAS.png" alt="PETROBRAS"
+                                            class="sadt-logo disabled" data-operadora="PETROBRAS"
+                                            data-pdf="PETROBRAS.pdf">
+                                    </div>
+
+                                    <!-- SMILE -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/SMILE.jpg" alt="SMILE"
+                                            class="sadt-logo disabled" data-operadora="SMILE" data-pdf="SMILE.pdf">
+                                    </div>
+
+                                    <!-- SULAMERICA -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/SULAMERICA.png" alt="SULAMERICA"
+                                            class="sadt-logo disabled" data-operadora="SULAMERICA"
+                                            data-pdf="SULAMERICA.pdf">
+                                    </div>
+
+                                    <!-- UNIMED -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/UNIMED.jpg" alt="UNIMED"
+                                            class="sadt-logo disabled" data-operadora="UNIMED" data-pdf="UNIMED.pdf">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Tela de Preenchimento do Formulário -->
+                <div id="tela-formulario" class="tela-app escondida" style="display: none; padding: 0 0 24px 0;">
+                    <div class="card shadow">
+                        <div class="card-header text-white d-flex align-items-center justify-content-between"
+                            style="padding: 16px 20px !important;">
+                            <div class="d-flex align-items-center gap-3">
+                                <button class="btn btn-link text-white p-0 me-1 d-flex align-items-center"
+                                    onclick="voltarInicio()"
+                                    style="font-size: 1.8rem; text-decoration: none; line-height: 1;"
+                                    title="Voltar à seleção">
+                                    <i class="bi bi-arrow-left-short text-white-50 hover-white"></i>
+                                </button>
+                                <h3 id="titulo-form" class="mb-0 fw-bold" style="font-family: 'Outfit', sans-serif;">
+                                    Preenchendo Termo</h3>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <!-- Ação de exportação FUSEX -->
+                                <button
+                                    class="btn btn-secondary btn-sm campos-fusex text-white shadow-sm d-flex align-items-center gap-2 px-3 py-2"
+                                    id="btn-copiar-whatsapp" type="button" onclick="copiarDadosWhatsAppFUSEX()"
+                                    title="Preencha os dados do paciente para liberar a cópia"
+                                    style="display: none; border-radius: 8px; font-size: 0.8rem; font-weight: 700;"
+                                    disabled>
+                                    <span id="icone-copiar-whatsapp" class="d-flex align-items-center"><i
+                                            class="bi bi-lock-fill"></i></span>
+                                    Copiar Dados
+                                </button>
+                                <span class="badge bg-light text-primary fw-bold px-3 py-2" id="status-conformidade"
+                                    style="border-radius: 8px; font-size: 0.85rem;">Conformidade: 0%</span>
+                            </div>
+                        </div>
+
+                        <!-- Indicador de Conformidade de Preenchimento -->
+                        <div class="progress"
+                            style="height: 6px; border-radius: 0; background-color: rgba(0, 0, 0, 0.05);">
+                            <div id="barra-progresso-form" class="progress-bar bg-danger" role="progressbar"
+                                style="width: 0%; transition: width 0.3s ease;" aria-valuenow="0" aria-valuemin="0"
+                                aria-valuemax="100"></div>
+                        </div>
+
+                        <form id="form-termos" autocomplete="off">
+                            <div class="row g-3 p-4">
+                                <!-- Row 1: Campos Necessários para Cópia (Grupo Inicial) -->
+                                <div class="col-md-3 col-sm-6">
+                                    <label id="label-cartao" class="form-label">N° do Cartão</label>
                                     <input type="text" class="form-control salva-local campo-obrigatorio"
-                                        id="nome_paciente" placeholder="" readonly
+                                        id="numero_cartao" placeholder="" readonly autocomplete="one-time-code"
                                         onfocus="this.removeAttribute('readonly');"
                                         onblur="this.setAttribute('readonly', 'readonly');">
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6 col-sm-12">
+                                    <label class="form-label">Nome completo do paciente</label>
+                                    <input type="text" class="form-control salva-local campo-obrigatorio"
+                                        id="nome_paciente" placeholder="" readonly autocomplete="one-time-code"
+                                        onfocus="this.removeAttribute('readonly');"
+                                        onblur="this.setAttribute('readonly', 'readonly');">
+                                </div>
+                                <div class="col-md-3 col-sm-6">
                                     <label class="form-label">Data de Nascimento</label>
                                     <input type="text" class="form-control salva-local campo-obrigatorio"
                                         id="data_nascimento" placeholder="DD/MM/AAAA" readonly
-                                        onfocus="this.removeAttribute('readonly');"
+                                        autocomplete="one-time-code" onfocus="this.removeAttribute('readonly');"
                                         onblur="this.setAttribute('readonly', 'readonly');">
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="form-label">Tel. de contato</label>
-                                    <input type="text" class="form-control salva-local campo-obrigatorio" id="telefone"
-                                        placeholder="" readonly onfocus="this.removeAttribute('readonly');"
-                                        onblur="this.setAttribute('readonly', 'readonly');">
-                                </div>
-                                <div class="col-md-4">
+
+                                <!-- Row 2: Especialidade (Necessária) + Atendimento e Telefone -->
+                                <div class="col-md-4 col-sm-12">
                                     <label class="form-label">Especialidade</label>
                                     <div class="position-relative">
                                         <input type="text" class="form-control salva-local campo-obrigatorio"
                                             id="especialidade" placeholder="Selecione..." readonly
-                                            onfocus="this.removeAttribute('readonly');"
+                                            autocomplete="one-time-code" onfocus="this.removeAttribute('readonly');"
                                             onblur="this.setAttribute('readonly', 'readonly');">
                                         <div id="dropdown-especialidades" class="dropdown-custom shadow"
                                             style="display: none;">
@@ -194,192 +404,245 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <label class="form-label">N° do Atendimento</label>
+                                    <input type="text" class="form-control salva-local campo-obrigatorio"
+                                        id="numero_atendimento" placeholder="" readonly autocomplete="one-time-code"
+                                        onfocus="this.removeAttribute('readonly');"
+                                        onblur="this.setAttribute('readonly', 'readonly');">
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <label class="form-label">Tel. de contato</label>
+                                    <input type="text" class="form-control salva-local campo-obrigatorio" id="telefone"
+                                        placeholder="" readonly autocomplete="one-time-code"
+                                        onfocus="this.removeAttribute('readonly');"
+                                        onblur="this.setAttribute('readonly', 'readonly');">
+                                </div>
 
-                        <!-- Seção 3: Cronologia -->
-                        <div class="secao-formulario mb-4">
-                            <h5 class="secao-titulo mb-3">3. Cronologia do Atendimento</h5>
-                            <div class="row g-3">
-                                <div class="col-md-6">
+                                <!-- Row 3: Campos Exclusivos FUSEX (GE e Autorizador) -->
+                                <div class="col-md-6 col-sm-12 campos-fusex" style="display: none;">
+                                    <label class="form-label">N° da GE</label>
+                                    <input type="text" class="form-control salva-local campo-obrigatorio" id="numero_ge"
+                                        placeholder="" readonly autocomplete="one-time-code"
+                                        onfocus="this.removeAttribute('readonly');"
+                                        onblur="this.setAttribute('readonly', 'readonly');">
+                                </div>
+                                <div class="col-md-6 col-sm-12 campos-fusex" style="display: none;">
+                                    <label class="form-label">Militar Autorizador</label>
+                                    <input type="text" class="form-control salva-local campo-obrigatorio"
+                                        id="militar_autorizou" placeholder="" readonly autocomplete="one-time-code"
+                                        onfocus="this.removeAttribute('readonly');"
+                                        onblur="this.setAttribute('readonly', 'readonly');">
+                                </div>
+
+                                <!-- Row 4: Cronologia Atendimento (Compacto) -->
+                                <div class="col-md-4 col-sm-6">
                                     <label class="form-label">Data de Atendimento</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control salva-local campo-obrigatorio"
                                             id="data_atendimento" placeholder="DD/MM/AAAA" readonly
-                                            onfocus="this.removeAttribute('readonly');"
+                                            autocomplete="one-time-code" onfocus="this.removeAttribute('readonly');"
                                             onblur="this.setAttribute('readonly', 'readonly');">
-                                        <button class="btn btn-primary px-3" type="button"
-                                            onclick="preencherDataAtual()">Data Atual</button>
+                                        <button class="btn btn-primary px-4" type="button"
+                                            onclick="preencherDataAtual()">Hoje</button>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4 col-sm-6">
                                     <label class="form-label">Hora do Atendimento</label>
                                     <div class="input-group">
-                                        <input type="time" class="form-control salva-local campo-obrigatorio"
-                                            id="hora_atendimento" readonly onfocus="this.removeAttribute('readonly');"
+                                        <input type="text" class="form-control salva-local campo-obrigatorio"
+                                            id="hora_atendimento" placeholder="HH:MM" readonly
+                                            autocomplete="one-time-code" onfocus="this.removeAttribute('readonly');"
                                             onblur="this.setAttribute('readonly', 'readonly');">
-                                        <button class="btn btn-primary px-3" type="button"
-                                            onclick="preencherHoraAtual()">Hora Atual</button>
+                                        <button class="btn btn-primary px-4" type="button"
+                                            onclick="preencherHoraAtual()">Agora</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid mt-4 px-4 pb-4">
+                                <button type="button" class="btn btn-success btn-lg shadow-sm"
+                                    onclick="abrirModalConfirmacao()"
+                                    style="background: linear-gradient(135deg, #198754 0%, #146c43 100%); border: none; font-size: 1rem; font-weight: 700; border-radius: 12px;">
+                                    <i class="bi bi-file-earmark-pdf-fill me-2"></i> Gerar Termo
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de Alerta de Preenchimento Incompleto -->
+            <div class="modal fade" id="modal-alerta-preenchimento" tabindex="-1" aria-labelledby="modalAlertaLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content shadow-lg border-0" style="border-radius: 20px;">
+                        <div class="modal-header border-0 bg-warning text-dark"
+                            style="border-radius: 20px 20px 0 0; padding: 20px;">
+                            <h5 class="modal-title fw-bold" id="modalAlertaLabel">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i> Atenção: Campos Pendentes!
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Fechar"></button>
+                        </div>
+                        <div class="modal-body p-4 text-center">
+                            <div class="mb-3">
+                                <i class="bi bi-pencil-square text-warning" style="font-size: 3.5rem;"></i>
+                            </div>
+                            <h5 class="fw-bold mb-3" style="color: #1e3a5f; font-family: 'Outfit', sans-serif;">
+                                Tem certeza que quer imprimir sem todos os dados preenchidos?
+                            </h5>
+                            <p class="text-muted mb-0" style="font-size: 0.95rem;">
+                                Caso decida não preencher agora, você terá que completar as informações restantes
+                                <strong>com
+                                    caneta</strong> no papel impresso.
+                            </p>
+                        </div>
+                        <div class="modal-footer border-0 p-3"
+                            style="background-color: #f8f9fa; border-radius: 0 0 20px 20px; gap: 10px;">
+                            <button type="button" class="btn btn-secondary flex-grow-1 py-2" data-bs-dismiss="modal"
+                                style="border-radius: 10px;">
+                                Voltar e Preencher
+                            </button>
+                            <button type="button" class="btn btn-warning flex-grow-1 py-2 fw-bold text-dark"
+                                id="btn-prosseguir-incompleto" style="border-radius: 10px;">
+                                Imprimir mesmo assim
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de Finalização: Protocolo de Segurança e Checklist -->
+            <div class="modal fade" id="modal-atencao" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="modalAtencaoLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content shadow-lg border-0" style="border-radius: 20px;">
+                        <div class="modal-header border-0 bg-warning text-dark"
+                            style="border-radius: 20px 20px 0 0; padding: 20px;">
+                            <h5 class="modal-title fw-bold" id="modalAtencaoLabel"><i
+                                    class="bi bi-exclamation-triangle-fill me-2"></i> Protocolo de Conclusão do
+                                Atendimento</h5>
+                        </div>
+                        <div class="modal-body p-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                            <!-- Ação de Impressão do Termo -->
+                            <div class="text-center mb-4">
+                                <button type="button"
+                                    class="btn btn-primary py-2 px-4 fw-bold shadow-sm w-100 d-flex align-items-center justify-content-center gap-2"
+                                    style="border-radius: 12px;" onclick="executarDownloadPDFReal()">
+                                    <i class="bi bi-printer-fill"></i> Imprimir
+                                </button>
+                            </div>
+
+                            <hr class="text-muted opacity-25">
+
+                            <!-- Checklist de Conformidade -->
+                            <h6 class="fw-bold mb-3 text-secondary" style="font-family: 'Outfit', sans-serif;">
+                                Checklist
+                                de
+                                Fechamento</h6>
+
+                            <div class="d-flex flex-column gap-3">
+                                <!-- Item 1: Validação do Código -->
+                                <div class="form-check p-3 rounded-3 border bg-light d-flex align-items-center gap-2"
+                                    id="container-chk-codigo">
+                                    <input class="form-check-input ms-0 check-protocolo" type="checkbox"
+                                        id="chk-codigo-atend" onclick="verificarChecklist()">
+                                    <label class="form-check-label text-muted small fw-semibold" for="chk-codigo-atend">
+                                        Enviei o código de atendimento para o Soldado/Cabo que forneceu a GE no
+                                        WhatsApp.
+                                    </label>
+                                </div>
+
+                                <!-- Item 2: Anexação Documental -->
+                                <div class="form-check p-3 rounded-3 border bg-light d-flex align-items-center gap-2">
+                                    <input class="form-check-input ms-0 check-protocolo" type="checkbox"
+                                        id="chk-anexo-guia" onclick="verificarChecklist()">
+                                    <label class="form-check-label text-muted small fw-semibold" for="chk-anexo-guia">
+                                        Anexei os documentos do paciente do <span
+                                            class="nome-forca fw-bold text-dark">FUSMA/FUSEX</span> no anexa guia.
+                                    </label>
+                                </div>
+
+                                <!-- Item 3: Notificação do Convênio -->
+                                <div class="form-check p-3 rounded-3 border bg-light d-flex flex-column gap-2"
+                                    id="container-chk-email">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input class="form-check-input ms-0 check-protocolo" type="checkbox"
+                                            id="chk-email-enviado" onclick="verificarChecklist()">
+                                        <label class="form-check-label text-muted small fw-semibold"
+                                            for="chk-email-enviado">
+                                            Enviei o e-mail para o <span
+                                                class="nome-forca fw-bold text-dark">FUSMA/FUSEX</span>.
+                                        </label>
+                                    </div>
+                                    <!-- Assistente Postal: Mostra o e-mail correspondente e o botão dinâmico -->
+                                    <div
+                                        class="mt-1 ps-4 border-start border-2 border-primary-subtle d-flex flex-column gap-1 text-start">
+                                        <div class="small">
+                                            <span class="text-secondary fw-semibold">Destinatário:</span>
+                                            <span id="email-destino-texto" class="fw-bold text-primary">Carregando
+                                                e-mail...</span>
+                                        </div>
+                                        <div class="mt-1">
+                                            <button type="button"
+                                                class="btn btn-sm btn-primary d-inline-flex align-items-center gap-2 fw-semibold"
+                                                id="btn-enviar-email-auto" onclick="abrirWebmailAutomatico()">
+                                                <i class="bi bi-envelope-open-fill"></i> Enviar E-mail
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="d-grid mt-4">
-                            <button type="button" class="btn btn-success btn-lg shadow-sm"
-                                onclick="abrirModalConfirmacao()">
-                                <i class="bi bi-file-earmark-pdf-fill me-2"></i> Gerar PDF Pronto para Imprimir
-                            </button>
+                        <div class="modal-footer border-0 p-3"
+                            style="background-color: #f8f9fa; border-radius: 0 0 20px 20px;">
+                            <button type="button" class="btn btn-success py-2 px-4 shadow-sm w-100"
+                                id="btn-concluir-atendimento" onclick="concluirAtendimentoFluxoFinal()"
+                                disabled>Concluir</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
-
-    <!-- Modal de Alerta de Preenchimento Incompleto -->
-    <div class="modal fade" id="modal-alerta-preenchimento" tabindex="-1" aria-labelledby="modalAlertaLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content shadow-lg border-0" style="border-radius: 20px;">
-                <div class="modal-header border-0 bg-warning text-dark"
-                    style="border-radius: 20px 20px 0 0; padding: 20px;">
-                    <h5 class="modal-title fw-bold" id="modalAlertaLabel">
-                        <i class="bi bi-exclamation-triangle-fill me-2"></i> Atenção: Campos Pendentes!
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body p-4 text-center">
-                    <div class="mb-3">
-                        <i class="bi bi-pencil-square text-warning" style="font-size: 3.5rem;"></i>
-                    </div>
-                    <h5 class="fw-bold mb-3" style="color: #1e3a5f; font-family: 'Outfit', sans-serif;">
-                        Tem certeza que quer imprimir sem todos os dados preenchidos?
-                    </h5>
-                    <p class="text-muted mb-0" style="font-size: 0.95rem;">
-                        Caso decida não preencher agora, você terá que completar as informações restantes <strong>com
-                            caneta</strong> no papel impresso.
-                    </p>
-                </div>
-                <div class="modal-footer border-0 p-3"
-                    style="background-color: #f8f9fa; border-radius: 0 0 20px 20px; gap: 10px;">
-                    <button type="button" class="btn btn-secondary flex-grow-1 py-2" data-bs-dismiss="modal"
-                        style="border-radius: 10px;">
-                        Voltar e Preencher
-                    </button>
-                    <button type="button" class="btn btn-warning flex-grow-1 py-2 fw-bold text-dark"
-                        id="btn-prosseguir-incompleto" style="border-radius: 10px;">
-                        Imprimir mesmo assim
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Finalização: Protocolo de Segurança e Checklist -->
-    <div class="modal fade" id="modal-atencao" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="modalAtencaoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content shadow-lg border-0" style="border-radius: 20px;">
-                <div class="modal-header border-0 bg-warning text-dark"
-                    style="border-radius: 20px 20px 0 0; padding: 20px;">
-                    <h5 class="modal-title fw-bold" id="modalAtencaoLabel"><i
-                            class="bi bi-exclamation-triangle-fill me-2"></i> Protocolo de Conclusão do Atendimento</h5>
-                </div>
-                <div class="modal-body p-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                    <!-- Ação de Impressão do Termo -->
-                    <div class="text-center mb-4">
-                        <button type="button"
-                            class="btn btn-primary py-2 px-4 fw-bold shadow-sm w-100 d-flex align-items-center justify-content-center gap-2"
-                            style="border-radius: 12px;" onclick="executarDownloadPDFReal()">
-                            <i class="bi bi-printer-fill"></i> Imprimir
-                        </button>
-                    </div>
-
-                    <hr class="text-muted opacity-25">
-
-                    <!-- Checklist de Conformidade -->
-                    <h6 class="fw-bold mb-3 text-secondary" style="font-family: 'Outfit', sans-serif;">Checklist de
-                        Fechamento</h6>
-
-                    <div class="d-flex flex-column gap-3">
-                        <!-- Item 1: Validação do Código -->
-                        <div class="form-check p-3 rounded-3 border bg-light d-flex align-items-center gap-2"
-                            id="container-chk-codigo">
-                            <input class="form-check-input ms-0 check-protocolo" type="checkbox" id="chk-codigo-atend"
-                                onclick="verificarChecklist()">
-                            <label class="form-check-label text-muted small fw-semibold" for="chk-codigo-atend">
-                                Enviei o código de atendimento para o Soldado/Cabo que forneceu a GE no WhatsApp.
-                            </label>
-                        </div>
-
-                        <!-- Item 2: Anexação Documental -->
-                        <div class="form-check p-3 rounded-3 border bg-light d-flex align-items-center gap-2">
-                            <input class="form-check-input ms-0 check-protocolo" type="checkbox" id="chk-anexo-guia"
-                                onclick="verificarChecklist()">
-                            <label class="form-check-label text-muted small fw-semibold" for="chk-anexo-guia">
-                                Anexei os documentos do paciente do <span
-                                    class="nome-forca fw-bold text-dark">FUSMA/FUSEX</span> no anexa guia.
-                            </label>
-                        </div>
-
-                        <!-- Item 3: Notificação do Convênio -->
-                        <div class="form-check p-3 rounded-3 border bg-light d-flex flex-column gap-2"
-                            id="container-chk-email">
-                            <div class="d-flex align-items-center gap-2">
-                                <input class="form-check-input ms-0 check-protocolo" type="checkbox"
-                                    id="chk-email-enviado" onclick="verificarChecklist()">
-                                <label class="form-check-label text-muted small fw-semibold" for="chk-email-enviado">
-                                    Enviei o e-mail para o <span
-                                        class="nome-forca fw-bold text-dark">FUSMA/FUSEX</span>.
-                                </label>
-                            </div>
-                            <!-- Assistente Postal: Mostra o e-mail correspondente e o botão dinâmico -->
-                            <div
-                                class="mt-1 ps-4 border-start border-2 border-primary-subtle d-flex flex-column gap-1 text-start">
-                                <div class="small">
-                                    <span class="text-secondary fw-semibold">Destinatário:</span>
-                                    <span id="email-destino-texto" class="fw-bold text-primary">Carregando
-                                        e-mail...</span>
-                                </div>
-                                <div class="mt-1">
-                                    <button type="button"
-                                        class="btn btn-sm btn-primary d-inline-flex align-items-center gap-2 fw-semibold"
-                                        id="btn-enviar-email-auto" onclick="abrirWebmailAutomatico()">
-                                        <i class="bi bi-envelope-open-fill"></i> Enviar E-mail
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-footer border-0 p-3" style="background-color: #f8f9fa; border-radius: 0 0 20px 20px;">
-                    <button type="button" class="btn btn-success py-2 px-4 shadow-sm w-100"
-                        id="btn-concluir-atendimento" onclick="concluirAtendimentoFluxoFinal()"
-                        disabled>Concluir</button>
-                </div>
-            </div>
-        </div>
+    </main>
     </div>
 
     <!-- Modal Adendos: Informações Legais e Privacidade -->
     <div class="modal fade" id="modal-adendos" tabindex="-1" aria-labelledby="modalAdendosLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content shadow-lg border-0" style="border-radius: 20px;">
                 <div class="modal-header border-0 bg-light text-dark"
                     style="border-radius: 20px 20px 0 0; padding: 20px;">
-                    <h5 class="modal-title fw-bold" id="modalAdendosLabel"
-                        style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; color: #1e3a5f;">ADENDOS</h5>
+                    <h5 class="modal-title fw-bold text-primary d-flex align-items-center gap-2" id="modalAdendosLabel"
+                        style="font-family: 'Outfit', sans-serif; font-size: 1.25rem;">
+                        <i class="bi bi-info-circle-fill text-primary"></i> ADENDOS
+                    </h5>
                 </div>
                 <div class="modal-body p-4"
                     style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; line-height: 1.6; color: #4a5c70;">
-                    <p class="mb-3">Desenvolvi este site para automatizar o preenchimento de termos e guias de
+                    <p class="mb-4">Este site foi desenvolvido para automatizar o preenchimento de termos e guias de
                         atendimento hospitalar oficiais na recepção da Emergência 24H.</p>
-                    <p class="mb-0">Para garantir a segurança dos dados dos pacientes e cumprir as exigências da LGPD, a
-                        aplicação funciona de forma 100% local. Não há banco de dados e nenhuma informação pessoal é
-                        armazenada ou enviada pela internet. Ao concluir ou limpar a ficha, todos os dados são
-                        descartados permanentemente.</p>
+
+                    <!-- Bloco Estilizado LGPD (Visual com Ícone e Card que você gostou) -->
+                    <div class="d-flex align-items-start gap-3 p-3 bg-light rounded-4 border"
+                        style="border-color: rgba(30, 58, 95, 0.06) !important;">
+                        <div class="icon-circle bg-success text-white"
+                            style="width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">
+                            <i class="bi bi-shield-lock-fill"></i>
+                        </div>
+                        <div class="text-start">
+                            <span class="d-block text-secondary small fw-semibold"
+                                style="font-size: 0.72rem; letter-spacing: 0.5px; text-transform: uppercase;">Segurança
+                                & Privacidade</span>
+                            <span class="d-block fw-bold text-dark mb-1" style="font-size: 0.88rem;">100% Local
+                                (Compatível LGPD)</span>
+                            <span class="d-block text-muted" style="font-size: 0.78rem; line-height: 1.4;">Para garantir
+                                a segurança dos dados e cumprir a LGPD, o processamento ocorre localmente no seu
+                                navegador. O sistema não coleta nem armazena dados em servidores externos. </span>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer border-0 p-3" style="background-color: #f8f9fa; border-radius: 0 0 20px 20px;">
                     <button type="button" class="btn btn-secondary w-100 py-2" data-bs-dismiss="modal"
@@ -413,173 +676,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal Guias SADT: Formulário e Grade de Emissão de Operadoras -->
-    <div class="modal fade" id="modal-guias-sadt" tabindex="-1" aria-labelledby="modalGuiasLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-            <div class="modal-content shadow-lg border-0" style="border-radius: 20px;">
-                <div class="modal-header border-0 text-white"
-                    style="border-radius: 20px 20px 0 0; padding: 20px; background: linear-gradient(135deg, #1e3a5f 0%, #112233 100%); border-bottom: 3.5px solid #0d6efd !important;">
-                    <h5 class="modal-title fw-bold" id="modalGuiasLabel"
-                        style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; letter-spacing: 0.5px;">Guias SADT
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4"
-                    style="font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fafbfc;">
-
-                    <!-- Estrutura do Formulário Estilizada -->
-                    <div class="sadt-form mb-4 p-3 bg-white rounded-4 border"
-                        style="border-color: rgba(30, 58, 95, 0.08) !important;">
-                        <div class="row g-3">
-                            <div class="col-md-4">
-                                <label for="sadt-carteirinha" class="form-label fw-semibold"
-                                    style="color: #1e3a5f;">Carteirinha do Beneficiário</label>
-                                <input type="text" id="sadt-carteirinha" class="form-control"
-                                    placeholder="Digite o número">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="sadt-validade" class="form-label fw-semibold"
-                                    style="color: #1e3a5f;">Validade da Carteirinha</label>
-                                <input type="text" id="sadt-validade" class="form-control" placeholder="DD/MM/AAAA"
-                                    maxlength="10">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="sadt-nome" class="form-label fw-semibold" style="color: #1e3a5f;">Nome do
-                                    Beneficiário</label>
-                                <input type="text" id="sadt-nome" class="form-control" placeholder="Nome completo">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="sadt-operadoras-container p-3 bg-white rounded-4 border"
-                        style="border-color: rgba(30, 58, 95, 0.08) !important;">
-                        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4"
-                            id="sadt-grid-operadoras" style="padding: 10px 5px;">
-
-                            <!-- AMIL -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/AMIL.png" alt="AMIL"
-                                    class="sadt-logo disabled" data-operadora="AMIL" data-pdf="AMIL.pdf">
-                            </div>
-
-                            <!-- ASFAL -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/ASFAL.png" alt="ASFAL"
-                                    class="sadt-logo disabled" data-operadora="ASFAL" data-pdf="ASFAL.pdf">
-                            </div>
-
-                            <!-- ASSEFAZ -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/ASSEFAZ.jpg" alt="ASSEFAZ"
-                                    class="sadt-logo disabled" data-operadora="ASSEFAZ" data-pdf="ASSEFAZ.pdf">
-                            </div>
-
-                            <!-- BRADESCO -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/BRADESCO.png" alt="BRADESCO"
-                                    class="sadt-logo disabled" data-operadora="BRADESCO" data-pdf="BRADESCO.pdf">
-                            </div>
-
-                            <!-- CAMED -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/CAMED.png" alt="CAMED"
-                                    class="sadt-logo disabled" data-operadora="CAMED" data-pdf="CAMED.pdf">
-                            </div>
-
-                            <!-- CAPESESP -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/CAPESESP.jpg" alt="CAPESESP"
-                                    class="sadt-logo disabled" data-operadora="CAPESESP" data-pdf="CAPESESP.pdf">
-                            </div>
-
-                            <!-- CASSI -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/CASSI.png" alt="CASSI"
-                                    class="sadt-logo disabled" data-operadora="CASSI" data-pdf="CASSI.pdf">
-                            </div>
-
-                            <!-- FUNCEF -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/FUNCEF.png" alt="FUNCEF"
-                                    class="sadt-logo disabled" data-operadora="FUNCEF" data-pdf="FUNCEF.pdf">
-                            </div>
-
-                            <!-- GEAP -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/GEAP.png" alt="GEAP"
-                                    class="sadt-logo disabled" data-operadora="GEAP" data-pdf="GEAP.pdf">
-                            </div>
-
-                            <!-- LIFE -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/LIFE.jpg" alt="LIFE"
-                                    class="sadt-logo disabled" data-operadora="LIFE" data-pdf="LIFE.pdf">
-                            </div>
-
-                            <!-- MEDSERVICE -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/MEDSERVICE.jpg" alt="MEDSERVICE"
-                                    class="sadt-logo disabled" data-operadora="MEDSERVICE" data-pdf="MEDSERVICE.pdf">
-                            </div>
-
-                            <!-- PADRAO -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/PADRAO.png" alt="PADRAO"
-                                    class="sadt-logo disabled" data-operadora="PADRAO" data-pdf="PADRAO.pdf">
-                            </div>
-
-                            <!-- PETROBRAS -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/PETROBRAS.png" alt="PETROBRAS"
-                                    class="sadt-logo disabled" data-operadora="PETROBRAS" data-pdf="PETROBRAS.pdf">
-                            </div>
-
-                            <!-- SMILE -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/SMILE.jpg" alt="SMILE"
-                                    class="sadt-logo disabled" data-operadora="SMILE" data-pdf="SMILE.pdf">
-                            </div>
-
-                            <!-- SULAMERICA -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/SULAMERICA.png" alt="SULAMERICA"
-                                    class="sadt-logo disabled" data-operadora="SULAMERICA" data-pdf="SULAMERICA.pdf">
-                            </div>
-
-                            <!-- UNIMED -->
-                            <div class="col text-center">
-                                <img src="assets/icons_operadoras_de_saude/UNIMED.jpg" alt="UNIMED"
-                                    class="sadt-logo disabled" data-operadora="UNIMED" data-pdf="UNIMED.pdf">
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Rodapé da Aplicação -->
-    <footer class="footer-corporativo w-100">
-        <div class="linha-gradiente-footer"></div>
-        <div class="footer-conteudo py-4">
-            <div class="container text-center">
-                <p class="mb-1 text-white-50 small"
-                    style="letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.7rem; font-weight: 700;">
-                    Desenvolvimento & Automação</p>
-                <h6 class="text-white fw-bold mb-1"
-                    style="font-family: 'Outfit', sans-serif; font-size: 1.05rem; letter-spacing: 0.5px;">Felipe Marques
-                    Argemiro</h6>
-                <p class="mb-1 text-white-50" style="font-size: 0.85rem; font-weight: 500;">Matrícula: 14660</p>
-                <p class="mb-0 text-white-50 small"
-                    style="font-size: 0.78rem; font-weight: 500; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.5px;">
-                    Emergência 24H — Hospital Santa Casa de Misericórdia de Maceió</p>
-            </div>
-        </div>
-    </footer>
 
     <!-- Dependências de JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

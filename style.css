@@ -88,7 +88,7 @@ h6 {
     padding: 35px 25px 25px 25px;
     margin: 15px;
     /* Espaçamento de segurança maior entre os cards */
-    max-width: 360px;
+    max-width: 440px;
     /* Largura padrão grande confortável */
     width: 100%;
     /* Curva de transição e animação baseada em cubic-bezier */
@@ -408,38 +408,60 @@ h6 {
     }
 }
 
-/* --- Rodapé da Aplicação (Sticky Footer) --- */
-.footer-corporativo {
-    margin-top: auto;
-    width: 100%;
-    z-index: 10;
+
+
+
+
+/* --- BARRA DE CABEÇALHO DO DASHBOARD (Estilo Glass) --- */
+.header-dashboard {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(10px);
+    padding: 16px 24px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
 }
 
-.linha-gradiente-footer {
-    height: 4px;
-    background: linear-gradient(90deg, #1e3a5f 0%, #0d6efd 50%, #198754 100%);
-    width: 100%;
+/* --- BOTÃO DE VOLTAR PREMIUM (Estética unificada) --- */
+.btn-voltar-projeto {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(13, 110, 253, 0.15) !important;
+    border-radius: 12px;
+    padding: 10px 22px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #1e3a5f;
+    font-weight: 700;
+    font-size: 0.85rem;
+    font-family: 'Outfit', sans-serif;
+    box-shadow: 0 4px 15px rgba(30, 58, 95, 0.04);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
+    border-bottom: 2.5px solid rgba(13, 110, 253, 0.35) !important;
 }
 
-.footer-conteudo {
-    background-color: #112233;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    padding-bottom: 48px !important;
+.btn-voltar-projeto i {
+    font-size: 1.1rem;
+    color: #0d6efd;
+    transition: color 0.3s ease;
 }
 
+.btn-voltar-projeto:hover {
+    transform: translateY(-2px);
+    background: #ffffff;
+    border-color: rgba(13, 110, 253, 0.3) !important;
+    box-shadow: 0 8px 25px rgba(13, 110, 253, 0.1) !important;
+    color: #0d6efd;
+}
 
+.btn-voltar-projeto:hover i {
+    color: #198754; /* Ícone verde no hover igual aos demais botões */
+}
 
-/* --- CONTAINER DOS BOTÕES FLUTUANTES NO TOPO --- */
-.container-botoes-topo {
-    position: fixed;
-    top: 24px;
-    left: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    z-index: 1000;
-    transition: top 0.3s ease;
+.btn-voltar-projeto:active {
+    transform: translateY(0);
 }
 
 /* --- ESTILO PADRÃO DOS BOTÕES FLUTUANTES (Estética unificada) --- */
@@ -493,28 +515,12 @@ h6 {
     /* Verde ao passar o mouse */
 }
 
-/* Responsividade dos botões para celulares */
+/* Responsividade do cabeçalho para celulares */
 @media (max-width: 768px) {
-    .container-botoes-topo {
-        position: relative;
-        top: 0 !important;
-        left: 0 !important;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 24px;
-        width: 100%;
-    }
-
-    .btn-github-projeto,
-    .btn-adendos-projeto,
-    .btn-guias-projeto,
-    .btn-internacao-projeto {
-        padding: 8px 12px;
-        font-size: 0.8rem;
+    .header-dashboard {
+        padding: 12px;
+        justify-content: center !important;
+        gap: 12px;
     }
 }
 
@@ -793,6 +799,431 @@ h6 {
     transform: scale(1.03) translateY(-1px);
     filter: drop-shadow(0 4px 8px rgba(13, 110, 253, 0.25));
 }
+
+/* --- Sistema de Transição de Páginas (Fade + Zoom) --- */
+.container-paginas {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+    width: 100%;
+}
+
+.tela-app {
+    grid-area: 1 / 1 / 2 / 2; /* Todas as telas se alinham sobrepostas no grid durante a transição */
+    width: 100%;
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+    transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+                visibility 0.4s;
+}
+
+/* Estado oculto (com zoom-out leve e desvanecimento) */
+.tela-app.escondida {
+    opacity: 0;
+    transform: scale(0.96);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* --- Cards do Menu Principal --- */
+.menu-icon-wrapper {
+    background: rgba(248, 249, 250, 0.8);
+    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-opcao:hover .menu-icon-wrapper {
+    transform: scale(1.08) rotate(3deg);
+}
+
+.card-sadt-menu:hover {
+    border-color: rgba(13, 110, 253, 0.3) !important;
+    box-shadow: 0 30px 60px rgba(13, 110, 253, 0.08),
+        0 0 40px rgba(13, 110, 253, 0.04) !important;
+}
+
+.card-sadt-menu:hover h2 {
+    color: #0d6efd !important;
+}
+
+.card-termos-menu:hover {
+    border-color: rgba(25, 135, 84, 0.3) !important;
+    box-shadow: 0 30px 60px rgba(25, 135, 84, 0.08),
+        0 0 40px rgba(25, 135, 84, 0.04) !important;
+}
+
+.card-termos-menu:hover h2 {
+    color: #198754 !important;
+}
+
+/* ==========================================================================
+   LAYOUT DO SISTEMA (SIDEBAR + CONTEÚDO PRINCIPAL)
+   ========================================================================== */
+.layout-sistema {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #fafbfc;
+}
+
+/* --- SIDEBAR PANEL --- */
+.sidebar-sistema {
+    width: 280px;
+    height: 100%;
+    background: linear-gradient(180deg, #1e3a5f 0%, #112233 100%);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    flex-shrink: 0;
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+}
+
+/* Brand logo */
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-family: 'Outfit', sans-serif;
+    color: #ffffff;
+    margin-bottom: 32px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 16px;
+}
+
+.sidebar-brand i {
+    animation: pulse 2s infinite;
+}
+
+/* Crachá do Usuário na Sidebar */
+.sidebar-user-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 12px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    margin-top: auto; /* Empurra o crachá para a base da barra lateral */
+}
+
+.badge-icon {
+    width: 42px;
+    height: 42px;
+    background: #ffffff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.badge-details {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.badge-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    color: #ffffff;
+}
+
+.badge-subtitle {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Sidebar Menu Navigation */
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.25s ease;
+    text-align: left;
+}
+
+.menu-item i {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.25s ease;
+}
+
+.menu-item:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.menu-item:hover i {
+    color: #0d6efd;
+}
+
+.menu-item.active {
+    color: #ffffff;
+    background: #0d6efd;
+    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+}
+
+.menu-item.active i {
+    color: #ffffff;
+}
+
+.menu-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 16px 0;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.72rem;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.conteudo-principal {
+    flex-grow: 1;
+    height: 100%;
+    overflow-y: auto;
+    padding: 24px 40px 40px 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- QUICK INFO BOARD CARD --- */
+.card-informacoes {
+    background: #ffffff;
+    border: 1px solid rgba(30, 58, 95, 0.06);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02) !important;
+}
+
+.icon-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+/* Pulsing heartbeat animation */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 0 rgba(13, 110, 253, 0.4));
+    }
+    70% {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 8px rgba(13, 110, 253, 0));
+    }
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 0 rgba(13, 110, 253, 0));
+    }
+}
+
+/* --- RESPONSIVIDADE DO LAYOUT DASHBOARD --- */
+@media (max-width: 992px) {
+    .layout-sistema {
+        flex-direction: column;
+    }
+    
+    .sidebar-sistema {
+        width: 100% !important;
+        height: auto !important;
+        padding: 16px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    
+    .sidebar-brand {
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+    }
+    
+    .sidebar-user-badge {
+        display: none; /* Esconde o crachá no celular para poupar espaço */
+    }
+    
+    .sidebar-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .menu-item {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .menu-divider {
+        display: none;
+    }
+    
+    .conteudo-principal {
+        padding: 20px !important;
+        height: calc(100vh - 120px);
+    }
+}
+
+/* --- WIDGET DE RELÓGIO DO DASHBOARD --- */
+.card-relogio {
+    border: 1px solid rgba(30, 58, 95, 0.06) !important;
+    background-color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02) !important;
+}
+
+.bg-primary-subtle {
+    background-color: rgba(13, 110, 253, 0.1) !important;
+}
+
+/* --- ESTILO PREMIUM DE INPUTS (Glow & Labels Flutuantes) --- */
+/* --- ESTILO PREMIUM DE INPUTS (Glow) --- */
+.form-control {
+    border-radius: 12px !important;
+    border: 1.5px solid rgba(30, 58, 95, 0.15) !important;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #1e3a5f;
+    font-weight: 600;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out !important;
+}
+
+/* Foco Temático FUSMA (Marinha - Azul) */
+.tema-fusma .form-control:focus {
+    border-color: #0d6efd !important;
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.15) !important;
+}
+
+/* Foco Temático FUSEX (Exército - Verde) */
+.tema-fusex .form-control:focus {
+    border-color: #198754 !important;
+    box-shadow: 0 0 0 4px rgba(25, 135, 84, 0.15) !important;
+}
+
+/* --- ANIMAÇÃO E INTERAÇÃO DOS BOTÕES DE VOLTAR --- */
+.hover-white {
+    color: rgba(255, 255, 255, 0.7) !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.hover-white:hover {
+    color: #ffffff !important;
+    transform: scale(1.15);
+}
+
+.hover-primary {
+    color: #6c757d !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.hover-primary:hover {
+    color: #0d6efd !important;
+    transform: scale(1.1);
+}
+
+/* --- BOTÃO DE DESTAQUE GITHUB NA SIDEBAR --- */
+.btn-github-sidebar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #24292e 0%, #0f1114 100%);
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    padding: 16px 20px; /* Aumentado verticalmente para ficar mais encorpado e satisfatório */
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem; /* Fonte um pouco maior para acompanhar o tamanho */
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+
+.btn-github-sidebar i {
+    font-size: 1.35rem; /* Ícone maior e proporcional */
+    color: #ffffff !important;
+}
+
+.btn-github-sidebar:hover {
+    transform: translateY(-3px) scale(1.02);
+    background: linear-gradient(135deg, #2b3137 0%, #1c1f23 100%);
+    border-color: #0d6efd;
+    box-shadow: 0 8px 25px rgba(13, 110, 253, 0.25) !important;
+}
+
+/* --- UNIFICAÇÃO DOS BOTÕES NO INPUT GROUP (Hoje/Agora) --- */
+.input-group > .form-control {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.input-group > .btn {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-top-right-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
+    border: 1.5px solid rgba(30, 58, 95, 0.15) !important;
+    border-left: none !important;
+    font-weight: 700 !important;
+    font-size: 0.82rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+/* Efeito de brilho sincronizado no contorno da cápsula ao focar */
+.tema-fusma .input-group:focus-within > .btn {
+    border-color: #0d6efd !important;
+}
+
+.tema-fusex .input-group:focus-within > .btn {
+    border-color: #198754 !important;
+}
+
+.input-group > .btn:hover {
+    filter: brightness(1.08);
+    box-shadow: none !important;
+}
+
+
 
 
 

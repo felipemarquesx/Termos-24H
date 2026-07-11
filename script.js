@@ -24,15 +24,142 @@ function atualizarAbaNavegador(titulo, faviconPath) {
     document.head.appendChild(novoFavicon);
 }
 
+// --- Sistema de Roteamento de Telas (SPA) ---
+function mudarTela(deId, paraId) {
+    const deTela = document.getElementById(deId);
+    const paraTela = document.getElementById(paraId);
+
+    if (!deTela || !paraTela) return;
+
+    // Atualizações automáticas do título e favicon da aba
+    if (paraId === 'tela-menu-principal') {
+        atualizarAbaNavegador('Termos 24H', './assets/Initial.png');
+    } else if (paraId === 'tela-sadt') {
+        atualizarAbaNavegador('Guias SADT', './assets/Initial.png');
+    } else if (paraId === 'tela-selecao-termos') {
+        atualizarAbaNavegador('Termos 24H', './assets/Initial.png');
+    }
+
+    // Se estiver saindo da tela SADT, limpa os campos para o próximo uso
+    if (deId === 'tela-sadt') {
+        const inputCarteirinha = document.getElementById('sadt-carteirinha');
+        const inputValidade = document.getElementById('sadt-vld-cart');
+        const inputNome = document.getElementById('sadt-nome');
+        if (inputCarteirinha && inputValidade && inputNome) {
+            [inputCarteirinha, inputValidade, inputNome].forEach(input => {
+                input.value = '';
+            });
+            if (typeof verificarCamposSadt === 'function') {
+                verificarCamposSadt();
+            }
+        }
+    }
+
+    // Se estiver saindo da tela do formulário FUSMA/FUSEX, limpa para garantir segurança e privacidade
+    if (deId === 'tela-formulario') {
+        const form = document.getElementById('form-termos');
+        if (form) {
+            form.reset();
+            form.querySelectorAll('[data-raw]').forEach(el => el.removeAttribute('data-raw'));
+        }
+        document.querySelectorAll('.campo-obrigatorio').forEach(input => {
+            input.classList.remove('valido');
+        });
+        atualizarConformidadeFormulario();
+    }
+
+    // Atualiza a barra lateral ativa
+    atualizarActiveSidebar(paraId);
+
+    // 1. Coloca a nova tela no fluxo HTML
+    paraTela.style.display = 'block';
+    paraTela.classList.add('escondida');
+
+    // Força reflow (recalculo de estilos pelo navegador) para registrar a classe .escondida
+    paraTela.offsetHeight;
+
+    // 2. Executa a transição suave de Fade + Zoom
+    deTela.classList.add('escondida');
+    paraTela.classList.remove('escondida');
+
+    // 3. Oculta a tela anterior do fluxo após a animação (400ms)
+    setTimeout(() => {
+        deTela.style.display = 'none';
+    }, 400);
+}
+
+// --- Navegação Sidebar ---
+function navegarMenu(paraId) {
+    // Descobre qual tela está visível atualmente
+    const telas = ['tela-menu-principal', 'tela-selecao-termos', 'tela-sadt', 'tela-formulario'];
+    let deId = '';
+    
+    telas.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.style.display !== 'none') {
+            deId = id;
+        }
+    });
+
+    if (!deId) deId = 'tela-menu-principal';
+    if (deId === paraId) return;
+
+    mudarTela(deId, paraId);
+}
+
+function atualizarActiveSidebar(telaAtivaId) {
+    const mapa = {
+        'tela-menu-principal': 'menu-inicio',
+        'tela-sadt': 'menu-sadt',
+        'tela-selecao-termos': 'menu-termos',
+        'tela-formulario': 'menu-termos' // Ativa "Termos Militares" quando preenchendo FUSMA/FUSEX
+    };
+
+    const activeMenuId = mapa[telaAtivaId];
+    
+    document.querySelectorAll('.sidebar-menu .menu-item').forEach(el => {
+        el.classList.remove('active');
+    });
+
+    if (activeMenuId) {
+        const activeLink = document.getElementById(activeMenuId);
+        if (activeLink) activeLink.classList.add('active');
+    }
+}
+
 // --- Navegação entre Telas ---
 function abrirFormulario(tipo) {
     termoAtual = tipo;
-    document.getElementById('tela-inicial').style.display = 'none';
-    document.getElementById('tela-formulario').style.display = 'block';
+    
+    // Limpa qualquer dado residual do formulário antes de abrir o novo convênio para evitar vazamento
+    const form = document.getElementById('form-termos');
+    if (form) {
+        form.reset();
+        form.querySelectorAll('[data-raw]').forEach(el => el.removeAttribute('data-raw'));
+    }
+    document.querySelectorAll('.campo-obrigatorio').forEach(input => {
+        input.classList.remove('valido');
+    });
+    atualizarConformidadeFormulario();
+    
+    // Transiciona da tela de seleção de termos para a tela do formulário
+    mudarTela('tela-selecao-termos', 'tela-formulario');
 
     const titulo = document.getElementById('titulo-form');
     const labelCartao = document.getElementById('label-cartao');
     const camposFusex = document.querySelectorAll('.campos-fusex');
+    
+    // Altera a classe de tema do card do formulário para aplicar as cores corretas nos inputs
+    const formCard = document.querySelector('#tela-formulario .card');
+    if (formCard) {
+        if (tipo === 'fusma') {
+            formCard.classList.add('tema-fusma');
+            formCard.classList.remove('tema-fusex');
+        } else if (tipo === 'fusex') {
+            formCard.classList.add('tema-fusex');
+            formCard.classList.remove('tema-fusma');
+        }
+    }
 
     if (tipo === 'fusma') {
         titulo.innerText = 'Preenchendo Termo: FUSMA';
@@ -61,15 +188,26 @@ function abrirFormulario(tipo) {
 }
 
 function voltarInicio() {
-    document.getElementById('tela-formulario').style.display = 'none';
-    document.getElementById('tela-inicial').style.display = 'block';
-    atualizarAbaNavegador('Termos 24H', './assets/Initial.png');
+    const form = document.getElementById('form-termos');
+    if (form) {
+        form.reset();
+        form.querySelectorAll('[data-raw]').forEach(el => el.removeAttribute('data-raw'));
+    }
+    document.querySelectorAll('.campo-obrigatorio').forEach(input => {
+        input.classList.remove('valido');
+    });
+    atualizarConformidadeFormulario();
+
+    // Retorna para a tela de seleção de termos (FUSMA/FUSEX)
+    mudarTela('tela-formulario', 'tela-selecao-termos');
 }
 
 // Reset de dados do atendimento
 function limparDados() {
     if (confirm("Tem certeza que deseja limpar todos os campos para o próximo paciente?")) {
-        document.getElementById('form-termos').reset();
+        const form = document.getElementById('form-termos');
+        form.reset();
+        form.querySelectorAll('[data-raw]').forEach(el => el.removeAttribute('data-raw'));
         // Limpeza de classes de validação do formulário
         document.querySelectorAll('.campo-obrigatorio').forEach(input => {
             input.classList.remove('valido');
@@ -90,21 +228,114 @@ window.addEventListener('beforeunload', function (e) {
 });
 
 // --- Geração Automática de Carimbo Cronológico ---
+function obterPeriodoDia(horaStr) {
+    if (!horaStr) return '';
+    const partes = horaStr.split(':');
+    if (partes.length < 2) return '';
+    const horas = parseInt(partes[0], 10);
+    if (isNaN(horas)) return '';
+    if (horas >= 6 && horas < 12) return 'Manhã';
+    if (horas >= 12 && horas < 18) return 'Tarde';
+    if (horas >= 18 && horas < 24) return 'Noite';
+    return 'Madrugada';
+}
+
+function obterNomeMes(mesNumero) {
+    const meses = [
+        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+    ];
+    return meses[mesNumero - 1] || '';
+}
+
+function formatarCampoData(input) {
+    const val = input.value.trim();
+    if (val.length === 10) {
+        const partes = val.split('/');
+        if (partes.length === 3) {
+            const dia = parseInt(partes[0], 10);
+            const mes = parseInt(partes[1], 10);
+            const ano = parseInt(partes[2], 10);
+            const mesNome = obterNomeMes(mes);
+            if (!isNaN(dia) && mesNome && !isNaN(ano)) {
+                input.setAttribute('data-raw', val);
+                const hoje = new Date();
+                if (dia === hoje.getDate() && mes === (hoje.getMonth() + 1) && ano === hoje.getFullYear()) {
+                    input.value = `Hoje, Dia ${dia} de ${mesNome} de ${ano}`;
+                } else {
+                    input.value = `Dia ${dia} de ${mesNome} de ${ano}`;
+                }
+            }
+        }
+    } else if (val === '') {
+        input.removeAttribute('data-raw');
+    }
+}
+
+function formatarCampoHora(input) {
+    const val = input.value.trim();
+    if (val.length === 5 && val.includes(':')) {
+        const periodo = obterPeriodoDia(val);
+        if (periodo) {
+            input.setAttribute('data-raw', val);
+            
+            // Verifica se a data preenchida é a de hoje
+            const dataInput = document.getElementById('data_atendimento');
+            const dataRaw = dataInput ? dataInput.getAttribute('data-raw') : '';
+            let eHoje = true;
+            if (dataRaw) {
+                const hoje = new Date();
+                const dia = String(hoje.getDate()).padStart(2, '0');
+                const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+                const ano = hoje.getFullYear();
+                if (dataRaw !== `${dia}/${mes}/${ano}`) {
+                    eHoje = false;
+                }
+            }
+            
+            if (eHoje) {
+                input.value = `Hoje às ${val} da ${periodo}`;
+            } else {
+                input.value = `Às ${val} da ${periodo}`;
+            }
+        }
+    } else if (val === '') {
+        input.removeAttribute('data-raw');
+    }
+}
+
 function preencherDataAtual() {
     const agora = new Date();
     const dia = String(agora.getDate()).padStart(2, '0');
     const mes = String(agora.getMonth() + 1).padStart(2, '0');
     const ano = agora.getFullYear();
-    document.getElementById('data_atendimento').value = `${dia}/${mes}/${ano}`;
-    atualizarConformidadeFormulario();
+    
+    const input = document.getElementById('data_atendimento');
+    if (input) {
+        input.value = `${dia}/${mes}/${ano}`;
+        formatarCampoData(input);
+        
+        // Sincroniza o campo de hora caso ele já esteja preenchido
+        const horaInput = document.getElementById('hora_atendimento');
+        if (horaInput && horaInput.getAttribute('data-raw')) {
+            horaInput.value = horaInput.getAttribute('data-raw');
+            formatarCampoHora(horaInput);
+        }
+        atualizarConformidadeFormulario();
+    }
 }
 
 function preencherHoraAtual() {
     const agora = new Date();
     const horas = String(agora.getHours()).padStart(2, '0');
     const minutos = String(agora.getMinutes()).padStart(2, '0');
-    document.getElementById('hora_atendimento').value = `${horas}:${minutos}`;
-    atualizarConformidadeFormulario();
+    
+    const input = document.getElementById('hora_atendimento');
+    if (input) {
+        input.value = `${horas}:${minutos}`;
+        formatarCampoHora(input);
+        atualizarConformidadeFormulario();
+    }
 }
 
 // --- Processamento de Protocolo e Emissão de PDF ---
@@ -310,7 +541,7 @@ async function executarDownloadPDFReal() {
             try {
                 const elementoInput = document.getElementById(idCampo);
                 if (elementoInput) {
-                    const valorDigitado = elementoInput.value.trim();
+                    const valorDigitado = elementoInput.getAttribute('data-raw') || elementoInput.value.trim();
                     const campoTextoPDF = formulario.getTextField(idCampo);
 
                     if (campoTextoPDF) {
@@ -352,7 +583,9 @@ function concluirAtendimentoFluxoFinal() {
         modalInstance.hide();
     }
 
-    document.getElementById('form-termos').reset();
+    const form = document.getElementById('form-termos');
+    form.reset();
+    form.querySelectorAll('[data-raw]').forEach(el => el.removeAttribute('data-raw'));
     voltarInicio();
 }
 
@@ -429,6 +662,43 @@ function configurarMonitoramentoConformidade() {
     if (!form) return;
 
     form.addEventListener('input', atualizarConformidadeFormulario);
+
+    const dataAtend = document.getElementById('data_atendimento');
+    const horaAtend = document.getElementById('hora_atendimento');
+
+    if (dataAtend) {
+        dataAtend.addEventListener('focus', function() {
+            const raw = this.getAttribute('data-raw');
+            if (raw) {
+                this.value = raw;
+            }
+        });
+        
+        dataAtend.addEventListener('blur', function() {
+            formatarCampoData(this);
+            // Sincroniza o campo de hora caso a data mude para hoje ou outro dia
+            const horaInput = document.getElementById('hora_atendimento');
+            if (horaInput && horaInput.getAttribute('data-raw')) {
+                horaInput.value = horaInput.getAttribute('data-raw');
+                formatarCampoHora(horaInput);
+            }
+            atualizarConformidadeFormulario();
+        });
+    }
+
+    if (horaAtend) {
+        horaAtend.addEventListener('focus', function() {
+            const raw = this.getAttribute('data-raw');
+            if (raw) {
+                this.value = raw;
+            }
+        });
+
+        horaAtend.addEventListener('blur', function() {
+            formatarCampoHora(this);
+            atualizarConformidadeFormulario();
+        });
+    }
 }
 
 // Processamento da métrica de preenchimento obrigatório
@@ -447,7 +717,7 @@ function atualizarConformidadeFormulario() {
     let preenchidosValidos = 0;
 
     camposVisiveis.forEach(input => {
-        const valor = input.value.trim();
+        const valor = input.getAttribute('data-raw') || input.value.trim();
         let campoValido = false;
 
         if (input.id === 'data_nascimento' || input.id === 'data_atendimento') {
@@ -625,7 +895,7 @@ function exibirToastAvisoPreenchimento() {
 
 function inicializarSadt() {
     const inputCarteirinha = document.getElementById('sadt-carteirinha');
-    const inputValidade = document.getElementById('sadt-validade');
+    const inputValidade = document.getElementById('sadt-vld-cart');
     const inputNome = document.getElementById('sadt-nome');
     const cardsOperadoras = document.querySelectorAll('.sadt-logo');
 
@@ -674,22 +944,13 @@ function inicializarSadt() {
         });
     });
 
-    // Limpa os campos quando o modal for fechado para começar limpo na próxima vez
-    const modalElemento = document.getElementById('modal-guias-sadt');
-    if (modalElemento) {
-        modalElemento.addEventListener('hidden.bs.modal', () => {
-            [inputCarteirinha, inputValidade, inputNome].forEach(input => {
-                input.value = '';
-            });
-            verificarCamposSadt();
-        });
-    }
+    // Os campos da tela SADT são limpos automaticamente ao sair da página, dentro da função mudarTela()
 }
 
 // 3. AUDITORIA DE PREENCHIMENTO DOS CAMPOS
 function verificarCamposSadt() {
     const inputCarteirinha = document.getElementById('sadt-carteirinha');
-    const inputValidade = document.getElementById('sadt-validade');
+    const inputValidade = document.getElementById('sadt-vld-cart');
     const inputNome = document.getElementById('sadt-nome');
     const cardsOperadoras = document.querySelectorAll('.sadt-logo');
 
@@ -745,7 +1006,7 @@ async function gerarPdfSadt(logoElemento, nomeOperadora, nomeArquivoPDF) {
 
         // Valores digitados
         const valorCarteirinha = document.getElementById('sadt-carteirinha').value.trim();
-        const valorValidade = document.getElementById('sadt-validade').value.trim();
+        const valorValidade = document.getElementById('sadt-vld-cart').value.trim();
         const valorNome = document.getElementById('sadt-nome').value.trim();
 
         // Garante que a data de validade seja enviada perfeitamente formatada (DD/MM/AAAA) para o PDF
@@ -894,8 +1155,11 @@ function abrirWebmailAutomatico() {
     const dataSistema = `${dia}/${mes}/${ano}`;
     const horaSistema = `${horas}:${minutos}`;
 
-    const data = (dataInput && dataInput.value.trim()) ? dataInput.value.trim() : dataSistema;
-    const hora = (horaInput && horaInput.value.trim()) ? horaInput.value.trim() : horaSistema;
+    const dataVal = (dataInput) ? (dataInput.getAttribute('data-raw') || dataInput.value.trim()) : '';
+    const horaVal = (horaInput) ? (horaInput.getAttribute('data-raw') || horaInput.value.trim()) : '';
+
+    const data = dataVal ? dataVal : dataSistema;
+    const hora = horaVal ? horaVal : horaSistema;
 
     // 3. Descobre o período do dia com base nos plantões:
     // - Manhã: das 04:00 às 11:59
@@ -941,7 +1205,28 @@ function abrirWebmailAutomatico() {
     }
 }
 
-// Inicializar a lógica da SADT quando o DOM estiver pronto
+// Inicializar a lógica da SADT e o Relógio do Dashboard quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', () => {
     inicializarSadt();
-});
+    iniciarRelogioDashboard();
+});
+
+// --- Função: Relógio Digital em tempo real no Dashboard ---
+function iniciarRelogioDashboard() {
+    const clockEl = document.getElementById('dashboard-relogio');
+    const dateEl = document.getElementById('dashboard-data');
+    if (!clockEl || !dateEl) return;
+
+    function atualizar() {
+        const agora = new Date();
+        const horas = String(agora.getHours()).padStart(2, '0');
+        const minutos = String(agora.getMinutes()).padStart(2, '0');
+        const segundos = String(agora.getSeconds()).padStart(2, '0');
+        clockEl.innerText = `${horas}:${minutos}:${segundos}`;
+
+        const opcoes = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateEl.innerText = agora.toLocaleDateString('pt-BR', opcoes);
+    }
+    atualizar();
+    setInterval(atualizar, 1000);
+}
