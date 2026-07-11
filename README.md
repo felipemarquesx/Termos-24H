@@ -35,6 +35,47 @@ O sistema está hospedado no **GitHub Pages** e pode ser acessado diretamente de
 7. **Módulo de Internação (Em Construção / Futuro!)**  
    Atalho pré-configurado com visual de manutenção no menu flutuante. Um clique no botão abre o modal informativo avisando que a funcionalidade está sendo ativamente desenvolvida para integrar no futuro o fluxo de guias de internação.
 
+## 🚀 Evolução Recente: Antes vs. Depois
+
+Para elevar a experiência do usuário e garantir conformidade rígida de segurança, o layout e o comportamento do formulário foram completamente otimizados:
+
+| Recurso / Área | Como Era (Antes) | Como Ficou (Depois) |
+| :--- | :--- | :--- |
+| **Visualização de Data e Hora** | Exibia os números brutos (`DD/MM/AAAA` e `HH:MM`), ocupando colunas excessivamente largas sem feedback contextual. | **Frases Humanizadas Inline!** Exibe frases amigáveis como *"Hoje, Dia 10 de Julho de 2026"* e *"Hoje às 20:48 da Noite"*. O cursor revela os números brutos para digitação; ao clicar fora, o texto volta a ser amigável. O PDF final continua recebendo a data técnica de forma invisível. |
+| **Limpeza e Privacidade** | Navegar entre convênios (FUSMA/FUSEX) ou sair do formulário mantinha as informações preenchidas nos campos, correndo risco de vazar dados do paciente anterior. | **Limpeza Inteligente por Eclusa!** Sair do formulário por qualquer meio (seta de voltar, menu lateral, sidebar) ativa uma limpeza profunda preventiva, resetando 100% dos inputs e excluindo dados temporários da memória. |
+| **Preenchimento Automático (Autofill)** | O Chrome e outros navegadores bloqueavam a tela com popups oferecendo dados antigos de outros pacientes e davam alertas de "conexão insegura" no campo de validade. | **Bloqueio Total de Heurísticas!** Renomeamos o ID do campo de validade para evitar alertas falsos de cartão e alteramos a propriedade de autocomplete de todos os campos para `one-time-code`, desativando qualquer dropdown intrusivo do navegador. |
+| **Design dos Inputs (Cápsulas)** | Usavam caixas de texto separadas de seus botões de atalho, com divisão visual marcada e sem destaque do foco do usuário. | **Cápsula Unificada!** Inputs e botões integrados se fundem em um visual elegante de "pílula única", com destaque de foco por brilho na cor tema correspondente a cada convênio (Azul para FUSMA, Verde para FUSEX). |
+| **Ergonomia e Área de Trabalho** | O botão de cópia rápida do FUSEX ocupava um espaço gigante no rodapé, mudando o layout e forçando o operador a scrollar a tela constantemente. | **Foco e Ergonomia!** Os 4 campos necessários para cópia foram agrupados lado a lado no início. O botão de copiar dados retornou ao cabeçalho em tamanho discreto, destravando e mudando de cor dinamicamente com base nas validações. |
+
+### 🖼️ Comparação Visual de Telas (Antes vs. Depois)
+
+*(Nota: As novas capturas do "Depois" aparecerão assim que você salvar os prints na pasta assets/screenshots com os nomes correspondentes)*
+
+#### 📊 1. Painel de Controle (Dashboard) — [NOVA PÁGINA!]
+*Esta tela de controle não existia na versão anterior. Ela centraliza as estatísticas, o relógio e a navegação do sistema.*
+
+![Dashboard](assets/screenshots/InitialPage.png)
+
+#### 🖥️ 2. Página de Seleção de Termos (FUSMA / FUSEX)
+| Como Era (Antes) | Como Ficou (Depois) |
+| :---: | :---: |
+| ![Menu Antes](assets/screenshots/InitialPage_old.png) | ![Menu Depois](assets/screenshots/NewPageTerms.png) |
+
+#### 🟢 3. Formulário FUSEX
+| Como Era (Antes) | Como Ficou (Depois) |
+| :---: | :---: |
+| ![FUSEX Antes](assets/screenshots/PageFusex_old.png) | ![FUSEX Depois](assets/screenshots/PageFusex.png) |
+
+#### 🔵 4. Formulário FUSMA
+| Como Era (Antes) | Como Ficou (Depois) |
+| :---: | :---: |
+| ![FUSMA Antes](assets/screenshots/PageFusma_old.png) | ![FUSMA Depois](assets/screenshots/PageFusma.png) |
+
+#### 📁 5. Painel SADT
+| Como Era (Antes) | Como Ficou (Depois) |
+| :---: | :---: |
+| ![SADT Antes](assets/screenshots/SadtModal_old.png) | ![SADT Depois](assets/screenshots/SadtModal.png) |
+
 ## Tecnologias Utilizadas
 
 - **PDF24 Toolbox** — Ferramenta utilizada para criar e configurar os campos editáveis (formulários interativos) nos PDFs oficiais.
@@ -90,9 +131,13 @@ HOSPITAL SANTA CASA DE MISERICORDIA DE MACEIÓ
 
 ## Capturas de Tela
 
-### Página inicial
+### Painel de Controle (Dashboard)
 
-![Página Inicial](assets/screenshots/InitialPage.png)
+![Painel de Controle](assets/screenshots/InitialPage.png)
+
+### Página de Seleção de Termos (FUSMA / FUSEX)
+
+![Seleção de Termos](assets/screenshots/NewPageTerms.png)
 
 ### Página FUSEX
 
