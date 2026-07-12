@@ -38,6 +38,8 @@ function mudarTela(deId, paraId) {
         atualizarAbaNavegador('Guias SADT', './assets/Initial.png');
     } else if (paraId === 'tela-selecao-termos') {
         atualizarAbaNavegador('Termos 24H', './assets/Initial.png');
+    } else if (paraId === 'tela-guias-internacao') {
+        atualizarAbaNavegador('Guias de Internação', './assets/Initial.png');
     }
 
     // Se estiver saindo da tela SADT, limpa os campos para o próximo uso
@@ -91,7 +93,7 @@ function mudarTela(deId, paraId) {
 // --- Navegação Sidebar ---
 function navegarMenu(paraId) {
     // Descobre qual tela está visível atualmente
-    const telas = ['tela-menu-principal', 'tela-selecao-termos', 'tela-sadt', 'tela-formulario'];
+    const telas = ['tela-menu-principal', 'tela-selecao-termos', 'tela-sadt', 'tela-formulario', 'tela-guias-internacao'];
     let deId = '';
     
     telas.forEach(id => {
@@ -112,7 +114,8 @@ function atualizarActiveSidebar(telaAtivaId) {
         'tela-menu-principal': 'menu-inicio',
         'tela-sadt': 'menu-sadt',
         'tela-selecao-termos': 'menu-termos',
-        'tela-formulario': 'menu-termos' // Ativa "Termos Militares" quando preenchendo FUSMA/FUSEX
+        'tela-formulario': 'menu-termos', // Ativa "Termos Militares" quando preenchendo FUSMA/FUSEX
+        'tela-guias-internacao': 'menu-internacao'
     };
 
     const activeMenuId = mapa[telaAtivaId];
@@ -168,7 +171,7 @@ function abrirFormulario(tipo) {
         camposFusex.forEach(el => {
             el.style.setProperty('display', 'none', 'important');
         });
-        atualizarAbaNavegador('Termo FUSMA', './assets/FusmaPage.png');
+        atualizarAbaNavegador('Termo FUSMA', './assets/fusma/FusmaPage.png');
     } else if (tipo === 'fusex') {
         titulo.innerText = 'Preenchendo Termo: FUSEX';
         labelCartao.innerText = 'N° do Cartão ou Prec-CP:';
@@ -180,7 +183,7 @@ function abrirFormulario(tipo) {
                 el.style.display = 'block';
             }
         });
-        atualizarAbaNavegador('Termo FUSEX', './assets/FusexPage.png');
+        atualizarAbaNavegador('Termo FUSEX', './assets/fusex/FusexPage.png');
     }
 
     // Validação de integridade inicial após navegação
@@ -478,7 +481,7 @@ async function executarDownloadPDFReal() {
 
     // Define a configuração de campos e caminhos com base no termo atual
     if (termoAtual === 'fusex') {
-        urlPDF = './assets/termo_fusex_preenchivel.pdf';
+        urlPDF = './assets/fusex/termo_fusex_preenchivel.pdf';
         nomeTermoFormatado = 'FUSEX';
         listaCampos = [
             'numero_cartao',
@@ -493,7 +496,7 @@ async function executarDownloadPDFReal() {
             'especialidade'
         ];
     } else if (termoAtual === 'fusma') {
-        urlPDF = './assets/termo_fusma_preenchivel.pdf';
+        urlPDF = './assets/fusma/termo_fusma_preenchivel.pdf';
         nomeTermoFormatado = 'FUSMA';
         listaCampos = [
             'numero_cartao',
@@ -619,8 +622,32 @@ function configurarMascarasData() {
     });
 }
 
-// Inicializa a escuta dos campos de data
+// --- Máscara de Formatação de Hora ---
+// Formatação em tempo real no padrão HH:MM para hora do atendimento
+function configurarMascaraHora() {
+    const input = document.getElementById('hora_atendimento');
+    if (input) {
+        input.addEventListener('input', (evento) => {
+            let valor = evento.target.value;
+            // Filtra apenas números e limita a 4 dígitos (HHMM)
+            let apenasNumeros = valor.replace(/\D/g, '').slice(0, 4);
+
+            let formatado = '';
+            if (apenasNumeros.length > 0) {
+                formatado += apenasNumeros.slice(0, 2);
+            }
+            if (apenasNumeros.length > 2) {
+                formatado += ':' + apenasNumeros.slice(2, 4);
+            }
+
+            evento.target.value = formatado;
+        });
+    }
+}
+
+// Inicializa a escuta dos campos de data e hora
 configurarMascarasData();
+configurarMascaraHora();
 
 // --- Dropdown de Especialidades ---
 function configurarDropdownEspecialidades() {
@@ -929,12 +956,6 @@ function inicializarSadt() {
     // 2. DETECTOR DE CLIQUES NOS CARDS
     cardsOperadoras.forEach(card => {
         card.addEventListener('click', async () => {
-            if (card.classList.contains('disabled')) {
-                // Se estiver bloqueado, dá o aviso toast explicativo de pendência
-                exibirToastAvisoSadtBloqueado();
-                return;
-            }
-
             const nomeOperadora = card.getAttribute('data-operadora');
             const nomeArquivoPDF = card.getAttribute('data-pdf');
 
@@ -949,36 +970,11 @@ function inicializarSadt() {
 
 // 3. AUDITORIA DE PREENCHIMENTO DOS CAMPOS
 function verificarCamposSadt() {
-    const inputCarteirinha = document.getElementById('sadt-carteirinha');
-    const inputValidade = document.getElementById('sadt-vld-cart');
-    const inputNome = document.getElementById('sadt-nome');
+    // As operadoras ficam sempre disponíveis por solicitação da recepção (permite impressão em branco)
     const cardsOperadoras = document.querySelectorAll('.sadt-logo');
-
-    if (!inputCarteirinha || !inputValidade || !inputNome) return;
-
-    const carteirinha = inputCarteirinha.value.trim();
-    const validade = inputValidade.value.trim();
-    const nome = inputNome.value.trim();
-
-    // Regras de validação:
-    // - Carteirinha: Pelo menos 1 caractere
-    // - Validade: Exatamente 10 caracteres (DD/MM/AAAA)
-    // - Nome: Pelo menos 3 caracteres
-    const carteirinhaValida = carteirinha.length > 0;
-    const validadeValida = validade.length === 10;
-    const nomeValido = nome.length >= 3;
-
-    if (carteirinhaValida && validadeValida && nomeValido) {
-        // Desbloqueia todos os planos (luzes acesas! 🟢)
-        cardsOperadoras.forEach(card => {
-            card.classList.remove('disabled');
-        });
-    } else {
-        // Bloqueia todos os planos (luzes apagadas/azuladas 🔵)
-        cardsOperadoras.forEach(card => {
-            card.classList.add('disabled');
-        });
-    }
+    cardsOperadoras.forEach(card => {
+        card.classList.remove('disabled');
+    });
 }
 
 // 4. PREENCHIMENTO INTELIGENTE DO PDF E IMPRESSÃO DIRETA (IFRAME OCULTO)
@@ -1205,9 +1201,81 @@ function abrirWebmailAutomatico() {
     }
 }
 
-// Inicializar a lógica da SADT e o Relógio do Dashboard quando o DOM estiver pronto
+// ==========================================================================
+// 🚀 LÓGICA E IMPRESSÃO DE GUIAS DE INTERNAÇÃO (CLIQUE E IMPRIME)
+// ==========================================================================
+
+function inicializarInternacao() {
+    const cardsInternacao = document.querySelectorAll('.internacao-logo');
+
+    cardsInternacao.forEach(card => {
+        card.addEventListener('click', async () => {
+            const nomeOperadora = card.getAttribute('data-operadora');
+            const nomeArquivoPDF = card.getAttribute('data-pdf');
+
+            if (nomeOperadora && nomeArquivoPDF) {
+                await imprimirGuiaInternacao(card, nomeOperadora, nomeArquivoPDF);
+            }
+        });
+    });
+}
+
+async function imprimirGuiaInternacao(logoElemento, nomeOperadora, nomeArquivoPDF) {
+    const urlPDF = `./assets/guias internacao/${nomeArquivoPDF}`;
+    
+    try {
+        // Mostra estado de carregamento sutil no logotipo (opacidade piscando)
+        logoElemento.style.pointerEvents = 'none';
+        logoElemento.style.opacity = '0.3';
+
+        // Cria o iframe invisível
+        const iframeOculto = document.createElement('iframe');
+        iframeOculto.style.position = 'fixed';
+        iframeOculto.style.right = '0';
+        iframeOculto.style.bottom = '0';
+        iframeOculto.style.width = '0';
+        iframeOculto.style.height = '0';
+        iframeOculto.style.border = 'none';
+        iframeOculto.style.visibility = 'hidden';
+        iframeOculto.src = urlPDF;
+
+        // Dispara a impressão assim que o PDF for carregado
+        iframeOculto.onload = function() {
+            setTimeout(function() {
+                try {
+                    iframeOculto.contentWindow.focus();
+                    iframeOculto.contentWindow.print();
+                } catch (e) {
+                    console.error("[Internação] Falha ao tentar imprimir diretamente pelo iframe:", e);
+                    // Fallback seguro em nova aba
+                    window.open(urlPDF, '_blank');
+                }
+                
+                // Limpa o DOM após 5 segundos
+                setTimeout(() => {
+                    if (document.body.contains(iframeOculto)) {
+                        document.body.removeChild(iframeOculto);
+                    }
+                }, 5000);
+            }, 300);
+        };
+
+        document.body.appendChild(iframeOculto);
+
+    } catch (erroGeral) {
+        console.error("Erro ao imprimir a Guia de Internação:", erroGeral);
+        alert(`Opa! Ocorreu um erro ao imprimir a guia da ${nomeOperadora}.\n\nDetalhes: ${erroGeral.message}`);
+    } finally {
+        // Restaura o estado visual original do logotipo
+        logoElemento.style.pointerEvents = '';
+        logoElemento.style.opacity = '';
+    }
+}
+
+// Inicializar a lógica da SADT, Internação e o Relógio do Dashboard quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', () => {
     inicializarSadt();
+    inicializarInternacao();
     iniciarRelogioDashboard();
 });
 

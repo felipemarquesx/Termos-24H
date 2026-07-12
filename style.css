@@ -572,6 +572,26 @@ h6 {
         /* Imagem A4 alta e elegante */
         width: auto;
     }
+
+    /* Otimizações para o Dashboard Principal */
+    #tela-menu-principal > .d-flex.justify-content-between.mb-5 {
+        margin-bottom: 2rem !important;
+    }
+
+    .menu-icon-wrapper {
+        width: 115px !important;
+        height: 115px !important;
+        margin-bottom: 0.8rem !important;
+    }
+
+    .menu-icon-wrapper i {
+        font-size: 3.2rem !important;
+    }
+
+    .card-opcao p {
+        font-size: 0.76rem !important;
+        line-height: 1.4 !important;
+    }
 }
 
 /* --- 2. Monitores AOC 15.6" e 18.5" (1366x768) --- */
@@ -644,6 +664,49 @@ h6 {
     }
     #modal-guias-sadt .modal-body {
         padding: 16px !important;
+    }
+
+    /* Otimizações severas para o Dashboard Principal em 1366x768 */
+    .conteudo-principal {
+        padding: 16px 30px 16px 30px !important;
+    }
+
+    #tela-menu-principal {
+        padding-bottom: 5px !important;
+    }
+
+    #tela-menu-principal > .d-flex.justify-content-between.mb-5 {
+        margin-bottom: 1.25rem !important; /* Reduz espaço sob o título */
+    }
+
+    .titulo-principal {
+        font-size: 1.8rem !important;
+    }
+
+    .card-relogio {
+        padding: 8px 16px !important;
+    }
+
+    .card-relogio #dashboard-relogio {
+        font-size: 1.4rem !important;
+    }
+
+    .menu-icon-wrapper {
+        width: 90px !important;
+        height: 90px !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .menu-icon-wrapper i {
+        font-size: 2.5rem !important;
+    }
+
+    .card-opcao p {
+        font-size: 0.72rem !important;
+        line-height: 1.3 !important;
+        margin-bottom: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
     }
 }
 
@@ -800,6 +863,32 @@ h6 {
     filter: drop-shadow(0 4px 8px rgba(13, 110, 253, 0.25));
 }
 
+/* Logotipo das Operadoras na Página de Internação (Sempre Habilitado) */
+.internacao-logo {
+    height: 96px;
+    width: 100%;
+    object-fit: contain;
+    background-color: #ffffff;
+    border-radius: 16px !important;
+    padding: 12px;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    user-select: none;
+    cursor: pointer;
+    /* Sombra inteligente no contorno */
+    filter: drop-shadow(0 6px 10px rgba(30, 58, 95, 0.22));
+}
+
+.internacao-logo:hover {
+    transform: scale(1.1) translateY(-4px);
+    /* Elevação de flutuação 3D e sombra azul brilhante */
+    filter: drop-shadow(0 12px 18px rgba(13, 110, 253, 0.48));
+}
+
+.internacao-logo:active {
+    transform: scale(1.03) translateY(-1px);
+    filter: drop-shadow(0 4px 8px rgba(13, 110, 253, 0.25));
+}
+
 /* --- Sistema de Transição de Páginas (Fade + Zoom) --- */
 .container-paginas {
     display: grid;
@@ -863,6 +952,26 @@ h6 {
 
 .card-termos-menu:hover h2 {
     color: #198754 !important;
+}
+
+.card-internacao-menu:hover {
+    border-color: rgba(253, 126, 20, 0.3) !important;
+    box-shadow: 0 30px 60px rgba(253, 126, 20, 0.08),
+        0 0 40px rgba(253, 126, 20, 0.04) !important;
+}
+
+.card-internacao-menu:hover h2 {
+    color: #fd7e14 !important;
+}
+
+.card-escala-menu:hover {
+    border-color: rgba(108, 117, 125, 0.3) !important;
+    box-shadow: 0 30px 60px rgba(108, 117, 125, 0.08),
+        0 0 40px rgba(108, 117, 125, 0.04) !important;
+}
+
+.card-escala-menu:hover h2 {
+    color: #6c757d !important;
 }
 
 /* ==========================================================================

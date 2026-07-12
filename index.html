@@ -41,12 +41,16 @@
                     <i class="bi bi-file-earmark-text-fill"></i>
                     <span>Termos Militares</span>
                 </a>
+                <a href="#" id="menu-internacao" class="menu-item" onclick="navegarMenu('tela-guias-internacao')">
+                    <i class="bi bi-hospital"></i>
+                    <span>Guias de Internação</span>
+                </a>
 
                 <div class="menu-divider"></div>
 
-                <a href="#" class="menu-item" data-bs-toggle="modal" data-bs-target="#modal-internacao-manutencao">
-                    <i class="bi bi-wrench-adjustable"></i>
-                    <span>Guia Internação</span>
+                <a href="#" class="menu-item" data-bs-toggle="modal" data-bs-target="#modal-escala-manutencao">
+                    <i class="bi bi-calendar-event"></i>
+                    <span>Escala Diária</span>
                     <span class="badge bg-warning text-dark ms-auto font-monospace"
                         style="font-size: 0.6rem;">MANUT</span>
                 </a>
@@ -99,10 +103,10 @@
                         </div>
                     </div>
 
-                    <div class="row justify-content-center align-items-center g-5 w-100 container-cards gap-md-5"
-                        style="margin: 0 auto;">
+                    <div class="row justify-content-center align-items-center g-4 w-100 container-cards"
+                        style="margin: 0 auto; max-width: 1300px;">
                         <!-- Card Guias SADT -->
-                        <div class="col-12 col-md-6 col-lg-5 col-xl-5 card-opcao card-sadt-menu text-center"
+                        <div class="col-12 col-md-6 col-lg-3 card-opcao card-sadt-menu text-center"
                             onclick="navegarMenu('tela-sadt')">
                             <div class="d-flex flex-column align-items-center">
                                 <span class="sub-forca mb-2">Operadoras de Saúde</span>
@@ -116,7 +120,7 @@
                         </div>
 
                         <!-- Card Termos Militares -->
-                        <div class="col-12 col-md-6 col-lg-5 col-xl-5 card-opcao card-termos-menu text-center"
+                        <div class="col-12 col-md-6 col-lg-3 card-opcao card-termos-menu text-center"
                             onclick="navegarMenu('tela-selecao-termos')">
                             <div class="d-flex flex-column align-items-center">
                                 <span class="sub-forca mb-2">Convênios Militares</span>
@@ -126,6 +130,35 @@
                                 </div>
                                 <p class="text-muted small px-3">Preenchimento automatizado de termos de
                                     responsabilidade para FUSMA e FUSEX</p>
+                            </div>
+                        </div>
+
+                        <!-- Card Guia Internação -->
+                        <div class="col-12 col-md-6 col-lg-3 card-opcao card-internacao-menu text-center"
+                            onclick="navegarMenu('tela-guias-internacao')">
+                            <div class="d-flex flex-column align-items-center">
+                                <span class="sub-forca mb-2">Internação de Urgência</span>
+                                <h2 class="mb-4 fw-bold">GUIAS DE INTERNAÇÃO</h2>
+                                <div class="menu-icon-wrapper mb-3">
+                                    <i class="bi bi-hospital display-1" style="color: #fd7e14;"></i>
+                                </div>
+                                <p class="text-muted small px-3">Acesso rápido e impressão direta de guias de internação das operadoras de saúde</p>
+                            </div>
+                        </div>
+
+                        <!-- Card Escala Diária (Manutenção) -->
+                        <div class="col-12 col-md-6 col-lg-3 card-opcao card-escala-menu text-center"
+                            data-bs-toggle="modal" data-bs-target="#modal-escala-manutencao"
+                            style="opacity: 0.85;">
+                            <div class="d-flex flex-column align-items-center">
+                                <span class="sub-forca mb-2 text-warning fw-bold">
+                                    <i class="bi bi-wrench-adjustable me-1"></i>Em Desenvolvimento
+                                </span>
+                                <h2 class="mb-4 fw-bold text-muted">ESCALA DIÁRIA</h2>
+                                <div class="menu-icon-wrapper mb-3" style="background-color: rgba(108, 117, 125, 0.08);">
+                                    <i class="bi bi-calendar-event display-1 text-secondary"></i>
+                                </div>
+                                <p class="text-muted small px-3">Uma nova forma ágil e eficaz de preencher as escalas dos médicos e recepcionistas do plantão</p>
                             </div>
                         </div>
                     </div>
@@ -158,7 +191,7 @@
                             <div class="d-flex flex-column align-items-center">
                                 <span class="sub-forca mb-2">Marinha do Brasil</span>
                                 <h2 class="mb-4 fw-bold">FUSMA</h2>
-                                <img src="./assets/FUSMA.jpg" alt="Termo FUSMA" class="imagem-a4-completa">
+                                <img src="./assets/fusma/FUSMA.jpg" alt="Termo FUSMA" class="imagem-a4-completa">
                             </div>
                         </div>
 
@@ -168,7 +201,7 @@
                             <div class="d-flex flex-column align-items-center">
                                 <span class="sub-forca mb-2">Exército Brasileiro</span>
                                 <h2 class="mb-4 fw-bold">FUSEX</h2>
-                                <img src="./assets/FUSEX.jpg" alt="Termo FUSEX" class="imagem-a4-completa">
+                                <img src="./assets/fusex/FUSEX.jpg" alt="Termo FUSEX" class="imagem-a4-completa">
                             </div>
                         </div>
                     </div>
@@ -217,102 +250,102 @@
                                     <!-- AMIL -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/AMIL.png" alt="AMIL"
-                                            class="sadt-logo disabled" data-operadora="AMIL" data-pdf="AMIL.pdf">
+                                            class="sadt-logo" data-operadora="AMIL" data-pdf="AMIL.pdf">
                                     </div>
 
                                     <!-- ASFAL -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/ASFAL.png" alt="ASFAL"
-                                            class="sadt-logo disabled" data-operadora="ASFAL" data-pdf="ASFAL.pdf">
+                                            class="sadt-logo" data-operadora="ASFAL" data-pdf="ASFAL.pdf">
                                     </div>
 
                                     <!-- ASSEFAZ -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/ASSEFAZ.jpg" alt="ASSEFAZ"
-                                            class="sadt-logo disabled" data-operadora="ASSEFAZ" data-pdf="ASSEFAZ.pdf">
+                                            class="sadt-logo" data-operadora="ASSEFAZ" data-pdf="ASSEFAZ.pdf">
                                     </div>
 
                                     <!-- BRADESCO -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/BRADESCO.png" alt="BRADESCO"
-                                            class="sadt-logo disabled" data-operadora="BRADESCO"
+                                            class="sadt-logo" data-operadora="BRADESCO"
                                             data-pdf="BRADESCO.pdf">
                                     </div>
 
                                     <!-- CAMED -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/CAMED.png" alt="CAMED"
-                                            class="sadt-logo disabled" data-operadora="CAMED" data-pdf="CAMED.pdf">
+                                            class="sadt-logo" data-operadora="CAMED" data-pdf="CAMED.pdf">
                                     </div>
 
                                     <!-- CAPESESP -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/CAPESESP.jpg" alt="CAPESESP"
-                                            class="sadt-logo disabled" data-operadora="CAPESESP"
+                                            class="sadt-logo" data-operadora="CAPESESP"
                                             data-pdf="CAPESESP.pdf">
                                     </div>
 
                                     <!-- CASSI -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/CASSI.png" alt="CASSI"
-                                            class="sadt-logo disabled" data-operadora="CASSI" data-pdf="CASSI.pdf">
+                                            class="sadt-logo" data-operadora="CASSI" data-pdf="CASSI.pdf">
                                     </div>
 
                                     <!-- FUNCEF -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/FUNCEF.png" alt="FUNCEF"
-                                            class="sadt-logo disabled" data-operadora="FUNCEF" data-pdf="FUNCEF.pdf">
+                                            class="sadt-logo" data-operadora="FUNCEF" data-pdf="FUNCEF.pdf">
                                     </div>
 
                                     <!-- GEAP -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/GEAP.png" alt="GEAP"
-                                            class="sadt-logo disabled" data-operadora="GEAP" data-pdf="GEAP.pdf">
+                                            class="sadt-logo" data-operadora="GEAP" data-pdf="GEAP.pdf">
                                     </div>
 
                                     <!-- LIFE -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/LIFE.jpg" alt="LIFE"
-                                            class="sadt-logo disabled" data-operadora="LIFE" data-pdf="LIFE.pdf">
+                                            class="sadt-logo" data-operadora="LIFE" data-pdf="LIFE.pdf">
                                     </div>
 
                                     <!-- MEDSERVICE -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/MEDSERVICE.jpg" alt="MEDSERVICE"
-                                            class="sadt-logo disabled" data-operadora="MEDSERVICE"
+                                            class="sadt-logo" data-operadora="MEDSERVICE"
                                             data-pdf="MEDSERVICE.pdf">
                                     </div>
 
                                     <!-- PADRAO -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/PADRAO.png" alt="PADRAO"
-                                            class="sadt-logo disabled" data-operadora="PADRAO" data-pdf="PADRAO.pdf">
+                                            class="sadt-logo" data-operadora="PADRAO" data-pdf="PADRAO.pdf">
                                     </div>
 
                                     <!-- PETROBRAS -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/PETROBRAS.png" alt="PETROBRAS"
-                                            class="sadt-logo disabled" data-operadora="PETROBRAS"
+                                            class="sadt-logo" data-operadora="PETROBRAS"
                                             data-pdf="PETROBRAS.pdf">
                                     </div>
 
                                     <!-- SMILE -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/SMILE.jpg" alt="SMILE"
-                                            class="sadt-logo disabled" data-operadora="SMILE" data-pdf="SMILE.pdf">
+                                            class="sadt-logo" data-operadora="SMILE" data-pdf="SMILE.pdf">
                                     </div>
 
                                     <!-- SULAMERICA -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/SULAMERICA.png" alt="SULAMERICA"
-                                            class="sadt-logo disabled" data-operadora="SULAMERICA"
+                                            class="sadt-logo" data-operadora="SULAMERICA"
                                             data-pdf="SULAMERICA.pdf">
                                     </div>
 
                                     <!-- UNIMED -->
                                     <div class="col text-center">
                                         <img src="assets/icons_operadoras_de_saude/UNIMED.jpg" alt="UNIMED"
-                                            class="sadt-logo disabled" data-operadora="UNIMED" data-pdf="UNIMED.pdf">
+                                            class="sadt-logo" data-operadora="UNIMED" data-pdf="UNIMED.pdf">
                                     </div>
                                 </div>
                             </div>
@@ -320,7 +353,123 @@
                     </div>
                 </div>
 
-                <!-- 4. Tela de Preenchimento do Formulário -->
+                <!-- 4. Tela Guias Internação -->
+                <div id="tela-guias-internacao" class="tela-app escondida" style="display: none; padding: 0 0 24px 0;">
+                    <div class="card shadow">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom"
+                                style="border-color: rgba(30, 58, 95, 0.08) !important;">
+                                <button class="btn btn-link text-secondary p-0 me-1 d-flex align-items-center justify-content-center"
+                                    onclick="mudarTela('tela-guias-internacao', 'tela-menu-principal')"
+                                    style="font-size: 1.8rem; text-decoration: none; line-height: 1;" title="Voltar ao início">
+                                    <i class="bi bi-arrow-left-circle-fill text-secondary hover-primary"></i>
+                                </button>
+                                <div>
+                                    <h4 class="fw-bold mb-0 text-primary" style="font-family: 'Outfit', sans-serif;">GUIAS DE INTERNAÇÃO</h4>
+                                </div>
+                            </div>
+
+                            <div class="internacao-operadoras-container p-3 bg-white rounded-4 border"
+                                style="border-color: rgba(30, 58, 95, 0.08) !important;">
+                                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-4 justify-content-center"
+                                    id="internacao-grid-operadoras" style="padding: 10px 5px;">
+
+                                    <!-- SUS -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/SUS.jpg" alt="SUS"
+                                            class="internacao-logo" data-operadora="SUS" data-pdf="AIH - SUS.pdf">
+                                    </div>
+
+                                    <!-- AMIL -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/AMIL.png" alt="AMIL"
+                                            class="internacao-logo" data-operadora="AMIL" data-pdf="AMIL.pdf">
+                                    </div>
+
+                                    <!-- ASFAL -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/ASFAL.png" alt="ASFAL"
+                                            class="internacao-logo" data-operadora="ASFAL" data-pdf="ASFAL.pdf">
+                                    </div>
+
+                                    <!-- BRADESCO -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/BRADESCO.png" alt="BRADESCO"
+                                            class="internacao-logo" data-operadora="BRADESCO" data-pdf="BRADESCO.pdf">
+                                    </div>
+
+                                    <!-- CAMED -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/CAMED.png" alt="CAMED"
+                                            class="internacao-logo" data-operadora="CAMED" data-pdf="CAMED.pdf">
+                                    </div>
+
+                                    <!-- CAPSESP -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/CAPESESP.jpg" alt="CAPSESP"
+                                            class="internacao-logo" data-operadora="CAPSESP" data-pdf="CAPSESP.pdf">
+                                    </div>
+
+                                    <!-- CASSI -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/CASSI.png" alt="CASSI"
+                                            class="internacao-logo" data-operadora="CASSI" data-pdf="CASSI.pdf">
+                                    </div>
+
+                                    <!-- FUNCEF -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/FUNCEF.png" alt="FUNCEF"
+                                            class="internacao-logo" data-operadora="FUNCEF" data-pdf="FUNCEF.pdf">
+                                    </div>
+
+                                    <!-- GEAP -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/GEAP.png" alt="GEAP"
+                                            class="internacao-logo" data-operadora="GEAP" data-pdf="GEAP.pdf">
+                                    </div>
+
+                                    <!-- LIFE -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/LIFE.jpg" alt="LIFE"
+                                            class="internacao-logo" data-operadora="LIFE" data-pdf="LIFE.pdf">
+                                    </div>
+
+                                    <!-- PADRÃO -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/PADRAO.png" alt="PADRÃO"
+                                            class="internacao-logo" data-operadora="PADRÃO" data-pdf="PADRÃO.pdf">
+                                    </div>
+
+                                    <!-- PETROBRAS -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/PETROBRAS.png" alt="PETROBRAS"
+                                            class="internacao-logo" data-operadora="PETROBRAS" data-pdf="PETROBRAS.pdf">
+                                    </div>
+
+                                    <!-- SMILE -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/SMILE.jpg" alt="SMILE"
+                                            class="internacao-logo" data-operadora="SMILE" data-pdf="SMILE.pdf">
+                                    </div>
+
+                                    <!-- SUL AMERICA -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/SULAMERICA.png" alt="SUL AMERICA"
+                                            class="internacao-logo" data-operadora="SUL AMERICA" data-pdf="SUL AMERICA.pdf">
+                                    </div>
+
+                                    <!-- UNIMED -->
+                                    <div class="col text-center">
+                                        <img src="assets/icons_operadoras_de_saude/UNIMED.jpg" alt="UNIMED"
+                                            class="internacao-logo" data-operadora="UNIMED" data-pdf="UNIMED.pdf">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Tela de Preenchimento do Formulário -->
                 <div id="tela-formulario" class="tela-app escondida" style="display: none; padding: 0 0 24px 0;">
                     <div class="card shadow">
                         <div class="card-header text-white d-flex align-items-center justify-content-between"
@@ -441,6 +590,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control salva-local campo-obrigatorio"
                                             id="data_atendimento" placeholder="DD/MM/AAAA" readonly
+                                            maxlength="10"
                                             autocomplete="one-time-code" onfocus="this.removeAttribute('readonly');"
                                             onblur="this.setAttribute('readonly', 'readonly');">
                                         <button class="btn btn-primary px-4" type="button"
@@ -452,6 +602,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control salva-local campo-obrigatorio"
                                             id="hora_atendimento" placeholder="HH:MM" readonly
+                                            maxlength="5"
                                             autocomplete="one-time-code" onfocus="this.removeAttribute('readonly');"
                                             onblur="this.setAttribute('readonly', 'readonly');">
                                         <button class="btn btn-primary px-4" type="button"
@@ -652,22 +803,21 @@
         </div>
     </div>
 
-    <!-- Modal Guias de Internação: Em Manutenção -->
-    <div class="modal fade" id="modal-internacao-manutencao" tabindex="-1" aria-labelledby="modalInternacaoLabel"
+    <!-- Modal Escala Diária: Em Manutenção -->
+    <div class="modal fade" id="modal-escala-manutencao" tabindex="-1" aria-labelledby="modalEscalaLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content shadow-lg border-0" style="border-radius: 20px;">
                 <div class="modal-header border-0 bg-light text-dark"
                     style="border-radius: 20px 20px 0 0; padding: 20px;">
-                    <h5 class="modal-title fw-bold" id="modalInternacaoLabel"
+                    <h5 class="modal-title fw-bold" id="modalEscalaLabel"
                         style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; color: #1e3a5f;">EM MANUTENÇÃO</h5>
                 </div>
                 <div class="modal-body p-4 text-center"
                     style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; line-height: 1.6; color: #4a5c70;">
                     <i class="bi bi-wrench-adjustable text-warning display-4 mb-3 d-block"></i>
                     <p class="mb-3 fw-bold text-dark" style="font-size: 1rem;">Módulo em Construção</p>
-                    <p class="mb-0">Este módulo de <strong>Guias de Internação</strong> estará totalmente liberado
-                        breve!</p>
+                    <p class="mb-0">O módulo de <strong>Escala Diária</strong> está sendo desenvolvido e trará uma <strong>nova forma ágil e eficaz de preencher</strong> as escalas do plantão!</p>
                 </div>
                 <div class="modal-footer border-0 p-3" style="background-color: #f8f9fa; border-radius: 0 0 20px 20px;">
                     <button type="button" class="btn btn-secondary w-100 py-2" data-bs-dismiss="modal"
