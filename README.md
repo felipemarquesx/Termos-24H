@@ -38,7 +38,7 @@ O sistema está hospedado no **GitHub Pages** e pode ser acessado diretamente de
 8. **Módulo de Escala Diária (Futuro / Em Desenvolvimento!)**  
    Atalho configurado no menu principal e na sidebar com sinalização visual de manutenção (tag `MANUT`). O clique no botão exibe um aviso informativo explicando que o módulo trará uma **nova forma ágil e eficaz de preencher** as escalas de médicos e recepcionistas do plantão da emergência 24H.
 
-## 🚀 Evolução Recente: Antes vs. Depois
+## Evolução Recente: Antes vs. Depois
 
 Para elevar a experiência do usuário e garantir conformidade rígida de segurança, o layout e o comportamento do formulário foram completamente otimizados:
 
@@ -52,37 +52,34 @@ Para elevar a experiência do usuário e garantir conformidade rígida de segura
 | **Limite de Digitação** | Campos de data e hora do atendimento permitiam digitação infinita de caracteres, desconfigurando os PDFs finais. | **Travas de Comprimento e Máscara!** Inclusão de `maxlength` rígido (10 para data, 5 para hora) combinados com máscara automática de hora no JS (insere `:` automaticamente ao digitar). |
 | **Responsividade Vertical** | O Dashboard inicial exigia barra de rolagem vertical em monitores antigos ou telas menores como 1366x768. | **Compactação Responsiva sem Scroll!** Media queries baseadas na altura do monitor encolhem os ícones e margens de forma inteligente para que o painel principal caiba 100% na tela de qualquer monitor sem barra de rolagem. |
 
-### 🖼️ Comparação Visual de Telas (Antes vs. Depois)
-
-*(Nota: As novas capturas do "Depois" aparecerão assim que você salvar os prints na pasta assets/screenshots com os nomes correspondentes)*
-
-#### 📊 1. Painel de Controle (Dashboard) — [NOVA PÁGINA!]
-*Esta tela de controle não existia na versão anterior. Ela centraliza as estatísticas, o relógio e a navegação do sistema.*
+### Comparação Visual de Telas (Antes vs. Depois)
+#### 1. Painel de Controle (Dashboard)
+*Esta tela de controle centraliza as estatísticas, o relógio e a navegação do sistema.*
 
 ![Dashboard](assets/screenshots/InitialPage.png)
 
-#### 🖥️ 2. Página de Seleção de Termos (FUSMA / FUSEX)
+#### 2. Página de Seleção de Termos (FUSMA / FUSEX)
 | Como Era (Antes) | Como Ficou (Depois) |
 | :---: | :---: |
 | ![Menu Antes](assets/screenshots/InitialPage_old.png) | ![Menu Depois](assets/screenshots/NewPageTerms.png) |
 
-#### 🟢 3. Formulário FUSEX
+#### 3. Formulário FUSEX
 | Como Era (Antes) | Como Ficou (Depois) |
 | :---: | :---: |
 | ![FUSEX Antes](assets/screenshots/PageFusex_old.png) | ![FUSEX Depois](assets/screenshots/PageFusex.png) |
 
-#### 🔵 4. Formulário FUSMA
+#### 4. Formulário FUSMA
 | Como Era (Antes) | Como Ficou (Depois) |
 | :---: | :---: |
 | ![FUSMA Antes](assets/screenshots/PageFusma_old.png) | ![FUSMA Depois](assets/screenshots/PageFusma.png) |
 
-#### 📁 5. Painel SADT
+#### 5. Painel SADT
 | Como Era (Antes) | Como Ficou (Depois) |
 | :---: | :---: |
 | ![SADT Antes](assets/screenshots/SadtModal_old.png) | ![SADT Depois](assets/screenshots/SadtModal.png) |
 
-#### 🏥 6. Página de Guias de Internação (Nova Funcionalidade!)
-*Esta tela de guias de internação de urgência não existia na versão anterior.*
+#### 6. Página de Guias de Internação (Nova Funcionalidade)
+*Esta tela de guias de internação de urgência permite a emissão rápida direta.*
 
 ![Guias de Internação](assets/screenshots/PageInternacao.png)
 
