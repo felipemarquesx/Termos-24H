@@ -5,26 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Termos 24H</title>
-    <!-- Favicon da aplicação -->
+    <!-- --- Favicon da aplicação --- -->
     <link id="favicon" rel="icon" type="image/png" href="./assets/Initial.png?v=2">
-    <!-- CDN do Bootstrap CSS -->
+    <!-- --- CDN do Bootstrap CSS --- -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- CDN dos Ícones do Bootstrap -->
+    <!-- --- CDN dos Ícones do Bootstrap --- -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="style.css">
-    <!-- CDN da Biblioteca PDF-Lib -->
+    <!-- --- CDN da Biblioteca PDF-Lib --- -->
     <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+    <!-- --- CDN do PDF.js para renderizar PDF no Canvas --- -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 
 <body class="bg-light">
 
-    <!-- Layout Central do Sistema (Sidebar + Conteúdo Principal) -->
+    <!-- --- Layout Central do Sistema (Sidebar + Conteúdo Principal) --- -->
     <div class="layout-sistema">
 
-        <!-- Sidebar de Navegação -->
+        <!-- --- Sidebar de Navegação --- -->
         <aside class="sidebar-sistema">
             <nav class="sidebar-menu">
-                <!-- Botão de Destaque GitHub -->
+                <!-- --- Botão de Destaque GitHub --- -->
                 <a href="https://github.com/felipemarquesx/Termos-24H" target="_blank" class="btn-github-sidebar mb-4">
                     <i class="bi bi-github"></i>
                     <span>Termos 24H</span>
@@ -45,15 +47,13 @@
                     <i class="bi bi-hospital"></i>
                     <span>Guias de Internação</span>
                 </a>
+                <a href="#" id="menu-escala" class="menu-item" onclick="navegarMenu('tela-escala-diaria')">
+                    <i class="bi bi-calendar-event"></i>
+                    <span>Escala Diária</span>
+                </a>
 
                 <div class="menu-divider"></div>
 
-                <a href="#" class="menu-item" data-bs-toggle="modal" data-bs-target="#modal-escala-manutencao">
-                    <i class="bi bi-calendar-event"></i>
-                    <span>Escala Diária</span>
-                    <span class="badge bg-warning text-dark ms-auto font-monospace"
-                        style="font-size: 0.6rem;">MANUT</span>
-                </a>
                 <a href="#" class="menu-item" data-bs-toggle="modal" data-bs-target="#modal-adendos">
                     <i class="bi bi-info-circle-fill"></i>
                     <span>Adendos / LGPD</span>
@@ -70,14 +70,20 @@
                 <span class="small opacity-75">Matrícula: 14660</span>
                 <span class="small opacity-50 mt-1" style="font-size: 0.7rem; line-height: 1.3;">Emergência 24H —
                     Hospital Santa Casa de Misericórdia de Maceió</span>
+                <!-- Botão Modo Escuro Global Minimalista -->
+                <button type="button" id="btn-modo-escuro-global" class="btn-dark-mode-toggle" onclick="toggleModoEscuroGlobal()" title="Alternar tema">
+                    <i class="bi bi-moon"></i>
+                </button>
             </div>
         </aside>
 
-        <!-- Área de Conteúdo Principal -->
+        <!-- --- Área de Conteúdo Principal --- -->
         <main class="conteudo-principal">
             <div class="container-paginas">
 
-                <!-- 1. Tela de Menu Principal -->
+                <!-- ========================================================================== -->
+                <!-- TELA 1: MENU PRINCIPAL (DASHBOARD RECEPTIVO)                               -->
+                <!-- ========================================================================== -->
                 <div id="tela-menu-principal" class="tela-app text-center pt-0 pb-4">
                     <div class="d-flex justify-content-between align-items-center mb-5 w-100 flex-wrap gap-3">
                         <div class="text-start">
@@ -87,17 +93,20 @@
                             <p class="text-muted mb-0">Recepção Emergência 24H — Hospital Santa Casa de Misericórdia de
                                 Maceió</p>
                         </div>
-                        <!-- Relógio Digital da Recepção -->
-                        <div class="card card-relogio border-0 shadow-sm px-4 py-3 rounded-4 text-end bg-white">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="text-end">
-                                    <span id="dashboard-relogio" class="d-block fw-bold text-primary font-monospace"
-                                        style="font-size: 1.8rem; line-height: 1;">00:00:00</span>
-                                    <span id="dashboard-data" class="d-block text-secondary small fw-semibold mt-1"
-                                        style="font-size: 0.75rem;">Carregando data...</span>
-                                </div>
-                                <div class="icon-circle bg-primary-subtle text-primary m-0">
-                                    <i class="bi bi-clock-fill"></i>
+                        <div class="d-flex align-items-center gap-3 flex-wrap justify-content-end">
+
+                            <!-- Relógio Digital da Recepção -->
+                            <div class="card card-relogio border-0 shadow-sm px-4 py-3 rounded-4 text-end bg-white">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="text-end">
+                                        <span id="dashboard-relogio" class="d-block fw-bold text-primary font-monospace"
+                                            style="font-size: 1.8rem; line-height: 1;">00:00:00</span>
+                                        <span id="dashboard-data" class="d-block text-secondary small fw-semibold mt-1"
+                                            style="font-size: 0.75rem;">Carregando data...</span>
+                                    </div>
+                                    <div class="icon-circle bg-primary-subtle text-primary m-0">
+                                        <i class="bi bi-clock-fill"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -146,17 +155,14 @@
                             </div>
                         </div>
 
-                        <!-- Card Escala Diária (Manutenção) -->
+                        <!-- Card Escala Diária -->
                         <div class="col-12 col-md-6 col-lg-3 card-opcao card-escala-menu text-center"
-                            data-bs-toggle="modal" data-bs-target="#modal-escala-manutencao"
-                            style="opacity: 0.85;">
+                            onclick="navegarMenu('tela-escala-diaria')">
                             <div class="d-flex flex-column align-items-center">
-                                <span class="sub-forca mb-2 text-warning fw-bold">
-                                    <i class="bi bi-wrench-adjustable me-1"></i>Em Desenvolvimento
-                                </span>
-                                <h2 class="mb-4 fw-bold text-muted">ESCALA DIÁRIA</h2>
-                                <div class="menu-icon-wrapper mb-3" style="background-color: rgba(108, 117, 125, 0.08);">
-                                    <i class="bi bi-calendar-event display-1 text-secondary"></i>
+                                <span class="sub-forca mb-2">Escala de Plantão</span>
+                                <h2 class="mb-4 fw-bold">ESCALA DIÁRIA</h2>
+                                <div class="menu-icon-wrapper mb-3" style="background-color: rgba(254, 211, 78, 0.08);">
+                                    <i class="bi bi-calendar-event display-1" style="color: #FED34E;"></i>
                                 </div>
                                 <p class="text-muted small px-3">Uma nova forma ágil e eficaz de preencher as escalas dos médicos e recepcionistas do plantão</p>
                             </div>
@@ -166,7 +172,9 @@
 
 
 
-                <!-- 2. Tela de Seleção de Termos (FUSMA / FUSEX) -->
+                <!-- ========================================================================== -->
+                <!-- TELA 2: SELEÇÃO DE TERMOS MILITARES (FUSMA / FUSEX)                        -->
+                <!-- ========================================================================== -->
                 <div id="tela-selecao-termos" class="tela-app escondida" style="display: none; padding: 0 0 24px 0;">
                     <div class="d-flex align-items-center mb-5 w-100 gap-3">
                         <button class="btn btn-link text-secondary p-0 me-1"
@@ -207,7 +215,9 @@
                     </div>
                 </div>
 
-                <!-- 3. Tela Guias SADT -->
+                <!-- ========================================================================== -->
+                <!-- TELA 3: GUIA MÉDICA SADT (EXAMES E PROCEDIMENTOS)                           -->
+                <!-- ========================================================================== -->
                 <div id="tela-sadt" class="tela-app escondida" style="display: none; padding: 0 0 24px 0;">
                     <div class="card shadow border-0 rounded-4 overflow-hidden">
                         <div class="card-header text-white d-flex align-items-center justify-content-between"
@@ -353,7 +363,9 @@
                     </div>
                 </div>
 
-                <!-- 4. Tela Guias Internação -->
+                <!-- ========================================================================== -->
+                <!-- TELA 4: GUIA MÉDICA DE INTERNAÇÃO HOSPITALAR                               -->
+                <!-- ========================================================================== -->
                 <div id="tela-guias-internacao" class="tela-app escondida" style="display: none; padding: 0 0 24px 0;">
                     <div class="card shadow">
                         <div class="card-body p-4">
@@ -478,7 +490,9 @@
                     </div>
                 </div>
 
-                <!-- 5. Tela de Preenchimento do Formulário -->
+                <!-- ========================================================================== -->
+                <!-- TELA 5: PREENCHIMENTO DETALHADO DO TERMO MILITAR (FUSMA / FUSEX)           -->
+                <!-- ========================================================================== -->
                 <div id="tela-formulario" class="tela-app escondida" style="display: none; padding: 0 0 24px 0;">
                     <div class="card shadow">
                         <div class="card-header text-white d-flex align-items-center justify-content-between"
@@ -765,7 +779,135 @@
                     </div>
                 </div>
             </div>
-    </div>
+                
+                <!-- ========================================================================== -->
+                <!-- TELA 6: ESCALA DIÁRIA DE PLANTONISTAS (DASHBOARD INTERATIVO)              -->
+                <!-- ========================================================================== -->
+                <div id="tela-escala-diaria" class="tela-app escondida" style="display: none; padding: 0 0 24px 0;">
+                    <div class="card shadow border-0" style="border-radius: 20px;">
+                        <div class="card-body p-4">
+                            <!-- Cabeçalho com Botão Voltar -->
+                            <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom"
+                                style="border-color: rgba(30, 58, 95, 0.08) !important;">
+                                <button class="btn btn-link text-secondary p-0 me-1 d-flex align-items-center justify-content-center"
+                                    onclick="mudarTela('tela-escala-diaria', 'tela-menu-principal')"
+                                    style="font-size: 1.8rem; text-decoration: none; line-height: 1;" title="Voltar ao início">
+                                    <i class="bi bi-arrow-left-circle-fill text-secondary hover-primary"></i>
+                                </button>
+                                <div>
+                                    <h4 class="fw-bold mb-0 text-primary" style="font-family: 'Outfit', sans-serif;">ESCALA DIÁRIA DE PLANTONISTAS</h4>
+                                    <small class="text-muted">Preenchimento rápido e visualização em tempo real</small>
+                                </div>
+                            </div>
+
+                            <!-- Layout Principal em Três Partes (Preview | Linha Conectora | Formulário) -->
+                            <div class="row align-items-center position-relative" style="min-height: 500px;">
+                                <!-- Lado Esquerdo: Preview Visual -->
+                                <div class="col-lg-6 col-12 d-flex flex-column align-items-center">
+                                    <!-- Barra de Turnos Externa -->
+                                    <div id="escala-turno-external-bar" class="position-relative w-100 mb-2" style="max-width: 700px; height: 70px; padding: 0;">
+                                        <button type="button" class="btn-turno-img btn-turno" data-turno="manha" style="position: absolute; left: 41.5%; top: 50%; transform: translate(-50%, -50%);" title="Turno Manhã">
+                                            <img src="assets/escala_diaria/sun.png" alt="Manhã">
+                                        </button>
+                                        <button type="button" class="btn-turno-img btn-turno" data-turno="tarde" style="position: absolute; left: 65%; top: 50%; transform: translate(-50%, -50%);" title="Turno Tarde">
+                                            <img src="assets/escala_diaria/sun_tarde.png" alt="Tarde">
+                                        </button>
+                                        <button type="button" class="btn-turno-img btn-turno" data-turno="noite" style="position: absolute; left: 88.3%; top: 50%; transform: translate(-50%, -50%);" title="Turno Noite">
+                                            <img src="assets/escala_diaria/moon.png" alt="Noite">
+                                        </button>
+                                    </div>
+
+                                    <!-- Container da Visualização Real do PDF da Escala (Ao Vivo) -->
+                                    <div id="escala-pdf-container" class="w-100 rounded-4 shadow-sm border position-relative" style="max-width: 700px; max-height: 650px; overflow: auto; padding: 15px; display: flex; justify-content: center; align-items: flex-start; transition: background 0.5s ease;">
+                                        <div id="escala-pdf-wrapper" style="position: relative; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12), 0 8px 20px rgba(0, 0, 0, 0.06); border-radius: 4px; overflow: hidden; background-color: #ffffff;">
+                                            <canvas id="escala-pdf-canvas"></canvas>
+                                            <!-- Camada Invisível de Botões Interativos (Hotspots) -->
+                                            <div id="escala-pdf-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5;"></div>
+
+                                            <!-- Loader sobreposto para carregar renderizações -->
+                                            <div id="escala-pdf-loader" class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column align-items-center justify-content-center d-none">
+                                                <div class="pulse-loader-container">
+                                                    <div class="pulse-loader-ring"></div>
+                                                    <div class="pulse-loader-ring-2"></div>
+                                                    <div class="pulse-loader-core">
+                                                        <i class="bi bi-arrow-repeat"></i>
+                                                    </div>
+                                                </div>
+                                                <span class="pulse-loader-text">Sincronizando PDF...</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Centro: Elemento Visual (Linha Conectora) -->
+                                <div class="col-lg-1 col-12 d-none d-lg-flex align-items-center justify-content-center position-relative">
+                                    <div class="linha-conectora-escala"></div>
+                                </div>
+
+                                <!-- Lado Direito: Formulário Interativo + Botão Externo -->
+                                <div class="col-lg-5 col-12 d-flex flex-column align-items-end justify-content-center">
+                                    <!-- Card do Formulário -->
+                                    <div class="w-100 p-4 position-relative card-formulario-escala mb-3">
+                                        <!-- Botão Discreto de Limpeza -->
+                                        <button type="button" id="btn-limpar-escala" onclick="confirmarLimparEscalaCompleta()" class="btn-limpar-escala" title="Limpar todos os dados da escala do dia">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+
+                                        <!-- Título Dinâmico do Turno Ativo (Premium) -->
+                                        <div id="escala-titulo-container" class="mb-3 text-start">
+                                            <h3 id="escala-turno-titulo-grande" class="fw-extrabold mb-0 text-manha-gradient d-flex align-items-center" style="font-family: 'Outfit', sans-serif; font-size: 1.65rem; letter-spacing: -0.5px; font-weight: 800;">
+                                                <i class="bi bi-brightness-high-fill text-sky me-2" style="color: #0ea5e9;"></i>Plantão Matutino
+                                            </h3>
+                                        </div>
+
+
+
+                                        <!-- Navegação de Passos (Topo do Card) -->
+                                        <div id="escala-navegacao-container" class="d-flex gap-2 mb-3 border-bottom pb-3" style="border-color: rgba(30, 58, 95, 0.05) !important;">
+                                            <button type="button" id="btn-escala-anterior" class="btn btn-secondary px-3 py-2" onclick="retrocederPassoEscala()" style="display: none; font-size: 0.85rem;">
+                                                <i class="bi bi-chevron-left"></i> Voltar
+                                            </button>
+                                            <button type="button" id="btn-escala-proximo" class="btn btn-primary px-3 py-2" onclick="avancarPassoEscala()" style="font-size: 0.85rem;">
+                                                Avançar <i class="bi bi-chevron-right"></i>
+                                            </button>
+                                        </div>
+
+                                        <!-- Formulário Dinâmico -->
+                                        <div id="escala-step-form">
+                                            <!-- Os steps do formulário dinâmico serão inseridos aqui via javascript -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Botão Gerar Escala (Com Dropdown de opções PDF/JPG) -->
+                                    <div class="d-flex gap-2 justify-content-end align-items-center w-100">
+                                         <div class="btn-group shadow-sm">
+                                             <button type="button" class="btn btn-success px-4 py-2.5 d-flex align-items-center gap-2" style="border-radius: 12px 0 0 12px; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.95rem; pointer-events: none;">
+                                                 <i class="bi bi-file-earmark-arrow-down-fill"></i> Gerar Escala
+                                             </button>
+                                             <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split px-3" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 0 12px 12px 0; border-left: 1px solid rgba(255,255,255,0.25);">
+                                                 <span class="visually-hidden">Opções</span>
+                                             </button>
+                                             <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg p-2" style="border-radius: 16px; min-width: 170px; font-family: 'Plus Jakarta Sans', sans-serif; z-index: 1050;">
+                                                 <li>
+                                                     <a class="dropdown-item py-2 px-3 rounded-3 d-flex align-items-center gap-2 fw-bold text-danger" id="btn-escala-baixar-pdf" href="#" onclick="exportarEscalaComoPdf()">
+                                                         <i class="bi bi-file-pdf-fill"></i> Baixar em PDF
+                                                     </a>
+                                                 </li>
+                                                 <li>
+                                                     <a class="dropdown-item py-2 px-3 rounded-3 d-flex align-items-center gap-2 fw-bold text-warning-emphasis" id="btn-escala-imprimir-imagem" href="#" onclick="exportarEscalaComoImagem()">
+                                                         <i class="bi bi-file-image-fill"></i> Baixar em JPG
+                                                     </a>
+                                                 </li>
+                                             </ul>
+                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
     </main>
     </div>
 
@@ -836,9 +978,15 @@
         </div>
     </div>
 
-    <!-- Dependências de JavaScript -->
+
+
+    <!-- --- Dependências de JavaScript --- -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    <!-- --- Scripts do Sistema Modularizados (Ordem Sequencial de Escopo) --- -->
+    <script src="js/core.js"></script>
+    <script src="js/termos_militares.js"></script>
+    <script src="js/guias_medicas.js"></script>
+    <script src="js/escala_diaria.js"></script>
 </body>
 
 </html>
