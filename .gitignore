@@ -23,4 +23,7 @@ rad.json
 TestResults.xml
 
 # Escala de Produção
-escala_de_producao.txt
+escala_de_producao.txt
+
+# Regras de Conduta e Diretrizes de Desenvolvimento
+regras.md
