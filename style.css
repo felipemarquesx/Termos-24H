@@ -964,14 +964,15 @@ h6 {
     color: #fd7e14 !important;
 }
 
+/* Card Escala Diária Customizado (Amarelo #FED34E) */
 .card-escala-menu:hover {
-    border-color: rgba(108, 117, 125, 0.3) !important;
-    box-shadow: 0 30px 60px rgba(108, 117, 125, 0.08),
-        0 0 40px rgba(108, 117, 125, 0.04) !important;
+    border-color: rgba(254, 211, 78, 0.3) !important;
+    box-shadow: 0 30px 60px rgba(254, 211, 78, 0.08),
+        0 0 40px rgba(254, 211, 78, 0.04) !important;
 }
 
 .card-escala-menu:hover h2 {
-    color: #6c757d !important;
+    color: #FED34E !important;
 }
 
 /* ==========================================================================
@@ -1117,6 +1118,7 @@ h6 {
     flex-direction: column;
     gap: 4px;
     padding-top: 16px;
+    padding-bottom: 24px; /* Eleva levemente o rodapé para não ser cortado em telas de 768px */
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 0.72rem;
     text-align: left;
@@ -1332,8 +1334,1477 @@ h6 {
     box-shadow: none !important;
 }
 
+/* --- ESTILO TELA ESCALA DIÁRIA --- */
+.btn-turno {
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.3s ease;
+    border: 1.5px solid rgba(30, 58, 95, 0.15);
+    background-color: #fff;
+    color: #4a5c70;
+}
+
+.btn-turno:hover {
+    background-color: rgba(30, 58, 95, 0.05);
+    color: #1e3a5f;
+    border-color: rgba(30, 58, 95, 0.3);
+}
+
+.btn-turno.active {
+    background-color: #1e3a5f;
+    border-color: #1e3a5f;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(30, 58, 95, 0.2);
+}
+
+.linha-conectora-escala {
+    width: 100%;
+    height: 2px;
+    background: rgba(30, 58, 95, 0.12) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* O pulso de barramento que corre pela linha */
+.linha-conectora-escala::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        rgba(14, 165, 233, 0) 0%, 
+        rgba(14, 165, 233, 0.6) 50%, 
+        rgba(14, 165, 233, 0) 100%
+    );
+    animation: flowPulse 2.5s infinite linear;
+}
+
+@keyframes flowPulse {
+    0% { left: 100%; }
+    100% { left: -40%; }
+}
+
+/* O nodo central minimalista e moderno com a seta bootstrap */
+.linha-conectora-escala::before {
+    content: '\F135'; /* bi-arrow-left-circle-fill no bootstrap-icons */
+    font-family: "bootstrap-icons" !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.25rem;
+    color: #0ea5e9;
+    background-color: #ffffff;
+    padding: 0 6px;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+/* --- ESTILIZAÇÃO DO FORMULÁRIO DA ESCALA DIÁRIA (COLUNA DIREITA) --- */
+
+.card-formulario-escala {
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%) !important;
+    border: 1px solid rgba(30, 58, 95, 0.08) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 15px 35px rgba(30, 58, 95, 0.06), 0 5px 15px rgba(0, 242, 254, 0.02) !important;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    height: 255px; /* Altura fixa confortável para evitar corte de informações */
+}
+
+.card-formulario-escala::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+    opacity: 0.9;
+}
+
+/* Transições elegantes para os passos */
+.escala-step {
+    transition: filter 0.4s ease, opacity 0.4s ease;
+    filter: blur(10px);
+    opacity: 0;
+}
+
+.escala-step.active {
+    filter: blur(0);
+    opacity: 1;
+}
+
+/* Animação de saída para o topo */
+.escala-step.exit-up {
+    filter: blur(10px);
+    opacity: 0;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+/* Customização dos Inputs Tecnológicos */
+.card-formulario-escala .input-group {
+    background: #ffffff;
+    border: 1px solid rgba(30, 58, 95, 0.12) !important;
+    border-radius: 16px !important;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card-formulario-escala .input-group:focus-within {
+    border-color: #4facfe !important;
+    box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.15), 0 4px 12px rgba(79, 172, 254, 0.1) !important;
+    transform: translateY(-2px);
+}
+
+.card-formulario-escala .input-group-text {
+    border: none !important;
+    background: transparent !important;
+    color: #4facfe !important;
+    padding-left: 20px;
+    font-size: 1.2rem;
+}
+
+.card-formulario-escala input.form-control {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    font-weight: 500;
+    color: #1e3a5f;
+    padding: 16px 20px 16px 10px !important;
+}
+
+.card-formulario-escala input.form-control::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+/* Estilo premium do botão de pular e botões de navegação */
+.card-formulario-escala .btn-escala-pular {
+    border-radius: 12px !important;
+    border: 1.5px solid rgba(148, 163, 184, 0.3) !important;
+    color: #64748b !important;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.card-formulario-escala .btn-escala-pular:hover {
+    background-color: rgba(148, 163, 184, 0.08) !important;
+    color: #475569 !important;
+    border-color: rgba(148, 163, 184, 0.5) !important;
+}
+
+.card-formulario-escala .btn-primary {
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+    border: none !important;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3) !important;
+    transition: all 0.3s ease;
+}
+
+.card-formulario-escala .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 242, 254, 0.45) !important;
+}
+
+.card-formulario-escala .btn-secondary {
+    border-radius: 12px !important;
+    background-color: #f1f5f9 !important;
+    border: 1px solid rgba(30, 58, 95, 0.06) !important;
+    color: #475569 !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.card-formulario-escala .btn-secondary:hover {
+    background-color: #e2e8f0 !important;
+    color: #1e293b !important;
+}
+
+/* --- ESCALA VIRTUAL: PAINEL DE CRACHÁS REALISTAS --- */
+#escala-virtual-dashboard {
+    background-color: #f1f5f9 !important;
+    border: 1px solid rgba(30, 58, 95, 0.08) !important;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.03) !important;
+}
+
+.escala-coluna-virtual {
+    width: 100%;
+}
+
+.corpo-turno-virtual {
+    max-height: 480px;
+    overflow-y: auto;
+    padding: 8px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+/* O Crachá de Identificação */
+.slot-plantao-virtual {
+    background: #ffffff;
+    border: 1px solid rgba(30, 58, 95, 0.08);
+    border-radius: 16px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-top: 5px solid #94a3b8;
+    text-align: left;
+}
+
+/* Barrinha decorativa de crachá de hospital no topo do card */
+.slot-plantao-virtual::before {
+    content: 'PLANTÃO EMERGÊNCIA';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    font-size: 0.5rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    line-height: 4px;
+    letter-spacing: 1px;
+}
+
+/* Quando o crachá está preenchido */
+.slot-plantao-virtual.preenchido {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04);
+}
+
+/* Avatar do crachá */
+.slot-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    background-color: #f1f5f9;
+    color: #94a3b8;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.slot-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.slot-label {
+    font-size: 0.62rem;
+    font-weight: 800;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.slot-valor {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1e3a5f;
+    min-height: 18px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.slot-valor.vago {
+    color: #cbd5e1;
+    font-style: italic;
+    font-weight: 600;
+}
+
+/* Tag de Status do Crachá (Vago / Em Plantão) */
+.slot-status-badge {
+    font-size: 0.58rem;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 6px;
+    width: fit-content;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.slot-status-badge.status-vago {
+    background-color: #f1f5f9;
+    color: #94a3b8;
+}
+
+.slot-status-badge.status-ativo {
+    background-color: rgba(25, 135, 84, 0.08);
+    color: #198754;
+    font-weight: 900;
+}
+
+/* Ponto piscando de "Ao vivo" */
+.slot-status-badge.status-ativo::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background-color: #198754;
+    border-radius: 50%;
+    display: inline-block;
+    animation: status-blink 1.5s infinite;
+}
+
+@keyframes status-blink {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
+/* --- CORES EXCLUSIVAS POR CATEGORIA DE PROFISSIONAL --- */
+
+/* Clínicos: Azul */
+.slot-plantao-virtual.cargo-clinico {
+    border-top-color: #0d6efd;
+}
+.slot-plantao-virtual.cargo-clinico.preenchido {
+    border-color: rgba(13, 110, 253, 0.2) rgba(13, 110, 253, 0.2) rgba(13, 110, 253, 0.2) #0d6efd;
+    border-left-width: 4px;
+    background: linear-gradient(90deg, rgba(13, 110, 253, 0.01) 0%, rgba(13, 110, 253, 0.03) 100%);
+}
+.slot-plantao-virtual.cargo-clinico.preenchido .slot-avatar {
+    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    color: #ffffff;
+}
+.slot-plantao-virtual.cargo-clinico.preenchido .slot-label {
+    color: #0d6efd;
+}
+
+/* Cirurgião: Vermelho */
+.slot-plantao-virtual.cargo-cirurgiao {
+    border-top-color: #dc3545;
+}
+.slot-plantao-virtual.cargo-cirurgiao.preenchido {
+    border-color: rgba(220, 53, 69, 0.2) rgba(220, 53, 69, 0.2) rgba(220, 53, 69, 0.2) #dc3545;
+    border-left-width: 4px;
+    background: linear-gradient(90deg, rgba(220, 53, 69, 0.01) 0%, rgba(220, 53, 69, 0.03) 100%);
+}
+.slot-plantao-virtual.cargo-cirurgiao.preenchido .slot-avatar {
+    background: linear-gradient(135deg, #dc3545 0%, #bb2d3b 100%);
+    color: #ffffff;
+}
+.slot-plantao-virtual.cargo-cirurgiao.preenchido .slot-label {
+    color: #dc3545;
+}
+
+/* Cardiologista: Verde */
+.slot-plantao-virtual.cargo-cardiologista {
+    border-top-color: #198754;
+}
+.slot-plantao-virtual.cargo-cardiologista.preenchido {
+    border-color: rgba(25, 135, 84, 0.2) rgba(25, 135, 84, 0.2) rgba(25, 135, 84, 0.2) #198754;
+    border-left-width: 4px;
+    background: linear-gradient(90deg, rgba(25, 135, 84, 0.01) 0%, rgba(25, 135, 84, 0.03) 100%);
+}
+.slot-plantao-virtual.cargo-cardiologista.preenchido .slot-avatar {
+    background: linear-gradient(135deg, #198754 0%, #157347 100%);
+    color: #ffffff;
+}
+.slot-plantao-virtual.cargo-cardiologista.preenchido .slot-label {
+    color: #198754;
+}
+
+/* Ortopedista: Laranja */
+.slot-plantao-virtual.cargo-ortopedista {
+    border-top-color: #fd7e14;
+}
+.slot-plantao-virtual.cargo-ortopedista.preenchido {
+    border-color: rgba(253, 126, 20, 0.2) rgba(253, 126, 20, 0.2) rgba(253, 126, 20, 0.2) #fd7e14;
+    border-left-width: 4px;
+    background: linear-gradient(90deg, rgba(253, 126, 20, 0.01) 0%, rgba(253, 126, 20, 0.03) 100%);
+}
+.slot-plantao-virtual.cargo-ortopedista.preenchido .slot-avatar {
+    background: linear-gradient(135deg, #fd7e14 0%, #ca6510 100%);
+    color: #ffffff;
+}
+.slot-plantao-virtual.cargo-ortopedista.preenchido .slot-label {
+    color: #fd7e14;
+}
+
+/* Recepção: Roxo */
+.slot-plantao-virtual.cargo-adm {
+    border-top-color: #6f42c1;
+}
+.slot-plantao-virtual.cargo-adm.preenchido {
+    border-color: rgba(111, 66, 193, 0.2) rgba(111, 66, 193, 0.2) rgba(111, 66, 193, 0.2) #6f42c1;
+    border-left-width: 4px;
+    background: linear-gradient(90deg, rgba(111, 66, 193, 0.01) 0%, rgba(111, 66, 193, 0.03) 100%);
+}
+.slot-plantao-virtual.cargo-adm.preenchido .slot-avatar {
+    background: linear-gradient(135deg, #6f42c1 0%, #59359a 100%);
+    color: #ffffff;
+}
+.slot-plantao-virtual.cargo-adm.preenchido .slot-label {
+    color: #6f42c1;
+}
+
+/* Apoio: Ciano */
+.slot-plantao-virtual.cargo-apoio {
+    border-top-color: #0dcaf0;
+}
+.slot-plantao-virtual.cargo-apoio.preenchido {
+    border-color: rgba(13, 202, 240, 0.2) rgba(13, 202, 240, 0.2) rgba(13, 202, 240, 0.2) #0dcaf0;
+    border-left-width: 4px;
+    background: linear-gradient(90deg, rgba(13, 202, 240, 0.01) 0%, rgba(13, 202, 240, 0.03) 100%);
+}
+.slot-plantao-virtual.cargo-apoio.preenchido .slot-avatar {
+    background: linear-gradient(135deg, #0dcaf0 0%, #0bacd2 100%);
+    color: #ffffff;
+}
+.slot-plantao-virtual.cargo-apoio.preenchido .slot-label {
+    color: #0bacd2;
+}
+
+/* Enfermagem: Deep Blue */
+.slot-plantao-virtual.cargo-enferm {
+    border-top-color: #1e3a5f;
+}
+.slot-plantao-virtual.cargo-enferm.preenchido {
+    border-color: rgba(30, 58, 95, 0.2) rgba(30, 58, 95, 0.2) rgba(30, 58, 95, 0.2) #1e3a5f;
+    border-left-width: 4px;
+    background: linear-gradient(90deg, rgba(30, 58, 95, 0.01) 0%, rgba(30, 58, 95, 0.03) 100%);
+}
+.slot-plantao-virtual.cargo-enferm.preenchido .slot-avatar {
+    background: linear-gradient(135deg, #1e3a5f 0%, #112233 100%);
+    color: #ffffff;
+}
+.slot-plantao-virtual.cargo-enferm.preenchido .slot-label {
+    color: #1e3a5f;
+}
+
+/* --- EFEITO DE CRACHÁ FLUTUANTE EM FOCO (WOW DESIGN) --- */
+.slot-plantao-virtual.highlight-slot {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 25px rgba(30, 58, 95, 0.12) !important;
+    border-color: #0d6efd !important;
+    outline: 2px solid rgba(13, 110, 253, 0.15);
+}
+
+/* --- TRANSITIONS COM BLUR STEP-BY-STEP --- */
+.escala-step {
+    opacity: 0;
+    filter: blur(10px);
+    transition: filter 0.4s ease, opacity 0.35s ease;
+    display: none;
+}
+
+.escala-step.active {
+    display: block;
+    opacity: 1;
+    filter: blur(0);
+}
+
+.escala-step.exit-up {
+    display: block;
+    opacity: 0;
+    filter: blur(10px);
+}
+
+/* --- LOADER PREMIUM GLASSMORPHISM DA ESCALA (AO VIVO) --- */
+#escala-pdf-loader {
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    transition: all 0.3s ease;
+    display: flex !important;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 10;
+}
+
+/* Esconde o loader por padrão usando opacidade e pointer-events para permitir fade suave! */
+#escala-pdf-loader.d-none {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    display: flex !important; /* Mantém flex para a transição de opacidade */
+}
+
+/* O indicador de pulsação médico */
+.pulse-loader-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pulse-loader-core {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.4rem;
+    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4);
+    z-index: 2;
+}
+
+.pulse-loader-core i {
+    display: inline-block;
+    animation: rotate-sync 1.8s linear infinite;
+}
+
+.pulse-loader-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 3px solid rgba(13, 110, 253, 0.2);
+    border-radius: 50%;
+    animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    z-index: 1;
+}
+
+.pulse-loader-ring-2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 3px solid rgba(13, 110, 253, 0.1);
+    border-radius: 50%;
+    animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    animation-delay: 0.6s;
+    z-index: 1;
+}
+
+.pulse-loader-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1e3a5f;
+    letter-spacing: 0.5px;
+    animation: pulse-text 1.5s ease-in-out infinite alternate;
+}
+
+/* Animações CSS */
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.65);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.3);
+        opacity: 0;
+    }
+}
+
+@keyframes rotate-sync {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse-text {
+    0% {
+        opacity: 0.6;
+        transform: scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+}
+
+/* --- BOTÕES DE SELEÇÃO DE TURNO COM IMAGENS GLOW (SOBREPOSTOS NO PDF) --- */
+.btn-turno-img {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    cursor: pointer;
+    outline: none !important;
+    box-shadow: none !important;
+    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 5;
+    width: 48px; /* Padrão Manhã */
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+/* Compensação visual para Afternoon e Night devido aos paddings internos dos PNGs */
+.btn-turno-img[data-turno="tarde"] {
+    width: 70px;
+    height: 70px;
+}
+
+.btn-turno-img[data-turno="noite"] {
+    width: 70px;
+    height: 70px;
+}
+
+/* Imagem interna do botão (Sun, Sun tarde, Moon) */
+.btn-turno-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: brightness(0) invert(0.6) opacity(0.35);
+    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Animação de flutuação suave e contínua apenas para o turno ATIVO (Efeito Vivo) */
+.btn-turno-img[data-turno="manha"].active img {
+    animation: float-morning 4s ease-in-out infinite;
+}
+.btn-turno-img[data-turno="tarde"].active img {
+    animation: float-afternoon 4.5s ease-in-out infinite;
+    animation-delay: 0.4s;
+}
+.btn-turno-img[data-turno="noite"].active img {
+    animation: float-night 5s ease-in-out infinite;
+    animation-delay: 0.8s;
+}
+
+@keyframes float-morning {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes float-afternoon {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes float-night {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Hover comum nos desativados */
+.btn-turno-img:hover img {
+    filter: grayscale(30%) opacity(0.8) contrast(100%);
+}
+
+.btn-turno-img:hover {
+    transform: translate(-50%, -50%) !important;
+}
+
+/* --- ESTADO ATIVO DO BOTÃO DE TURNO --- */
+.btn-turno-img.active {
+    transform: translate(-50%, -50%) !important;
+}
+
+.btn-turno-img.active img {
+    filter: grayscale(0%) opacity(1) contrast(100%);
+}
+
+/* Glow específico de cada turno sobreposto (Forte e nítido) */
+.btn-turno-img[data-turno="manha"].active img {
+    filter: brightness(1) invert(0) grayscale(0%) opacity(1) drop-shadow(0 0 15px rgba(253, 197, 0, 0.95)) !important;
+}
+
+.btn-turno-img[data-turno="tarde"].active img {
+    filter: brightness(1) invert(0) grayscale(0%) opacity(1) drop-shadow(0 0 15px rgba(249, 115, 22, 0.95)) !important;
+}
+
+.btn-turno-img[data-turno="noite"].active img {
+    filter: brightness(1) invert(0) grayscale(0%) opacity(1) drop-shadow(0 0 15px rgba(59, 130, 246, 0.95)) !important;
+}
+
+/* Indicador de foco ativo no fundo (tipo uma aura suave sob o sol/lua com blur macio) */
+.btn-turno-img::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: transparent;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.4s ease;
+    opacity: 0;
+    filter: blur(14px); /* Deixa a iluminação macia e espalhada */
+}
+
+.btn-turno-img[data-turno="manha"].active::after {
+    background-color: rgba(253, 197, 0, 0.45);
+    opacity: 1;
+    transform: translate(-50%, -50%) !important;
+}
+
+.btn-turno-img[data-turno="tarde"].active::after {
+    background-color: rgba(249, 115, 22, 0.45);
+    opacity: 1;
+    transform: translate(-50%, -50%) !important;
+    width: 64px; /* Ajuste proporcional */
+    height: 64px;
+}
+
+.btn-turno-img[data-turno="noite"].active::after {
+    background-color: rgba(59, 130, 246, 0.5);
+    opacity: 1;
+    transform: translate(-50%, -50%) !important;
+    width: 60px; /* Ajuste proporcional */
+    height: 60px;
+}
+
+/* Otimizações de Altura Responsiva para Notebooks e Telas Menores (Fit to Screen - ex: 1366x768) */
+@media (max-height: 860px) {
+    #tela-escala-diaria .card-body {
+        padding: 1.25rem !important;
+    }
+    #tela-escala-diaria .mb-4 {
+        margin-bottom: 0.85rem !important;
+    }
+    #tela-escala-diaria .pb-3 {
+        padding-bottom: 0.65rem !important;
+    }
+    #escala-turno-external-bar {
+        height: 55px !important;
+        margin-bottom: 0.25rem !important;
+    }
+    .btn-turno-img img {
+        width: 80% !important;
+        height: auto !important;
+    }
+    .btn-turno-img::after {
+        display: none !important; /* Esconde a aura ativa para não sobrepor o botão espremido */
+    }
+    .card-formulario-escala {
+        padding: 1.25rem !important;
+        height: 205px !important; /* Ajuste preciso para evitar cortes em telas menores */
+    }
+    .card-formulario-escala .input-group input.form-control {
+        padding: 10px 15px !important;
+    }
+    .card-formulario-escala .mb-3 {
+        margin-bottom: 0.75rem !important;
+    }
+    .card-formulario-escala .mb-4 {
+        margin-bottom: 0.85rem !important;
+    }
+    /* Encolhe os textos ligeiramente para caber */
+    .card-formulario-escala label.form-label {
+        font-size: 1rem !important;
+    }
+    #btn-escala-imprimir {
+        padding: 8px 16px !important;
+        font-size: 0.85rem !important;
+    }
+    #escala-pdf-container {
+        max-height: 420px !important; /* Visualizador menor para caber em telas 768px sem scroll vertical */
+    }
+    /* Elevação e encolhimento da sidebar */
+    .sidebar-sistema {
+        padding: 16px !important;
+    }
+    .sidebar-menu {
+        gap: 4px !important;
+    }
+    .menu-item {
+        padding: 8px 12px !important;
+        font-size: 0.82rem !important;
+        gap: 8px !important;
+    }
+    .menu-item i {
+        font-size: 1rem !important;
+    }
+    .menu-divider {
+        margin: 8px 0 !important;
+    }
+    .sidebar-footer {
+        padding-top: 10px !important;
+        padding-bottom: 12px !important;
+        font-size: 0.68rem !important;
+        gap: 2px !important;
+    }
+}
+
+/* Gradientes Temáticos de Turnos para o Título do Card */
+.text-manha-gradient {
+    background: linear-gradient(90deg, #0284c7 0%, #0ea5e9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+.text-tarde-gradient {
+    background: linear-gradient(90deg, #ea580c 0%, #f97316 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+.text-noite-gradient {
+    background: linear-gradient(90deg, #4f46e5 0%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+/* Realce Visual de Hotspots do PDF (Foco Direto ao Clicar) */
+.escala-hotspot-botao {
+    background-color: rgba(0, 242, 254, 0.002) !important;
+    border: 1px dashed rgba(30, 58, 95, 0.05) !important;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+}
+.escala-hotspot-botao:hover {
+    background-color: rgba(0, 242, 254, 0.08) !important;
+    border: 1.5px solid rgba(0, 242, 254, 0.4) !important;
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.25);
+}
+
+/* Estúdio de Visualização do PDF */
+#escala-pdf-container {
+    background-color: #f1f5f9 !important; /* Estúdio cinza neutro premium */
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+#escala-pdf-wrapper {
+    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.15), 0 10px 20px rgba(15, 23, 42, 0.08) !important;
+    transition: all 0.4s ease;
+}
+
+/* Cards Dinâmicos do Formulário Baseados em Turnos (Sombra Marcante e Colorida) */
+.escala-card-manha {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1.5px solid rgba(14, 165, 233, 0.15) !important; /* Borda ciano sutil */
+    box-shadow: 0 25px 50px rgba(14, 165, 233, 0.1), 0 0 35px rgba(14, 165, 233, 0.05) !important;
+    transition: all 0.5s ease !important;
+}
+.escala-card-tarde {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1.5px solid rgba(245, 158, 11, 0.15) !important; /* Borda laranja sutil */
+    box-shadow: 0 25px 50px rgba(245, 158, 11, 0.1), 0 0 35px rgba(245, 158, 11, 0.05) !important;
+    transition: all 0.5s ease !important;
+}
+.escala-card-noite {
+    background: rgba(15, 23, 42, 0.9) !important; /* Fundo escuro premium na noite */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1.5px solid rgba(99, 102, 241, 0.25) !important; /* Borda indigo brilhante */
+    box-shadow: 0 25px 55px rgba(15, 23, 42, 0.45), 0 0 40px rgba(99, 102, 241, 0.15) !important;
+    color: #f8fafc !important; /* Texto claro no dark mode */
+    transition: all 0.5s ease !important;
+}
+
+/* Ajustes condicionais de textos para o card Dark da Noite */
+.escala-card-noite label.form-label {
+    color: #f1f5f9 !important; /* Branco azulado claro */
+}
+.escala-card-noite .text-muted,
+.escala-card-noite small {
+    color: #cbd5e1 !important; /* Cinza claro de alta leitura */
+}
+.escala-card-noite input.form-control {
+    background-color: rgba(15, 23, 42, 0.7) !important; /* Fundo escuro mais sólido e profundo */
+    border: 1.5px solid rgba(99, 102, 241, 0.3) !important;
+    color: #ffffff !important; /* Texto principal digitado em branco brilhante */
+}
+.escala-card-noite input.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.38) !important; /* Dica translúcida extremamente visível e contrastada */
+}
+.escala-card-noite input.form-control:focus {
+    border-color: #818cf8 !important;
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.4) !important;
+    background-color: rgba(15, 23, 42, 0.95) !important;
+}
+.escala-card-noite .input-group-text {
+    background-color: rgba(15, 23, 42, 0.7) !important;
+    border: 1.5px solid rgba(99, 102, 241, 0.3) !important;
+    color: #818cf8 !important; /* Ícone em indigo vibrante */
+}
+.escala-card-noite .btn-secondary {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #f1f5f9 !important;
+}
+.escala-card-noite .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.18) !important;
+}
+.escala-card-noite .border-bottom {
+    border-color: rgba(255, 255, 255, 0.1) !important; /* Divisor de navegação superior */
+}
+
+/* Hotspot Ativo correspondente ao input focado na direita */
+.escala-hotspot-botao.hotspot-focado {
+    background-color: rgba(0, 242, 254, 0.12) !important;
+    border: 2px solid #00f2fe !important;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.45);
+    animation: hotspotPulse 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes hotspotPulse {
+    0% {
+        box-shadow: 0 0 5px rgba(0, 242, 254, 0.3);
+        border-color: rgba(0, 242, 254, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
+        border-color: #00f2fe;
+    }
+}
+
+/* Efeito Premium nos botões de Exportação */
+.btn-opcao-exportar:hover {
+    border-color: #0d6efd !important;
+    background-color: #ffffff !important;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* --- TOAST PREMIUM DE LEMBRETE DE ESCALA --- */
+.toast-escala-lembrete-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(30, 58, 95, 0.06) !important;
+    border-left: 4px solid #6c757d !important; /* Borda lateral base */
+    border-radius: 16px;
+    padding: 16px;
+    width: 330px;
+    z-index: 9999;
+    box-shadow: 0 20px 45px rgba(30, 58, 95, 0.15) !important;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    animation: toastSlideIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+/* Transição de Saída */
+.toast-escala-lembrete-container.toast-saida {
+    animation: toastSlideOut 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes toastSlideIn {
+    0% {
+        transform: translateX(100px) translateY(0) scale(0.95);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0) translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes toastSlideOut {
+    0% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(120px) scale(0.9);
+        opacity: 0;
+    }
+}
+
+/* Dinamismo Cromático das Bordas do Toast por Turno */
+.toast-escala-lembrete-container.toast-turno-manha {
+    border-left-color: #0ea5e9 !important; /* Ciano */
+}
+.toast-escala-lembrete-container.toast-turno-tarde {
+    border-left-color: #fd7e14 !important; /* Laranja */
+}
+.toast-escala-lembrete-container.toast-turno-noite {
+    border-left-color: #6366f1 !important; /* Roxo */
+}
+
+/* Barra de progresso encolhendo */
+.toast-progress-bar-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: rgba(30, 58, 95, 0.05);
+}
+.toast-progress-bar {
+    height: 100%;
+    background-color: #FED34E; /* Cor amarela do tema */
+    width: 100%;
+    transition: width 15s linear; /* Reduz em 15 segundos */
+}
+
+/* Estilo do Botão Customizado da Escala no Toast */
+.btn-escala-toast-preencher {
+    background-color: #FED34E !important;
+    border-color: #FED34E !important;
+    color: #1e3a5f !important;
+    font-weight: 700 !important;
+    transition: all 0.2s ease;
+}
+.btn-escala-toast-preencher:hover {
+    background-color: #e5b827 !important;
+    border-color: #e5b827 !important;
+    color: #1e3a5f !important;
+}
+
+/* Sobrescreve no Modo Escuro Global */
+body.modo-escuro-global .toast-escala-lembrete-container {
+    background: rgba(17, 24, 39, 0.98) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5) !important;
+}
+body.modo-escuro-global .toast-escala-lembrete-container span.text-dark {
+    color: #f3f4f6 !important;
+}
+body.modo-escuro-global .toast-progress-bar-container {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* --- MODO CONFORTO NOTURNO (DARK MODE ESCALA) --- */
+.modo-conforto-ativo #escala-pdf-container {
+    background-color: #0b0f19 !important; /* Fundo grafite profundo */
+}
+
+.modo-conforto-ativo #escala-pdf-wrapper {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 10px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.modo-conforto-ativo #escala-pdf-canvas {
+    filter: invert(0.9) hue-rotate(180deg) !important; /* Inversão de cores premium */
+}
+
+.modo-conforto-ativo .card-formulario-escala {
+    background: linear-gradient(145deg, #111827 0%, #0b0f19 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(14, 165, 233, 0.05) !important;
+}
+
+.modo-conforto-ativo .card-formulario-escala label.form-label {
+    color: #f3f4f6 !important;
+}
+
+.modo-conforto-ativo .card-formulario-escala input.form-control {
+    background-color: #0b0f19 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+.modo-conforto-ativo .card-formulario-escala input.form-control:focus {
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 0 12px rgba(14, 165, 233, 0.3) !important;
+}
+
+.modo-conforto-ativo .card-formulario-escala .input-group-text {
+    background-color: #0b0f19 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.modo-conforto-ativo #escala-turno-titulo-grande {
+    color: #f3f4f6 !important;
+}
+
+.modo-conforto-ativo .text-dark {
+    color: #f3f4f6 !important;
+}
+
+.modo-conforto-ativo .text-muted {
+    color: #9ca3af !important;
+}
+
+.modo-conforto-ativo .escala-hotspot-botao {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+.modo-conforto-ativo .escala-hotspot-botao.hotspot-focado {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.45);
+}
+
+/* ==========================================================================
+   MODO ESCURO GLOBAL (.modo-escuro-global)
+   ========================================================================== */
+body.modo-escuro-global {
+    background-color: #0b0f19 !important;
+    color: #f3f4f6 !important;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body.modo-escuro-global .conteudo-principal {
+    background-color: #0b0f19 !important;
+    transition: background-color 0.4s ease;
+}
+
+body.modo-escuro-global .titulo-principal {
+    color: #f3f4f6 !important;
+}
+
+body.modo-escuro-global .text-muted {
+    color: #9ca3af !important;
+}
+
+/* Cards do Dashboard Principal */
+body.modo-escuro-global .card-opcao {
+    background-color: #111827 !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35) !important;
+}
+
+body.modo-escuro-global .card-opcao h2 {
+    color: #f3f4f6 !important;
+}
+
+body.modo-escuro-global .card-opcao p {
+    color: #9ca3af !important;
+}
+
+body.modo-escuro-global .card-opcao .menu-icon-wrapper {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Relógio do Dashboard */
+body.modo-escuro-global .card-relogio {
+    background-color: #111827 !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.modo-escuro-global .card-relogio #dashboard-relogio {
+    color: #0ea5e9 !important;
+}
+
+body.modo-escuro-global .card-relogio #dashboard-data {
+    color: #9ca3af !important;
+}
+
+body.modo-escuro-global .card-relogio .icon-circle {
+    background-color: rgba(14, 165, 233, 0.15) !important;
+    color: #0ea5e9 !important;
+}
+
+/* Telas Gerais (Cards e Formulários do SADT / Internação / Termos) */
+body.modo-escuro-global .card {
+    background-color: #111827 !important;
+    color: #f3f4f6 !important;
+}
+
+body.modo-escuro-global .card-header {
+    background-color: #1f2937 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    color: #f3f4f6 !important;
+}
+
+body.modo-escuro-global .modal-content {
+    background-color: #111827 !important;
+    color: #f3f4f6 !important;
+}
+
+body.modo-escuro-global .modal-header,
+body.modo-escuro-global .modal-footer {
+    border-color: rgba(255, 255, 255, 0.06) !important;
+    background-color: #1f2937 !important;
+}
+
+body.modo-escuro-global .modal-body {
+    background-color: #111827 !important;
+    color: #f3f4f6 !important;
+}
+
+/* Classes Utilitárias de Fundo do Bootstrap */
+body.modo-escuro-global .bg-white,
+body.modo-escuro-global .bg-light,
+body.modo-escuro-global .modal-header.bg-light {
+    background-color: #111827 !important;
+    color: #f3f4f6 !important;
+}
+
+/* Bordas Gerais */
+body.modo-escuro-global .border {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Inputs, Textareas e Placeholders */
+body.modo-escuro-global .form-control,
+body.modo-escuro-global .sadt-form .form-control {
+    background-color: #0b0f19 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+}
+
+body.modo-escuro-global .form-control:focus,
+body.modo-escuro-global .sadt-form .form-control:focus {
+    background-color: #0b0f19 !important;
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.25) !important;
+    color: #ffffff !important;
+}
+
+body.modo-escuro-global .form-control::placeholder,
+body.modo-escuro-global input::placeholder,
+body.modo-escuro-global textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+body.modo-escuro-global .form-label,
+body.modo-escuro-global label {
+    color: #cbd5e1 !important;
+}
+
+body.modo-escuro-global .input-group-text {
+    background-color: #0b0f19 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Especificidade do Formulário de Guias SADT */
+body.modo-escuro-global .sadt-form {
+    background-color: #111827 !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Logotipos das Operadoras integrados ao Modo Escuro */
+body.modo-escuro-global .sadt-logo,
+body.modo-escuro-global .internacao-logo {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+body.modo-escuro-global .sadt-logo.disabled,
+body.modo-escuro-global .internacao-logo.disabled {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    opacity: 0.15 !important;
+    filter: grayscale(100%) brightness(0.4) !important;
+}
+
+/* Visualizador de Escala Diária no Modo Escuro */
+body.modo-escuro-global #escala-pdf-container {
+    background-color: #0b0f19 !important;
+}
+
+body.modo-escuro-global #escala-pdf-wrapper {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 10px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.modo-escuro-global #escala-pdf-canvas {
+    filter: invert(0.9) hue-rotate(180deg) !important; /* Inversão do PDF */
+}
+
+body.modo-escuro-global .card-formulario-escala {
+    background: linear-gradient(145deg, #111827 0%, #0b0f19 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(14, 165, 233, 0.05) !important;
+}
+body.modo-escuro-global .card-formulario-escala .icon-circle {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
 
 
+body.modo-escuro-global #escala-turno-titulo-grande {
+    color: #f3f4f6 !important;
+}
 
+body.modo-escuro-global .text-dark {
+    color: #f3f4f6 !important;
+}
 
-
+body.modo-escuro-global .escala-hotspot-botao {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+body.modo-escuro-global .escala-hotspot-botao.hotspot-focado {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.45);
+}
+
+body.modo-escuro-global .linha-conectora-escala::before {
+    background-color: #111827 !important;
+}
+
+/* Tabelas e Resultados no Modo Escuro */
+body.modo-escuro-global .table {
+    color: #f3f4f6 !important;
+}
+
+body.modo-escuro-global .table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+body.modo-escuro-global th,
+body.modo-escuro-global td {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Botão Discreto de Limpeza no Card de Formulário */
+.btn-limpar-escala {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: #64748b;
+    opacity: 0.35;
+    font-size: 0.95rem;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    z-index: 10;
+}
+.btn-limpar-escala:hover {
+    opacity: 1;
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.08);
+    transform: scale(1.05);
+}
+
+body.modo-escuro-global .btn-limpar-escala {
+    color: #9ca3af;
+}
+body.modo-escuro-global .btn-limpar-escala:hover {
+    color: #f87171;
+    background-color: rgba(248, 113, 113, 0.12);
+}
+
+/* ==========================================================================
+   INTERRUPTOR MINIMALISTA DE DARK MODE (SIDEBAR FOOTER - ESTILO X/TWITTER)
+   ========================================================================== */
+.btn-dark-mode-toggle {
+    background: none !important;
+    border: none !important;
+    color: rgba(255, 255, 255, 0.45) !important;
+    font-size: 1.25rem;
+    padding: 8px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    margin: 12px auto 0 auto; /* Centralização horizontal abaixo dos metadados */
+    outline: none !important;
+}
+
+.btn-dark-mode-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+}
+
+.btn-dark-mode-toggle:active {
+    transform: scale(0.92);
+}
+
+/* ==========================================================================
+   OTIMIZAÇÕES ESPECÍFICAS PARA MONITORES CURTOS (1366x768 e Monitores AOC)
+   ========================================================================== */
+@media (max-height: 780px) {
+    /* Barra Lateral Esquerda */
+    .sidebar-sistema {
+        padding: 12px !important;
+    }
+    .sidebar-brand {
+        margin-bottom: 12px !important;
+        padding-bottom: 8px !important;
+        font-size: 1.15rem !important;
+    }
+    .sidebar-user-badge {
+        padding: 6px 10px !important;
+        margin-bottom: 12px !important;
+        font-size: 0.75rem !important;
+    }
+    .sidebar-user-badge img {
+        width: 28px !important;
+        height: 28px !important;
+    }
+    .sidebar-menu {
+        gap: 2px !important;
+    }
+    .menu-item {
+        padding: 6px 10px !important;
+        font-size: 0.78rem !important;
+    }
+    .menu-item i {
+        font-size: 0.95rem !important;
+    }
+    .menu-divider {
+        margin: 4px 0 !important;
+    }
+    .sidebar-footer {
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+        font-size: 0.62rem !important;
+    }
+    .btn-dark-mode-toggle {
+        margin-top: 6px !important;
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 1.1rem !important;
+    }
+
+    /* Conteúdo Principal e Dashboard */
+    .conteudo-principal {
+        padding: 16px 24px 24px 24px !important;
+    }
+    #tela-menu-principal > .d-flex {
+        margin-bottom: 1.5rem !important; /* mb-5 reduzido */
+    }
+    .container-cards {
+        gap: 1rem !important;
+    }
+    .card-opcao {
+        padding: 16px !important;
+    }
+    .card-opcao h2 {
+        font-size: 1.35rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    .card-opcao .menu-icon-wrapper {
+        margin-bottom: 0.5rem !important;
+    }
+    .card-opcao .menu-icon-wrapper i {
+        font-size: 3rem !important;
+    }
+    .card-opcao p {
+        font-size: 0.7rem !important;
+        padding: 0 5px !important;
+    }
+
+    /* Ajuste da Imagem do Termo Militar no Dashboard */
+    .imagem-a4-completa {
+        height: 340px !important; /* Encolhe visualizações A4 no Dashboard */
+    }
+    
+    /* Modais */
+    .modal-body {
+        padding: 16px !important;
+    }
+}
