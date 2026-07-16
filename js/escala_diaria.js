@@ -1,5 +1,5 @@
 // ==========================================================================
-// MÓDULO: ESCALA DIÁRIA DE PLANTONISTAS (HOSPITAL)
+// SISTEMA: ESCALA DIÁRIA DE PLANTONISTAS (HOSPITAL)
 // ==========================================================================
 // Este arquivo gerencia o formulário step-by-step de preenchimento dos turnos
 // (Manhã, Tarde, Noite), o salvamento local automático (localStorage) dos plantões,
@@ -13,17 +13,155 @@ try {
     const dataSalva = localStorage.getItem('escala_diaria_data_salvamento');
 
     if (dataSalva && dataSalva === hoje) {
+        // Mesmo dia: recupera os dados salvos
         const dadosSalvos = localStorage.getItem('escala_diaria_dados');
         if (dadosSalvos) {
             escalaDados = JSON.parse(dadosSalvos);
         }
     } else {
-        // Mudança de data ou primeiro acesso: purga registros do dia anterior
+        // Mudança de data ou primeiro acesso: purga os registros do dia anterior
         localStorage.removeItem('escala_diaria_dados');
         localStorage.removeItem('escala_diaria_data_salvamento');
+        localStorage.removeItem('escala_diaria_persistir_ativo');
     }
 } catch (e) {
     console.warn("Erro ao carregar dados da escala do localStorage:", e);
+}
+
+// Banco de dados dinâmico de sugestões de profissionais (salvo localmente no navegador)
+let profissionaisCadastrados = {
+    clinicos: [],
+    cirurgiao: [],
+    cardiologista: [],
+    ortopedista: [],
+    recepcao: [],
+    agente: [],
+    caixa: [],
+    gesso: [],
+    raio_x: [],
+    enfermagem: []
+};
+
+// Carrega os profissionais aprendidos do localStorage
+try {
+    const dadosCadastrados = localStorage.getItem('escala_diaria_profissionais');
+    if (dadosCadastrados) {
+        profissionaisCadastrados = JSON.parse(dadosCadastrados);
+        
+        // Higienização automática do banco de profissionais (remove nomes curtos ou fragmentos)
+        let higienizado = false;
+        const prefixosProibidos = ['dr', 'dra', 'dr.', 'dra.', 'enf', 'enf.', 'tec', 'tec.', 'enfa', 'enfa.'];
+        for (const grupo in profissionaisCadastrados) {
+            if (Array.isArray(profissionaisCadastrados[grupo])) {
+                const originalLength = profissionaisCadastrados[grupo].length;
+                profissionaisCadastrados[grupo] = profissionaisCadastrados[grupo].filter(nome => {
+                    const nomeLimpo = nome.trim();
+                    const nomeMin = nomeLimpo.toLowerCase();
+                    return nomeLimpo.length >= 3 && nomeLimpo.length <= 17 && !prefixosProibidos.includes(nomeMin);
+                });
+                if (profissionaisCadastrados[grupo].length !== originalLength) {
+                    higienizado = true;
+                }
+            }
+        }
+        if (higienizado) {
+            localStorage.setItem('escala_diaria_profissionais', JSON.stringify(profissionaisCadastrados));
+        }
+    }
+} catch (e) {
+    console.warn("Erro ao carregar banco de profissionais:", e);
+}
+
+// Analisa os nomes digitados na escala e os cadastra permanentemente no banco local
+function aprenderProfissionaisDaEscala() {
+    let alterado = false;
+    const prefixosProibidos = ['dr', 'dra', 'dr.', 'dra.', 'enf', 'enf.', 'tec', 'tec.', 'enfa', 'enfa.'];
+    for (const turno of ['manha', 'tarde', 'noite']) {
+        const campos = escalaCamposConfig[turno];
+        if (!campos) continue;
+        for (const campo of campos) {
+            const valor = escalaDados[campo.id];
+            if (valor) {
+                const nomeLimpo = valor.trim();
+                const nomeMin = nomeLimpo.toLowerCase();
+                if (nomeLimpo.length >= 3 && nomeLimpo.length <= 17 && !prefixosProibidos.includes(nomeMin)) {
+                    const grupo = campo.grupo;
+                    if (!profissionaisCadastrados[grupo]) {
+                        profissionaisCadastrados[grupo] = [];
+                    }
+                    if (!profissionaisCadastrados[grupo].includes(nomeLimpo)) {
+                        profissionaisCadastrados[grupo].push(nomeLimpo);
+                        profissionaisCadastrados[grupo].sort();
+                        alterado = true;
+                    }
+                }
+            }
+        }
+    }
+    if (alterado) {
+        try {
+            localStorage.setItem('escala_diaria_profissionais', JSON.stringify(profissionaisCadastrados));
+        } catch (e) {
+            console.warn("Erro ao salvar banco de profissionais aprendido:", e);
+        }
+    }
+}
+
+// Dispara um pulso visual brilhante na linha conectora que corre do formulário ao PDF
+function dispararPulsoLinhaConectora() {
+    const linha = document.querySelector('.linha-conectora-escala');
+    if (linha) {
+        linha.classList.add('pulso-ativo-linha');
+        if (linha.timeoutId) clearTimeout(linha.timeoutId);
+        linha.timeoutId = setTimeout(() => {
+            linha.classList.remove('pulso-ativo-linha');
+        }, 450);
+    }
+}
+
+// Exclui um profissional específico de um grupo no localStorage de sugestões
+function excluirSugestaoDaMemoria(grupo, nome, botaoElemento) {
+    try {
+        const chave = 'escala_diaria_profissionais';
+        const dadosLocais = localStorage.getItem(chave);
+        if (!dadosLocais) return;
+
+        let profissionais = JSON.parse(dadosLocais);
+        if (profissionais[grupo]) {
+            // Remove o nome exato da lista do grupo
+            profissionais[grupo] = profissionais[grupo].filter(n => n.trim().toLowerCase() !== nome.trim().toLowerCase());
+            
+            // Grava de volta no localStorage
+            localStorage.setItem(chave, JSON.stringify(profissionais));
+            
+            // Atualiza o objeto de memória ativa
+            profissionaisCadastrados = profissionais;
+
+            // Remove a pílula do DOM com um efeito suave de fade
+            const tagPai = botaoElemento.closest('.tag-sugestao-inline');
+            if (tagPai) {
+                tagPai.style.opacity = '0';
+                tagPai.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    // Seleciona o container das sugestões
+                    const container = tagPai.parentElement;
+                    tagPai.remove();
+                    
+                    // Se não sobrou nenhuma pílula visível, oculta o container
+                    if (container && container.querySelectorAll('.tag-sugestao-inline').length === 0) {
+                        container.classList.add('d-none');
+                        container.innerHTML = '';
+                    }
+                }, 150);
+            }
+
+            if (typeof exibirToastLembrete === 'function') {
+                exibirToastLembrete('success', `"${nome}" foi removido do banco local.`);
+            }
+        }
+    } catch (e) {
+        console.error("Erro ao excluir sugestão específica do localStorage:", e);
+    }
 }
 
 let escalaPassoAtual = 0;
@@ -43,10 +181,10 @@ const escalaCamposConfig = {
         { id: 'plant_adm2M', label: 'Recepcionista 2 (Manhã)', labelCurta: 'Recepção 2', icone: 'person-badge', grupo: 'recepcao' },
         { id: 'plant_adm3M', label: 'Recepcionista 3 (Manhã)', labelCurta: 'Recepção 3', icone: 'person-badge', grupo: 'recepcao' },
         { id: 'plant_adm4M', label: 'Recepcionista 4 (Manhã)', labelCurta: 'Recepção 4', icone: 'person-badge', grupo: 'recepcao' },
-        { id: 'plant_agenteM', label: 'Agente de Emergência (Manhã)', labelCurta: 'Agente', icone: 'shield-check', grupo: 'apoio' },
-        { id: 'plant_caixaM', label: 'Caixa (Manhã)', labelCurta: 'Caixa', icone: 'cash-coin', grupo: 'apoio' },
-        { id: 'plant_imobiM', label: 'Técnico de Gesso (Manhã)', labelCurta: 'Gesso', icone: 'layers-half', grupo: 'apoio' },
-        { id: 'plant_raioM', label: 'Técnico de Raio-X (Manhã)', labelCurta: 'Raio-X', icone: 'lightning-charge', grupo: 'apoio' },
+        { id: 'plant_agenteM', label: 'Agente de Emergência (Manhã)', labelCurta: 'Agente', icone: 'shield-check', grupo: 'agente' },
+        { id: 'plant_caixaM', label: 'Caixa (Manhã)', labelCurta: 'Caixa', icone: 'cash-coin', grupo: 'caixa' },
+        { id: 'plant_imobiM', label: 'Técnico de Gesso (Manhã)', labelCurta: 'Gesso', icone: 'layers-half', grupo: 'gesso' },
+        { id: 'plant_raioM', label: 'Técnico de Raio-X (Manhã)', labelCurta: 'Raio-X', icone: 'lightning-charge', grupo: 'raio_x' },
         { id: 'plant_enfermM', label: 'Enfermagem 1 (Manhã)', labelCurta: 'Enferm. 1', icone: 'capsule', grupo: 'enfermagem' },
         { id: 'plant_enferm2M', label: 'Enfermagem 2 (Manhã)', labelCurta: 'Enferm. 2', icone: 'capsule', grupo: 'enfermagem' },
         { id: 'plant_enferm3M', label: 'Enfermagem 3 (Manhã)', labelCurta: 'Enferm. 3', icone: 'capsule', grupo: 'enfermagem' },
@@ -64,10 +202,10 @@ const escalaCamposConfig = {
         { id: 'plant_adm2T', label: 'Recepcionista 2 (Tarde)', labelCurta: 'Recepção 2', icone: 'person-badge', grupo: 'recepcao' },
         { id: 'plant_adm3T', label: 'Recepcionista 3 (Tarde)', labelCurta: 'Recepção 3', icone: 'person-badge', grupo: 'recepcao' },
         { id: 'plant_adm4T', label: 'Recepcionista 4 (Tarde)', labelCurta: 'Recepção 4', icone: 'person-badge', grupo: 'recepcao' },
-        { id: 'plant_agenteT', label: 'Agente de Emergência (Tarde)', labelCurta: 'Agente', icone: 'shield-check', grupo: 'apoio' },
-        { id: 'plant_caixaT', label: 'Caixa (Tarde)', labelCurta: 'Caixa', icone: 'cash-coin', grupo: 'apoio' },
-        { id: 'plant_imobiT', label: 'Técnico de Gesso (Tarde)', labelCurta: 'Gesso', icone: 'layers-half', grupo: 'apoio' },
-        { id: 'plant_raioT', label: 'Técnico de Raio-X (Tarde)', labelCurta: 'Raio-X', icone: 'lightning-charge', grupo: 'apoio' },
+        { id: 'plant_agenteT', label: 'Agente de Emergência (Tarde)', labelCurta: 'Agente', icone: 'shield-check', grupo: 'agente' },
+        { id: 'plant_caixaT', label: 'Caixa (Tarde)', labelCurta: 'Caixa', icone: 'cash-coin', grupo: 'caixa' },
+        { id: 'plant_imobiT', label: 'Técnico de Gesso (Tarde)', labelCurta: 'Gesso', icone: 'layers-half', grupo: 'gesso' },
+        { id: 'plant_raioT', label: 'Técnico de Raio-X (Tarde)', labelCurta: 'Raio-X', icone: 'lightning-charge', grupo: 'raio_x' },
         { id: 'plant_enfermT', label: 'Enfermagem 1 (Tarde)', labelCurta: 'Enferm. 1', icone: 'capsule', grupo: 'enfermagem' },
         { id: 'plant_enferm2T', label: 'Enfermagem 2 (Tarde)', labelCurta: 'Enferm. 2', icone: 'capsule', grupo: 'enfermagem' },
         { id: 'plant_enferm3T', label: 'Enfermagem 3 (Tarde)', labelCurta: 'Enferm. 3', icone: 'capsule', grupo: 'enfermagem' },
@@ -82,10 +220,10 @@ const escalaCamposConfig = {
         { id: 'medico_ortopedistaN', label: 'Médico Ortopedista (Noite)', labelCurta: 'Ortopedista', icone: 'bandaid', grupo: 'ortopedista' },
         { id: 'plant_admN', label: 'Recepcionista 1 (Noite)', labelCurta: 'Recepção 1', icone: 'person-badge', grupo: 'recepcao' },
         { id: 'plant_adm2N', label: 'Recepcionista 2 (Noite)', labelCurta: 'Recepção 2', icone: 'person-badge', grupo: 'recepcao' },
-        { id: 'plant_agenteN', label: 'Agente de Emergência (Noite)', labelCurta: 'Agente', icone: 'shield-check', grupo: 'apoio' },
-        { id: 'plant_caixaN', label: 'Caixa (Noite)', labelCurta: 'Caixa', icone: 'cash-coin', grupo: 'apoio' },
-        { id: 'plant_imobiN', label: 'Técnico de Gesso (Noite)', labelCurta: 'Gesso', icone: 'layers-half', grupo: 'apoio' },
-        { id: 'plant_raioN', label: 'Técnico de Raio-X (Noite)', labelCurta: 'Raio-X', icone: 'lightning-charge', grupo: 'apoio' },
+        { id: 'plant_agenteN', label: 'Agente de Emergência (Noite)', labelCurta: 'Agente', icone: 'shield-check', grupo: 'agente' },
+        { id: 'plant_caixaN', label: 'Caixa (Noite)', labelCurta: 'Caixa', icone: 'cash-coin', grupo: 'caixa' },
+        { id: 'plant_imobiN', label: 'Técnico de Gesso (Noite)', labelCurta: 'Gesso', icone: 'layers-half', grupo: 'gesso' },
+        { id: 'plant_raioN', label: 'Técnico de Raio-X (Noite)', labelCurta: 'Raio-X', icone: 'lightning-charge', grupo: 'raio_x' },
         { id: 'plant_enfermN', label: 'Enfermagem 1 (Noite)', labelCurta: 'Enferm. 1', icone: 'capsule', grupo: 'enfermagem' },
         { id: 'plant_enferm2N', label: 'Enfermagem 2 (Noite)', labelCurta: 'Enferm. 2', icone: 'capsule', grupo: 'enfermagem' },
         { id: 'plant_enferm3N', label: 'Enfermagem 3 (Noite)', labelCurta: 'Enferm. 3', icone: 'capsule', grupo: 'enfermagem' },
@@ -100,7 +238,10 @@ const escalaGrupoNomes = {
     'cardiologista': 'Cardiologistas',
     'ortopedista': 'Ortopedistas',
     'recepcao': 'Recepcionistas',
-    'apoio': 'Técnicos/Apoio',
+    'agente': 'Agentes de Emergência',
+    'caixa': 'Caixas',
+    'gesso': 'Técnicos de Gesso',
+    'raio_x': 'Técnicos de Raio-X',
     'enfermagem': 'Enfermagem'
 };
 
@@ -121,6 +262,24 @@ async function inicializarEscalaDiaria() {
             escalaDados['data_atual'] = `${dia}/${mes}/${ano}`;
         }
 
+        // Auto-seleciona o turno se houver dados preenchidos na memória
+        let turnoAuto = null;
+        for (const turno of ['manha', 'tarde', 'noite']) {
+            const campos = escalaCamposConfig[turno];
+            if (campos) {
+                const temDados = campos.some(campo => escalaDados[campo.id] && escalaDados[campo.id].trim() !== '');
+                if (temDados) {
+                    turnoAuto = turno;
+                    break;
+                }
+            }
+        }
+        if (turnoAuto) {
+            escalaTurnoSelecionado = turnoAuto;
+        } else {
+            escalaTurnoSelecionado = null;
+        }
+
         // 1. Carrega o PDF original em segundo plano
         await carregarPdfOriginal();
 
@@ -130,12 +289,49 @@ async function inicializarEscalaDiaria() {
         // 3. Configura seletores de turno do topo
         configurarSeletoresTurno();
 
-        // 4. Renderiza o PDF inicial no canvas
+        // 4. Configura o botão de persistência permanente
+        configurarBotaoPersistencia();
+
+        // 5. Renderiza o PDF inicial no canvas
         await atualizarVisualPDF();
 
     } catch (erro) {
         console.error("Erro ao inicializar Escala Diária:", erro);
     }
+}
+
+// Configura o comportamento do botão de salvamento persistente da escala
+function configurarBotaoPersistencia() {
+    const btnPersistir = document.getElementById('btn-persistir-escala');
+    if (!btnPersistir) return;
+
+    // Recupera o estado de persistência ativo
+    const persistenteAtivo = localStorage.getItem('escala_diaria_persistir_ativo') === 'true';
+    if (persistenteAtivo) {
+        btnPersistir.classList.add('salvo');
+    } else {
+        btnPersistir.classList.remove('salvo');
+    }
+
+    // Configura o evento de clique
+    btnPersistir.addEventListener('click', () => {
+        const estaSalvo = btnPersistir.classList.contains('salvo');
+        try {
+            if (estaSalvo) {
+                // Desativa salvamento persistente
+                btnPersistir.classList.remove('salvo');
+                localStorage.removeItem('escala_diaria_persistir_ativo');
+            } else {
+                // Ativa salvamento persistente e grava dados atuais
+                btnPersistir.classList.add('salvo');
+                localStorage.setItem('escala_diaria_persistir_ativo', 'true');
+                localStorage.setItem('escala_diaria_dados', JSON.stringify(escalaDados));
+                localStorage.setItem('escala_diaria_data_salvamento', new Date().toDateString());
+            }
+        } catch (e) {
+            console.warn("Erro ao alterar configuracao de persistencia:", e);
+        }
+    });
 }
 
 // Carrega o PDF modelo do servidor para a memória
@@ -229,7 +425,7 @@ async function renderizarPdfBytesNoCanvas(pdfBytes) {
 
         const viewportOriginal = page.getViewport({ scale: 1 });
         const escalaCalculada = containerWidth / viewportOriginal.width;
-        const viewport = page.getViewport({ scale: Math.max(escalaCalculada, 1.25) });
+        const viewport = page.getViewport({ scale: escalaCalculada });
 
         // Criamos um canvas oculto na memória (offscreen buffer)
         const canvasOculto = document.createElement('canvas');
@@ -430,7 +626,7 @@ function atualizarTituloTurnoGrande() {
     }
 
     if (escalaTurnoSelecionado === 'manha') {
-        tituloEl.innerHTML = '<i class="bi bi-brightness-high-fill me-2" style="color: #0ea5e9;"></i>Plantão Matutino';
+        tituloEl.innerHTML = '<i class="bi bi-sun me-2" style="color: #0ea5e9;"></i>Plantão Matutino';
         tituloEl.className = "fw-extrabold mb-0 text-manha-gradient d-flex align-items-center";
     } else if (escalaTurnoSelecionado === 'tarde') {
         tituloEl.innerHTML = '<i class="bi bi-sun-fill me-2" style="color: #f59e0b;"></i>Plantão Vespertino';
@@ -484,7 +680,7 @@ function criarFormularioPassoAPasso() {
         stepDiv.className = `escala-step ${index === 0 ? 'active' : ''}`;
         stepDiv.setAttribute('data-step', index);
 
-        // Estrutura limpa: apenas pergunta e caixa de digitação
+        // Estrutura com suporte a sugestões horizontais inline alinhadas abaixo do input
         stepDiv.innerHTML = `
             <div class="text-start">
                 <label for="input-${campo.id}" class="form-label fw-bold d-block text-dark mb-2" style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; color: #1e3a5f;">
@@ -497,33 +693,104 @@ function criarFormularioPassoAPasso() {
                     <input type="text" class="form-control border-start-0 py-3" id="input-${campo.id}" 
                            placeholder="Digite o nome do plantonista..." 
                            style="border-radius: 0 12px 12px 0 !important; font-size: 0.95rem;"
-                           value="${escalaDados[campo.id] || ''}" autocomplete="off">
+                           value="${escalaDados[campo.id] || ''}" autocomplete="off" maxlength="17">
                 </div>
+                <div class="container-sugestoes-inline" id="container-sugestoes-${campo.id}"></div>
             </div>
         `;
 
         // Manipuladores de eventos para atualização em tempo real
         const input = stepDiv.querySelector('input');
+        const containerSugestoes = stepDiv.querySelector('.container-sugestoes-inline');
 
-        // 1. Grava o valor na memória e persiste no localStorage (Auto-Save)
+        // Função interna para preencher o campo com a sugestão e avançar
+        function preencherCampoComSugestao(nome) {
+            input.value = nome;
+            escalaDados[campo.id] = nome;
+            containerSugestoes.innerHTML = '';
+            
+            try {
+                localStorage.setItem('escala_diaria_dados', JSON.stringify(escalaDados));
+                localStorage.setItem('escala_diaria_data_salvamento', new Date().toDateString());
+            } catch (err) { }
+            
+            agendarAtualizacaoVisualPDF();
+            aprenderProfissionaisDaEscala();
+            
+            // Avança após 150ms para ficar visualmente bonito
+            setTimeout(avancarPassoEscala, 150);
+        }
+
+        // Evento de digitação para filtrar e mostrar sugestões horizontais inline
         input.addEventListener('input', (e) => {
-            escalaDados[campo.id] = e.target.value;
+            const valor = e.target.value;
+            escalaDados[campo.id] = valor;
+            
+            // Grava o valor na memória e persiste no localStorage (Auto-Save)
             try {
                 localStorage.setItem('escala_diaria_dados', JSON.stringify(escalaDados));
                 localStorage.setItem('escala_diaria_data_salvamento', new Date().toDateString());
             } catch (err) {
                 console.warn("Erro ao salvar dados no localStorage:", err);
             }
+
+            // Filtra sugestões da categoria exata se o usuário digitou pelo menos 2 letras
+            const grupo = campo.grupo;
+            const listaProfissionais = profissionaisCadastrados[grupo] || [];
+            
+            if (valor.trim().length >= 2 && listaProfissionais.length > 0) {
+                const termo = valor.toLowerCase().trim();
+                // Filtramos os correspondentes e limitamos a no máximo 2 ou 3 sugestões
+                const filtrados = listaProfissionais.filter(nome => nome.toLowerCase().includes(termo)).slice(0, 3);
+                
+                if (filtrados.length > 0) {
+                    containerSugestoes.innerHTML = '';
+                    
+                    filtrados.forEach((nome) => {
+                        const tag = document.createElement('div');
+                        tag.className = 'tag-sugestao-inline';
+                        tag.setAttribute('data-sugestao', nome);
+                        
+                        tag.innerHTML = `
+                            <span class="sugestao-texto-wrapper d-flex align-items-center"><i class="bi bi-arrow-right-short me-1"></i>${nome}</span>
+                            <button type="button" class="btn-excluir-sugestao" title="Excluir esta sugestão da memória" onclick="event.stopPropagation(); excluirSugestaoDaMemoria('${grupo}', '${nome.replace(/'/g, "\\'")}', this)">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        `;
+                        
+                        tag.addEventListener('click', (ev) => {
+                            ev.stopPropagation();
+                            preencherCampoComSugestao(nome);
+                        });
+                        
+                        containerSugestoes.appendChild(tag);
+                    });
+                } else {
+                    containerSugestoes.innerHTML = '';
+                }
+            } else {
+                containerSugestoes.innerHTML = '';
+            }
         });
 
-        // 2. Renderiza o PDF apenas quando o usuário confirmar/sair do campo
+        // Renderiza o PDF apenas quando o usuário confirmar/sair do campo
         input.addEventListener('change', () => {
             agendarAtualizacaoVisualPDF();
+            aprenderProfissionaisDaEscala();
         });
 
-        // 2. Tecla ENTER avança automaticamente
+        // Atalhos de teclado (Tab ou ArrowRight aceita a primeira sugestão se houver)
         input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
+            if (e.key === 'ArrowRight' || e.key === 'Tab') {
+                const primeiraTag = containerSugestoes.querySelector('.tag-sugestao-inline');
+                if (primeiraTag && containerSugestoes.children.length > 0 && input.selectionStart === input.value.length) {
+                    const sugestao = primeiraTag.getAttribute('data-sugestao');
+                    if (sugestao) {
+                        e.preventDefault();
+                        preencherCampoComSugestao(sugestao);
+                    }
+                }
+            } else if (e.key === 'Enter') {
                 e.preventDefault();
                 avancarPassoEscala();
             }
@@ -562,6 +829,7 @@ function configurarSeletoresTurno() {
     botoesLimpos.forEach(botao => {
         botao.addEventListener('click', () => {
             const turno = botao.getAttribute('data-turno');
+
             if (turno === escalaTurnoSelecionado) return;
 
             // Transição visual de botão ativo
@@ -582,6 +850,7 @@ function configurarSeletoresTurno() {
 // Avança o formulário step-by-step
 function avancarPassoEscala() {
     agendarAtualizacaoVisualPDF();
+    dispararPulsoLinhaConectora();
     const camposAtuais = escalaCamposConfig[escalaTurnoSelecionado];
     if (escalaPassoAtual >= camposAtuais.length - 1) {
         // Fim do formulário: pisca o botão de imprimir para guiar o usuário
@@ -789,27 +1058,74 @@ function atualizarFocoHotspotPdf() {
 function limparEscalaDiaria() {
     escalaDados = {};
     escalaPassoAtual = 0;
+    escalaTurnoSelecionado = null; // Reseta o turno ativo
     try {
         localStorage.removeItem('escala_diaria_dados');
         localStorage.removeItem('escala_diaria_data_salvamento');
+        localStorage.removeItem('escala_diaria_persistir_ativo');
+        
+        const btnPersistir = document.getElementById('btn-persistir-escala');
+        if (btnPersistir) {
+            btnPersistir.classList.remove('salvo');
+        }
     } catch (e) {
         console.warn("Erro ao limpar dados do localStorage:", e);
     }
 
-    // Limpa o formulário e atualiza o PDF visual
+    // Limpa o formulário, reseta os botões de turno e atualiza o PDF visual
+    configurarSeletoresTurno();
     criarFormularioPassoAPasso();
     agendarAtualizacaoVisualPDF();
 }
 
-// Confirma e aciona a limpeza total da escala
-function confirmarLimparEscalaCompleta() {
-    const confirmar = confirm("Tem certeza de que deseja apagar TODOS os dados da escala diária preenchidos para hoje? Essa ação não pode ser desfeita.");
-    if (confirmar) {
-        limparEscalaDiaria();
-        if (typeof exibirToastLembrete === 'function') {
-            exibirToastLembrete('success', 'Todos os dados da escala foram apagados com sucesso!');
+// Exibe o popover de confirmação de limpeza da escala (cabeçalho)
+function mostrarPopoverConfirmacao(event) {
+    if (event) {
+        event.stopPropagation();
+    }
+    const popover = document.getElementById('popover-confirmacao-escala');
+    if (popover) {
+        popover.style.display = popover.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+// Oculta o popover de confirmação de limpeza
+function ocultarPopoverConfirmacao() {
+    const popover = document.getElementById('popover-confirmacao-escala');
+    if (popover) {
+        popover.style.display = 'none';
+    }
+}
+
+// Executa a limpeza total após confirmação no popover
+function executarLimparEscalaCompleta() {
+    limparEscalaDiaria();
+    ocultarPopoverConfirmacao();
+    if (typeof exibirToastLembrete === 'function') {
+        exibirToastLembrete('success', 'Todos os dados da escala foram apagados com sucesso!');
+    }
+}
+
+// Fecha o popover automaticamente caso o usuário clique em qualquer outra área externa
+document.addEventListener('click', (event) => {
+    const popover = document.getElementById('popover-confirmacao-escala');
+    const btnLimpar = document.getElementById('btn-limpar-escala');
+    if (popover && popover.style.display === 'block') {
+        if (!popover.contains(event.target) && event.target !== btnLimpar && !btnLimpar.contains(event.target)) {
+            ocultarPopoverConfirmacao();
         }
     }
+});
+
+// Mantido para compatibilidade e integridade histórica do roteamento
+function mostrarConfirmacaoLimparInline() {
+    mostrarPopoverConfirmacao();
+}
+function ocultarConfirmacaoLimparInline() {
+    ocultarPopoverConfirmacao();
+}
+function confirmarLimparEscalaCompleta() {
+    mostrarPopoverConfirmacao();
 }
 
 // Exporta a escala final preenchida no formato JPG de alta qualidade
