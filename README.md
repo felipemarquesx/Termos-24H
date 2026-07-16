@@ -1,23 +1,45 @@
 # Termos 24H — Automação de Termos Hospitalares (FUSMA e FUSEX)
 
-> Sistema web corporativo de processamento distribuído desenvolvido para otimizar o fluxo de preenchimento de guias e termos de responsabilidade no setor de **Emergência 24H**, com suporte dedicado às regras operacionais dos convênios militares **FUSMA** e **FUSEX**.
+> Sistema web desenvolvido para otimizar o fluxo de preenchimento de guias e termos de responsabilidade no setor de **Emergência 24H**, voltado especificamente para os convênios militares **FUSMA** e **FUSEX**.
 
-O preenchimento manual de formulários e termos de consentimento no fluxo operacional da recepção hospitalar demanda alto controle de integridade de dados e tempo de processamento. O sistema **Termos 24H** automatiza este fluxo, mitigando riscos de preenchimento incorreto de variáveis críticas (ex: registros cadastrais, dados cronológicos de atendimento e identificadores de beneficiários), otimizando a eficiência do atendimento e a conformidade regulatória e de faturamento da instituição.
+O preenchimento manual dessas guias no dia a dia da recepção hospitalar exige atenção constante e consome tempo que poderia ser dedicado ao atendimento do paciente.  
+O sistema **Termos 24H** foi desenvolvido para otimizar esse processo e reduzir erros de digitação em campos críticos, como número do cartão, data de nascimento e dados do atendimento, proporcionando maior agilidade e confiabilidade ao fluxo de trabalho.
 
 > [!NOTE]
-> **Evolução Arquitetônica e Funcional:** Concebido inicialmente para a automação de termos de responsabilidade da FUSMA e FUSEX, o sistema evoluiu para uma plataforma integrada de suporte ao faturamento e atendimento de emergência, incorporando módulos de emissão de guias SADT, guias de internação e gestão de escalas internas.
+> **Visão de Futuro e Evolução:** Embora a ferramenta tenha sido concebida inicialmente para os fluxos exclusivos de **FUSMA** e **FUSEX**, ela acabou abrindo as portas para novas ideias de otimização administrativa no setor. Outras automações já estão sendo ativamente trabalhadas e implementadas para integrar e simplificar cada vez mais os processos do faturamento e atendimento.
 
-## Módulos e Recursos do Sistema
+## Acesso / Demo ao Vivo
 
-1. **Mecanismo de Preenchimento Automatizado de Documentos PDF:** Geração dinâmica de termos baseada em entrada de dados estruturados com injeção direta de dados nos campos editáveis de formulários interativos PDF (AcroForms) através da biblioteca `pdf-lib`.
-2. **Transferência Estruturada de Dados Operacionais:** Utilitário de validação e extração de dados do convênio militar FUSEX para a área de transferência em formato de texto padronizado, evitando redundância de digitação em sistemas terceiros.
-3. **Mapeamento de Metadados Temporais:** Captura automatizada e padronização da data e hora do sistema operacional para garantir a integridade temporal no preenchimento de termos.
-4. **Controle de Protocolo de Segurança Interna (Checklist):** Bloqueio preventivo que condiciona o encerramento do atendimento à confirmação de conformidade nos fluxos de envio de correio eletrônico e conferência de anexos obrigatórios do faturamento.
-5. **Painel de Emissão de Guias de SADT:** Emissão dinâmica e impressão silenciosa baseada em `iframe` oculto para guias de 16 operadoras de saúde, habilitando a impressão de guias em branco ou preenchidas.
-6. **Mecanismo de Roteamento de E-mail (Assistente Postal):** Detecção automatizada de regras de convênio ativo (FUSMA/FUSEX) e vinculação restritiva aos servidores de correio eletrônico correspondentes (Valentin ou Gmail) para mitigar falhas de endereçamento.
-7. **Página de Emissão de Guias de Internação de Urgência:** Interface dedicada para a geração e impressão silenciosa de guias de internação clínica de 15 operadoras com total simplificação de campos obrigatórios.
-8. **Módulo de Escala Diária de Plantonistas:** Preenchimento interativo de escalas operacionais por meio de hotspots gráficos clicáveis vinculados a formulários em etapas e geração de exportações (PDF/JPG) nomeadas de forma unívoca com registro temporal do faturamento.
-9. **Modo Escuro Global (Visual Comfort):** Tratamento visual preventivo de fadiga ocular da equipe de faturamento e recepção em regime de plantão noturno, aplicando inversão de contraste cromático no visualizador de escalas e componentes.
+O sistema está hospedado no **GitHub Pages** e pode ser acessado diretamente de qualquer computador da recepção:
+
+## O que o projeto faz
+
+1. **Preenchimento Automatizado de PDFs**  
+   O operador preenche um formulário digital limpo com os dados do paciente (cartão, atendimento, nome, nascimento, telefone e especialidade). O sistema gera automaticamente o PDF oficial com os dados perfeitamente posicionados, pronto para impressão e assinatura.
+
+2. **Cópia Rápida FUSEX**  
+   Botão de validação que copia os dados básicos do atendimento em formato de texto estruturado para a área de transferência, evitando digitação repetida.
+
+3. **Cronologia com 1 Clique**  
+   Botões de atalho que capturam automaticamente a data e hora atuais do computador.
+
+4. **Checklist de Protocolo de Segurança**  
+   Modal de fechamento que impede o encerramento do atendimento até que o operador confirme o envio de e-mails e anexos exigidos, garantindo a conformidade com os protocolos internos.
+
+5. **Painel de Emissão de Guias SADT**  
+   Painel inteligente que permite o preenchimento de guias SADT de 16 operadoras de saúde diferentes. Os botões ficam **sempre habilitados** (por solicitação da recepção), permitindo que o operador imprima guias pré-preenchidas na tela ou totalmente em branco para preenchimento manual quando requisitado pelo médico. O clique em uma operadora aciona a **impressão silenciosa direta e automática** via iframe oculto.
+
+6. **Assistente Postal e Integração de E-mail**  
+   Mecanismo integrado ao checklist que detecta dinamicamente o convênio ativo (FUSMA com Valentin ou FUSEX com Gmail) e trava os endereços de destino corretos. Isso **evita falhas de envio e elimina erros operacionais**. Um clique no botão dispara a abertura do Webmail Seguro (Roundcube) em uma nova aba com o assunto formatado de forma profissional e marca automaticamente a conclusão da tarefa no checklist.
+
+7. **Página de Emissão de Guias de Internação (Novo!)**  
+   Página dedicada para a emissão rápida e direta de guias de internação de urgência de 15 operadoras de saúde (incluindo o SUS). Sem burocracia ou campos obrigatórios de preenchimento, basta um clique sobre o logotipo do convênio para disparar a **impressão silenciosa direta e automática** da respectiva guia pelo iframe oculto, otimizando o tempo no atendimento de pacientes graves.
+
+8. **Sistema de Escala Diária de Plantonistas**  
+   Estrutura completa para o gerenciamento e preenchimento visual das escalas diárias dos médicos e recepcionistas do plantão. O operador conta com uma prancheta de visualização dinâmica com hotspots clicáveis vinculados a um formulário inteligente passo a passo. O sistema realiza o preenchimento em tempo real e permite a exportação do arquivo finalizado em formatos PDF e JPG com nomenclatura automatizada e temporal.
+
+9. **Modo Escuro Global**  
+   Mecanismo de alternância de tema integrado à barra lateral esquerda (botão de controle minimalista). Quando ativo, escurece todos os painéis, caixas de digitação, tabelas de controle e inverte as cores do canvas de visualização do PDF da escala diária para garantir o conforto visual da equipe durante os plantões noturnos.
 
 ## Evolução Recente: Antes vs. Depois
 
@@ -25,14 +47,14 @@ Para elevar a experiência do usuário e garantir conformidade rígida de segura
 
 | Recurso / Área | Como Era (Antes) | Como Ficou (Depois) |
 | :--- | :--- | :--- |
-| **Visualização de Data e Hora** | Exibia os números brutos (`DD/MM/AAAA` e `HH:MM`), ocupando colunas excessivamente largas sem feedback contextual. | **Frases Humanizadas Inline!** Exibe frases amigáveis como *"Hoje, Dia 10 de Julho de 2026"* e *"Hoje às 20:48 da Noite"*. O cursor revela os números brutos para digitação; ao clicar fora, o texto volta a ser amigável. O PDF final continua recebendo a data técnica de forma invisível. |
+| **Visualização de Data e Hora** | Exibia os números brutos (`DD/MM/AAAA` e `HH:MM`), ocupando colunas excessivamente largas sem feedback contextual. | **Exibição por Extenso Dinâmica!** Exibe a data e hora formatadas por extenso (ex: *"Hoje, Dia 10 de Julho de 2026"* e *"Hoje às 20:48 da Noite"*). O foco no input revela os números brutos para digitação; ao desfocar, o texto retorna à formatação por extenso. O PDF final recebe a data técnica correspondente de forma automatizada. |
 | **Limpeza e Privacidade** | Navegar entre convênios (FUSMA/FUSEX) ou sair do formulário mantinha as informações preenchidas nos campos, correndo risco de vazar dados do paciente anterior. | **Limpeza Inteligente por Eclusa!** Sair do formulário por qualquer meio (seta de voltar, menu lateral, sidebar) ativa uma limpeza profunda preventiva, resetando 100% dos inputs e excluindo dados temporários da memória. |
 | **Preenchimento Automático (Autofill)** | O Chrome e outros navegadores bloqueavam a tela com popups oferecendo dados antigos de outros pacientes e davam alertas de "conexão insegura" no campo de validade. | **Bloqueio Total de Heurísticas!** Renomeamos o ID do campo de validade para evitar alertas falsos de cartão e alteramos a propriedade de autocomplete de todos os campos para `one-time-code`, desativando qualquer dropdown intrusivo do navegador. |
 | **Design dos Inputs (Cápsulas)** | Usavam caixas de texto separadas de seus botões de atalho, com divisão visual marcada e sem destaque do foco do usuário. | **Cápsula Unificada!** Inputs e botões integrados se fundem em um visual elegante de "pílula única", com destaque de foco por brilho na cor tema correspondente a cada convênio (Azul para FUSMA, Verde para FUSEX). |
 | **Ergonomia e Área de Trabalho** | O botão de cópia rápida do FUSEX ocupava um espaço gigante no rodapé, mudando o layout e forçando o operador a scrollar a tela constantemente. | **Foco e Ergonomia!** Os 4 campos necessários para cópia foram agrupados lado a lado no início. O botão de copiar dados retornou ao cabeçalho em tamanho discreto, destravando e mudando de cor dinamicamente com base nas validações. |
-| **Limite de Digitação** | Campos de data e hora do atendimento permitiam digitação infinita de caracteres, desconfigurando os PDFs finais. | **Travas de Comprimento e Máscara!** Inclusão de `maxlength` rígido (10 para data, 5 para hora) combinados com máscara automática de hora no JS (insere `:` automaticamente ao digitar). |
+| **Limite de Digitação** | Campos de data e hora
+ do atendimento permitiam digitação infinita de caracteres, desconfigurando os PDFs finais. | **Travas de Comprimento e Máscara!** Inclusão de `maxlength` rígido (10 para data, 5 para hora) combinados com máscara automática de hora no JS (insere `:` automaticamente ao digitar). |
 | **Responsividade Vertical** | O Dashboard inicial exigia barra de rolagem vertical em monitores antigos ou telas menores como 1366x768. | **Compactação Responsiva sem Scroll!** Media queries baseadas na altura do monitor encolhem os ícones e margens de forma inteligente para que o painel principal caiba 100% na tela de qualquer monitor sem barra de rolagem. |
-| **Arquitetura de Software** | Monolito Organizado. Toda a inteligência da aplicação e lógica das telas residia em um arquivo unificado (`script.js`). | **Arquitetura em Camadas (Modularizada)!** Código distribuído de forma limpa em submódulos específicos na pasta `js/` (`core.js`, `escala_diaria.js`, `guias_medicas.js`, `termos_militares.js`), facilitando a manutenção e a escalabilidade do sistema. |
 
 ### Comparação Visual de Telas (Antes vs. Depois)
 #### 1. Painel de Controle (Dashboard)
@@ -65,11 +87,6 @@ Para elevar a experiência do usuário e garantir conformidade rígida de segura
 
 ![Guias de Internação](assets/screenshots/PageInternacao.png)
 
-#### 7. Módulo de Escala Diária e Modo Escuro Global
-*Esta tela exibe o preenchimento da escala diária de plantonistas e a interface integrada no Modo Escuro.*
-
-![Escala Diária de Plantonistas](assets/screenshots/PageEscalaDiaria.png)
-
 ## Tecnologias Utilizadas
 
 - **PDF24 Toolbox** — Ferramenta utilizada para criar e configurar os campos editáveis (formulários interativos) nos PDFs oficiais.
@@ -79,6 +96,9 @@ Para elevar a experiência do usuário e garantir conformidade rígida de segura
 - **Bootstrap 5 + Bootstrap Icons** — Interface limpa, responsiva e intuitiva.
 
 - **HTML5 + CSS3 + JavaScript Vanilla** — Aplicação executada inteiramente no lado do cliente (client-side), sem dependências de servidor, compatível com navegadores modernos.
+
+- **Google Antigravity** — ferramenta de assistência ao desenvolvimento e otimização do projeto.  
+  [https://antigravity.google/](https://antigravity.google/)
 
 ## Conformidade com a LGPD
 
@@ -112,18 +132,13 @@ termos-24h/
     └── screenshots/    # Capturas de tela da aplicação para o README
 ```
 
-## Implantação e Execução
+## Como executar localmente
 
-Por ser um sistema estático que opera inteiramente no lado do cliente (Client-Side Single Page Application), a implantação não exige servidores de aplicação (como Node.js ou PHP) ou bancos de dados relacionais.
+1. Mantenha a estrutura de pastas acima.
+2. Abra o arquivo `index.html` diretamente no navegador, ou
+3. Use a extensão **Live Server** do VS Code para melhor experiência.
 
-### Requisitos de Hospedagem
-* **Servidor Web:** Compatível com qualquer servidor de arquivos estáticos, incluindo Microsoft IIS, Apache HTTP Server, Nginx ou soluções de intranet local.
-* **Protocolo de Comunicação:** Recomenda-se a ativação obrigatória do protocolo seguro HTTPS no servidor para garantir a conformidade com a LGPD nas conexões externas à rede do hospital.
-
-### Execução em Ambiente de Homologação / Desenvolvimento
-1. Clone ou extraia os arquivos mantendo a estrutura de diretórios do projeto.
-2. Sirva a pasta raiz da aplicação por meio de um servidor HTTP local (ex: Extensão Live Server do VS Code, Python `http.server`, ou módulo `http-server` do npm).
-3. *Nota:* Recomenda-se evitar a abertura direta de arquivos via protocolo `file:///` no Chrome para garantir o funcionamento correto de requisições assíncronas do visualizador PDF (pdf-lib).
+> Não é necessário build, servidor backend ou instalação de dependências. Tudo roda no navegador.
 
 ## Autor
 
@@ -161,14 +176,6 @@ HOSPITAL SANTA CASA DE MISERICORDIA DE MACEIÓ
 ### Página de Guias de Internação (Nova Funcionalidade!)
 
 ![Página de Guias de Internação](assets/screenshots/PageInternacao.png)
-
-### Módulo de Escala Diária de Plantonistas
-
-![Escala Diária de Plantonistas](assets/screenshots/PageEscalaDiaria.png)
-
-### Interface com Modo Escuro Global Ativo
-
-![Interface no Modo Escuro](assets/screenshots/DarkModeGlobal.png)
 ---
 
 *Ferramenta desenvolvida para uso interno no Setor de Emergência 24H, com foco na otimização de processos e na proteção de dados sensíveis.*
