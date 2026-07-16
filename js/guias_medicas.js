@@ -1,5 +1,5 @@
 // ==========================================================================
-// MÓDULO: GUIAS MÉDICAS (SADT / INTERNAÇÃO)
+// SISTEMA: GUIAS MÉDICAS (SADT / INTERNAÇÃO)
 // ==========================================================================
 // Este arquivo gerencia a validação de dados cadastrais das operadoras de saúde
 // (Amil, Unimed, Bradesco, etc.), máscaras dinâmicas de input, e faz o preenchimento
@@ -272,7 +272,7 @@ function abrirWebmailAutomatico() {
 }
 
 // ==========================================================================
-// 🚀 LÓGICA E IMPRESSÃO DE GUIAS DE INTERNAÇÃO (CLIQUE E IMPRIME)
+// LÓGICA E IMPRESSÃO DE GUIAS DE INTERNAÇÃO (CLIQUE E IMPRIME)
 // ==========================================================================
 
 function inicializarInternacao() {

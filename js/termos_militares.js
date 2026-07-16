@@ -1,5 +1,5 @@
 // ==========================================================================
-// MÓDULO: TERMOS MILITARES (FUSEX / FUSMA)
+// SISTEMA: TERMOS MILITARES (FUSEX / FUSMA)
 // ==========================================================================
 // Este arquivo gerencia o preenchimento, validação de campos obrigatórios,
 // checklist de requisitos, cópias rápidas de dados para o WhatsApp, e a

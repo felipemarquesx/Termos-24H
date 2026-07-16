@@ -1,5 +1,5 @@
 // ==========================================================================
-// SISTEMA AUTOMATIZAR TERMOS - MÓDULO CENTRAL (CORE)
+// SISTEMA AUTOMATIZAR TERMOS - NÚCLEO CENTRAL (CORE)
 // ==========================================================================
 // Este arquivo é o "esqueleto" e o "guia de trânsito" do nosso aplicativo.
 // Ele gerencia a troca de telas (SPA), as abas do navegador (título e favicon),
@@ -33,11 +33,24 @@ function atualizarAbaNavegador(titulo, faviconPath) {
 }
 
 // --- Sistema de Roteamento de Telas (SPA) ---
+let mudarTelaTimeoutId = null;
+let mudarTelaEmTransicao = false;
+
 function mudarTela(deId, paraId) {
+    if (mudarTelaEmTransicao) return; // Bloqueia cliques rápidos concorrentes
+
     const deTela = document.getElementById(deId);
     const paraTela = document.getElementById(paraId);
 
     if (!deTela || !paraTela) return;
+
+    // Cancela o timeout da transição anterior se houver
+    if (mudarTelaTimeoutId) {
+        clearTimeout(mudarTelaTimeoutId);
+        mudarTelaTimeoutId = null;
+    }
+
+    mudarTelaEmTransicao = true;
 
     // Atualizações automáticas do título e favicon da aba
     if (paraId === 'tela-menu-principal') {
@@ -93,6 +106,18 @@ function mudarTela(deId, paraId) {
     // Atualiza a barra lateral ativa
     atualizarActiveSidebar(paraId);
 
+    // Força qualquer outra tela concorrente (fantasmas) a ficar escondida imediatamente
+    const todasTelas = ['tela-menu-principal', 'tela-selecao-termos', 'tela-sadt', 'tela-formulario', 'tela-guias-internacao', 'tela-escala-diaria'];
+    todasTelas.forEach(id => {
+        if (id !== paraId && id !== deId) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.style.display = 'none';
+                el.classList.add('escondida');
+            }
+        }
+    });
+
     // 1. Coloca a nova tela no fluxo HTML
     paraTela.style.display = 'block';
     paraTela.classList.add('escondida');
@@ -104,9 +129,10 @@ function mudarTela(deId, paraId) {
     deTela.classList.add('escondida');
     paraTela.classList.remove('escondida');
 
-    // 3. Oculta a tela anterior do fluxo após a animação (400ms)
-    setTimeout(() => {
+    // 3. Oculta a tela anterior do fluxo após a animação (400ms) e libera o roteador
+    mudarTelaTimeoutId = setTimeout(() => {
         deTela.style.display = 'none';
+        mudarTelaEmTransicao = false;
     }, 400);
 }
 
@@ -294,7 +320,7 @@ function exibirToastLembrete(turno, mensagem, chaveConcluido, chaveUltimoDisparo
     if (turno === "manha") {
         corIcone = "#0ea5e9";
         bgIcone = "rgba(14, 165, 233, 0.15)";
-        icone = "bi-brightness-high-fill";
+        icone = "bi-sun";
         classeTurnoToast = "toast-turno-manha";
     } else if (turno === "tarde") {
         corIcone = "#fd7e14";

@@ -64,6 +64,15 @@ h6 {
     letter-spacing: 2px;
     color: #8c9ba5;
     text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.card-fusma:hover .sub-forca {
+    color: #0d6efd;
+}
+
+.card-fusex:hover .sub-forca {
+    color: #198754;
 }
 
 /* Alinhamento e dimensões da tela de seleção inicial */
@@ -124,19 +133,21 @@ h6 {
 
 /* Efeitos de sombra e elevação no estado hover */
 .card-opcao:hover {
-    transform: translateY(-15px) scale(1.02);
+    transform: translateY(-12px) scale(1.03);
 }
 
 .card-fusma:hover {
-    border-color: rgba(13, 110, 253, 0.3);
-    box-shadow: 0 30px 60px rgba(13, 110, 253, 0.08),
-        0 0 40px rgba(13, 110, 253, 0.04) !important;
+    border-color: rgba(13, 110, 253, 0.4) !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 249, 255, 0.98) 100%) !important;
+    box-shadow: 0 25px 50px rgba(13, 110, 253, 0.12),
+        0 0 35px rgba(13, 110, 253, 0.06) !important;
 }
 
 .card-fusex:hover {
-    border-color: rgba(25, 135, 84, 0.3);
-    box-shadow: 0 30px 60px rgba(25, 135, 84, 0.08),
-        0 0 40px rgba(25, 135, 84, 0.04) !important;
+    border-color: rgba(25, 135, 84, 0.4) !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 244, 0.98) 100%) !important;
+    box-shadow: 0 25px 50px rgba(25, 135, 84, 0.12),
+        0 0 35px rgba(25, 135, 84, 0.06) !important;
 }
 
 /* Transição de cores do cabeçalho do card no estado hover */
@@ -422,7 +433,7 @@ h6 {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
 }
 
-/* --- BOTÃO DE VOLTAR PREMIUM (Estética unificada) --- */
+/* --- BOTÃO DE RETORNO UNIFICADO (Estética integrada) --- */
 .btn-voltar-projeto {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
@@ -607,8 +618,8 @@ h6 {
     }
 
     .container-cards {
-        max-width: 900px !important;
-        /* Espalha os cards nas laterais */
+        max-width: 1100px !important;
+        /* Espalha os cards nas laterais com maior amplitude */
     }
 
     .titulo-principal {
@@ -616,21 +627,21 @@ h6 {
     }
 
     .card-opcao {
-        padding: 20px 15px 15px 15px;
-        margin: 12px;
-        border-radius: 22px;
-        max-width: 270px;
+        padding: 24px 20px 20px 20px;
+        margin: 15px;
+        border-radius: 24px;
+        max-width: 360px;
         /* Card substancialmente maior para preencher a tela */
         width: 100%;
     }
 
     .card-opcao::before {
-        border-radius: 22px 22px 0 0;
+        border-radius: 24px 24px 0 0;
     }
 
     .card-opcao h2 {
-        font-size: 1.25rem;
-        margin-bottom: 8px !important;
+        font-size: 1.55rem;
+        margin-bottom: 15px !important;
     }
 
     .sub-forca {
@@ -639,8 +650,8 @@ h6 {
     }
 
     .imagem-a4-completa {
-        height: 320px;
-        /* Altura generosa que preenche cerca de metade da tela */
+        height: 420px;
+        /* Altura generosa que preenche perfeitamente a tela curta */
         width: auto;
     }
 
@@ -724,7 +735,7 @@ h6 {
     .card-opcao {
         padding: 30px 22px 22px 22px;
         max-width: 330px;
-        /* Card premium largo */
+        /* Card estruturado largo */
         width: 100%;
     }
 
@@ -1222,8 +1233,8 @@ h6 {
     background-color: rgba(13, 110, 253, 0.1) !important;
 }
 
-/* --- ESTILO PREMIUM DE INPUTS (Glow & Labels Flutuantes) --- */
-/* --- ESTILO PREMIUM DE INPUTS (Glow) --- */
+/* --- ESTILO DE INPUTS COM LABELS FLUTUANTES --- */
+/* --- ESTILO DE INPUTS COM EFEITO DE FOCO --- */
 .form-control {
     border-radius: 12px !important;
     border: 1.5px solid rgba(30, 58, 95, 0.15) !important;
@@ -1335,6 +1346,59 @@ h6 {
 }
 
 /* --- ESTILO TELA ESCALA DIÁRIA --- */
+/* Botão de Persistência Permanente da Escala */
+.btn-persistir {
+    width: 36px !important;
+    height: 36px !important;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+    border-radius: 50% !important;
+    border: 2.5px dashed #a0aec0 !important;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    padding: 0;
+}
+
+.btn-persistir:hover {
+    border-color: #4a5568;
+    background-color: rgba(74, 85, 104, 0.05);
+    transform: scale(1.05);
+}
+
+.btn-persistir .icon-check {
+    font-size: 1.15rem;
+    color: transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estado Salvo (Verde com ícone de correto) */
+.btn-persistir.salvo {
+    border-style: solid !important;
+    border-color: #198754 !important;
+    background-color: #198754 !important;
+    box-shadow: 0 0 12px rgba(25, 135, 84, 0.3) !important;
+}
+
+.btn-persistir.salvo .icon-check {
+    color: #ffffff;
+    transform: scale(1);
+}
+
+.btn-persistir.salvo:hover {
+    background-color: #157347;
+    border-color: #157347;
+    box-shadow: 0 0 15px rgba(21, 115, 71, 0.45);
+}
+
 .btn-turno {
     border-radius: 12px;
     padding: 10px 20px;
@@ -1359,49 +1423,87 @@ h6 {
     box-shadow: 0 4px 12px rgba(30, 58, 95, 0.2);
 }
 
+
+
 .linha-conectora-escala {
     width: 100%;
     height: 2px;
-    background: rgba(30, 58, 95, 0.12) !important;
+    background: rgba(30, 58, 95, 0.08) !important;
     position: relative;
-    overflow: hidden;
+    overflow: visible; /* Permite que o glow e a expansao do nodo fiquem visiveis */
 }
 
-/* O pulso de barramento que corre pela linha */
+/* O pulso de barramento Apple-Style que corre pela linha de forma muito sutil */
 .linha-conectora-escala::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 40%;
-    height: 100%;
+    top: 50%;
+    left: 100%;
+    width: 50px;
+    height: 2px;
+    transform: translateY(-50%);
     background: linear-gradient(90deg, 
         rgba(14, 165, 233, 0) 0%, 
-        rgba(14, 165, 233, 0.6) 50%, 
+        rgba(14, 165, 233, 0.7) 50%, 
         rgba(14, 165, 233, 0) 100%
     );
-    animation: flowPulse 2.5s infinite linear;
+    filter: drop-shadow(0 0 2px rgba(14, 165, 233, 0.4));
+    animation: flowPulse 2.8s infinite linear;
 }
 
 @keyframes flowPulse {
     0% { left: 100%; }
-    100% { left: -40%; }
+    100% { left: -50px; }
 }
 
-/* O nodo central minimalista e moderno com a seta bootstrap */
+/* Pulso ativo ultra rápido de envio de dados (Direita para Esquerda) */
+.linha-conectora-escala.pulso-ativo-linha::after {
+    animation: flowPulseActive 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@keyframes flowPulseActive {
+    0% {
+        left: 100%;
+        width: 80px;
+        background: linear-gradient(90deg, 
+            rgba(56, 189, 248, 0) 0%, 
+            rgba(56, 189, 248, 1) 50%, 
+            rgba(56, 189, 248, 0) 100%
+        );
+        filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.8));
+    }
+    100% {
+        left: -80px;
+        width: 120px;
+        background: linear-gradient(90deg, 
+            rgba(14, 165, 233, 0) 0%, 
+            rgba(14, 165, 233, 0.7) 50%, 
+            rgba(14, 165, 233, 0) 100%
+        );
+        filter: drop-shadow(0 0 2px rgba(14, 165, 233, 0.3));
+    }
+}
+
+/* O nodo central (Seta) que reage com uma micro-pulsacao elegante de cor e tamanho */
 .linha-conectora-escala::before {
     content: '\F135'; /* bi-arrow-left-circle-fill no bootstrap-icons */
     font-family: "bootstrap-icons" !important;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.25rem;
-    color: #0ea5e9;
+    transform: translate(-50%, -50%) scale(1);
+    font-size: 1.15rem;
+    color: #cbd5e1;
     background-color: #ffffff;
-    padding: 0 6px;
+    padding: 0 4px;
     z-index: 2;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.linha-conectora-escala.pulso-ativo-linha::before {
+    color: #0ea5e9;
+    transform: translate(-50%, -50%) scale(1.18);
+    text-shadow: 0 0 6px rgba(14, 165, 233, 0.4);
 }
 
 /* --- ESTILIZAÇÃO DO FORMULÁRIO DA ESCALA DIÁRIA (COLUNA DIREITA) --- */
@@ -1410,22 +1512,12 @@ h6 {
     background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%) !important;
     border: 1px solid rgba(30, 58, 95, 0.08) !important;
     border-radius: 24px !important;
-    box-shadow: 0 15px 35px rgba(30, 58, 95, 0.06), 0 5px 15px rgba(0, 242, 254, 0.02) !important;
+    box-shadow: 0 20px 45px rgba(30, 58, 95, 0.12), 0 8px 20px rgba(0, 0, 0, 0.04) !important;
     transition: all 0.3s ease;
-    overflow: hidden;
-    height: 255px; /* Altura fixa confortável para evitar corte de informações */
+    overflow: visible !important;
+    height: 285px !important;
 }
 
-.card-formulario-escala::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
-    opacity: 0.9;
-}
 
 /* Transições elegantes para os passos */
 .escala-step {
@@ -1483,7 +1575,7 @@ h6 {
     font-weight: 400;
 }
 
-/* Estilo premium do botão de pular e botões de navegação */
+/* Estilo dos botões de navegação e pular etapa */
 .card-formulario-escala .btn-escala-pular {
     border-radius: 12px !important;
     border: 1.5px solid rgba(148, 163, 184, 0.3) !important;
@@ -1825,7 +1917,7 @@ h6 {
     filter: blur(10px);
 }
 
-/* --- LOADER PREMIUM GLASSMORPHISM DA ESCALA (AO VIVO) --- */
+/* --- INDICADOR DE CARREGAMENTO GLASSMORPHISM DA ESCALA --- */
 #escala-pdf-loader {
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
@@ -1975,7 +2067,7 @@ h6 {
 
 /* Animação de flutuação suave e contínua apenas para o turno ATIVO (Efeito Vivo) */
 .btn-turno-img[data-turno="manha"].active img {
-    animation: float-morning 4s ease-in-out infinite;
+    animation: spinSlow 30s linear infinite !important;
 }
 .btn-turno-img[data-turno="tarde"].active img {
     animation: float-afternoon 4.5s ease-in-out infinite;
@@ -2098,7 +2190,8 @@ h6 {
     }
     .card-formulario-escala {
         padding: 1.25rem !important;
-        height: 205px !important; /* Ajuste preciso para evitar cortes em telas menores */
+        height: 230px !important;
+        overflow: visible !important;
     }
     .card-formulario-escala .input-group input.form-control {
         padding: 10px 15px !important;
@@ -2181,7 +2274,7 @@ h6 {
 
 /* Estúdio de Visualização do PDF */
 #escala-pdf-container {
-    background-color: #f1f5f9 !important; /* Estúdio cinza neutro premium */
+    background-color: #f1f5f9 !important; /* Estúdio cinza neutro profissional */
     transition: background-color 0.4s ease, box-shadow 0.4s ease;
 }
 
@@ -2208,7 +2301,7 @@ h6 {
     transition: all 0.5s ease !important;
 }
 .escala-card-noite {
-    background: rgba(15, 23, 42, 0.9) !important; /* Fundo escuro premium na noite */
+    background: rgba(15, 23, 42, 0.9) !important; /* Fundo escuro profissional para modo noturno */
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1.5px solid rgba(99, 102, 241, 0.25) !important; /* Borda indigo brilhante */
@@ -2274,7 +2367,7 @@ h6 {
     }
 }
 
-/* Efeito Premium nos botões de Exportação */
+/* Efeito visual nos botões de Exportação */
 .btn-opcao-exportar:hover {
     border-color: #0d6efd !important;
     background-color: #ffffff !important;
@@ -2282,7 +2375,7 @@ h6 {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }
 
-/* --- TOAST PREMIUM DE LEMBRETE DE ESCALA --- */
+/* --- NOTIFICAÇÃO DE LEMBRETE DE ESCALA --- */
 .toast-escala-lembrete-container {
     position: fixed;
     top: 24px;
@@ -2392,7 +2485,7 @@ body.modo-escuro-global .toast-progress-bar-container {
 }
 
 .modo-conforto-ativo #escala-pdf-canvas {
-    filter: invert(0.9) hue-rotate(180deg) !important; /* Inversão de cores premium */
+    filter: invert(0.9) hue-rotate(180deg) !important; /* Ajuste técnico de inversão de cores */
 }
 
 .modo-conforto-ativo .card-formulario-escala {
@@ -2471,6 +2564,18 @@ body.modo-escuro-global .card-opcao {
     background-color: #111827 !important;
     border: 1px solid rgba(255, 255, 255, 0.05) !important;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35) !important;
+}
+
+body.modo-escuro-global .card-fusma:hover {
+    border-color: rgba(13, 110, 253, 0.5) !important;
+    background: linear-gradient(145deg, #111827 0%, #071329 100%) !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(13, 110, 253, 0.2) !important;
+}
+
+body.modo-escuro-global .card-fusex:hover {
+    border-color: rgba(25, 135, 84, 0.5) !important;
+    background: linear-gradient(145deg, #111827 0%, #051a10 100%) !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(25, 135, 84, 0.2) !important;
 }
 
 body.modo-escuro-global .card-opcao h2 {
@@ -2657,40 +2762,146 @@ body.modo-escuro-global td {
     border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-/* Botão Discreto de Limpeza no Card de Formulário */
-.btn-limpar-escala {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: transparent;
-    border: none;
-    color: #64748b;
-    opacity: 0.35;
-    font-size: 0.95rem;
-    cursor: pointer;
-    padding: 6px;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
+/* Botão de Limpeza no Cabeçalho */
+.btn-cabecalho-limpar {
+    width: 36px !important;
+    height: 36px !important;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+    border-radius: 50% !important;
+    border: 2.5px solid rgba(239, 68, 68, 0.45) !important;
+    background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.25s ease;
-    z-index: 10;
-}
-.btn-limpar-escala:hover {
-    opacity: 1;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     color: #ef4444;
+    outline: none;
+    padding: 0;
+}
+
+.btn-cabecalho-limpar:hover {
     background-color: rgba(239, 68, 68, 0.08);
     transform: scale(1.05);
 }
 
-body.modo-escuro-global .btn-limpar-escala {
-    color: #9ca3af;
+.btn-cabecalho-limpar i {
+    font-size: 1.15rem;
 }
-body.modo-escuro-global .btn-limpar-escala:hover {
-    color: #f87171;
-    background-color: rgba(248, 113, 113, 0.12);
+
+/* Popover de Confirmação de Exclusão (Notion/Linear Style) */
+.popover-confirmacao-escala {
+    position: absolute;
+    top: 48px;
+    right: 0;
+    width: 210px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    padding: 12px;
+    z-index: 1060;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    animation: popoverFadeIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: left;
+}
+
+@keyframes popoverFadeIn {
+    from { opacity: 0; transform: translateY(-8px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Setinha do Popover */
+.popover-confirmacao-escala .popover-arrow {
+    position: absolute;
+    top: -6px;
+    right: 14px;
+    width: 10px;
+    height: 10px;
+    background-color: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    border-left: 1px solid #e2e8f0;
+    transform: rotate(45deg);
+}
+
+.popover-confirmacao-escala .popover-title {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #ef4444;
+    margin-bottom: 12px;
+    font-family: 'Outfit', sans-serif;
+}
+
+.popover-confirmacao-escala .popover-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-confirmar-sim-popover {
+    background-color: #ef4444;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    width: 100%;
+}
+
+.btn-confirmar-sim-popover:hover {
+    background-color: #dc2626;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+.btn-confirmar-nao-popover {
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    width: 100%;
+}
+
+.btn-confirmar-nao-popover:hover {
+    background-color: #e2e8f0;
+    color: #1e293b;
+}
+
+body.modo-escuro-global .popover-confirmacao-escala {
+    background-color: #1e293b;
+    border-color: #334155;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+body.modo-escuro-global .popover-confirmacao-escala .popover-arrow {
+    background-color: #1e293b;
+    border-top-color: #334155;
+    border-left-color: #334155;
+}
+
+body.modo-escuro-global .popover-confirmacao-escala .popover-subtitle {
+    color: #94a3b8;
+}
+
+body.modo-escuro-global .btn-confirmar-nao-popover {
+    background-color: #334155;
+    color: #cbd5e1;
+    border-color: #475569;
+}
+
+body.modo-escuro-global .btn-confirmar-nao-popover:hover {
+    background-color: #475569;
+    color: #ffffff;
 }
 
 /* ==========================================================================
@@ -2806,5 +3017,208 @@ body.modo-escuro-global .btn-limpar-escala:hover {
     /* Modais */
     .modal-body {
         padding: 16px !important;
+    }
+}
+
+/* Painel de Sugestões Inline (Tags Horizontais abaixo do Input) */
+.container-sugestoes-inline {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    z-index: 10;
+    min-height: 32px;
+}
+
+.tag-sugestao-inline {
+    font-size: 0.8rem;
+    color: #1e3a5f;
+    background-color: #f0f9ff;
+    border: 1.5px solid #bae6fd;
+    padding: 4px 6px 4px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(14, 165, 233, 0.05);
+}
+
+.tag-sugestao-inline i {
+    color: #0ea5e9;
+    font-size: 0.95rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.tag-sugestao-inline:hover {
+    background-color: #e0f2fe;
+    border-color: #7dd3fc;
+    color: #0369a1;
+    transform: scale(1.03);
+    box-shadow: 0 4px 8px rgba(14, 165, 233, 0.12);
+}
+
+/* Botão de Excluir Sugestão Individual no Autocomplete */
+.btn-excluir-sugestao {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    padding: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-excluir-sugestao:hover {
+    background-color: rgba(239, 68, 68, 0.12);
+    color: #ef4444 !important;
+    transform: scale(1.1);
+}
+
+.btn-excluir-sugestao i {
+    font-size: 0.85rem !important;
+    color: inherit !important;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ajuste do botão de fechar no modo escuro */
+body.modo-escuro-global .btn-excluir-sugestao {
+    color: #64748b;
+}
+
+body.modo-escuro-global .btn-excluir-sugestao:hover {
+    background-color: rgba(248, 113, 113, 0.15);
+    color: #f87171 !important;
+}
+
+/* Animação de Giro Suave do Sol (Turno Matutino) */
+.giro-suave-sol {
+    animation: spinSlow 30s linear infinite;
+    display: inline-block;
+}
+
+
+
+@keyframes spinSlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ==========================================================================
+   LAYOUT INTEGRADO SADT PROFISSIONAL (UX/UI REFINADO E MODO ESCURO)
+   ========================================================================== */
+.input-group-sadt-moderno {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.icon-sadt-moderno {
+    position: absolute;
+    left: 14px;
+    color: #94a3b8;
+    font-size: 1.05rem;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.form-control-sadt-moderno {
+    width: 100%;
+    padding: 10px 14px 10px 42px !important;
+    border: 1.5px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease-in-out !important;
+    background-color: #ffffff !important;
+    color: #1e293b !important;
+    height: auto !important;
+}
+
+.form-control-sadt-moderno:focus {
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12) !important;
+    outline: none !important;
+}
+
+.sadt-bloco-inputs {
+    border-color: rgba(30, 58, 95, 0.08) !important;
+}
+
+/* Modo escuro suportado */
+body.modo-escuro-global .sadt-operadoras-container {
+    background-color: #111827 !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+body.modo-escuro-global .sadt-bloco-inputs {
+    background-color: #1e293b !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+body.modo-escuro-global .form-control-sadt-moderno {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+body.modo-escuro-global .form-control-sadt-moderno:focus {
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.18) !important;
+}
+
+body.modo-escuro-global .icon-sadt-moderno {
+    color: #64748b;
+}
+
+body.modo-escuro-global .badge.bg-primary-subtle {
+    background-color: rgba(14, 165, 233, 0.15) !important;
+    color: #38bdf8 !important;
+}
+
+body.modo-escuro-global .badge.bg-secondary-subtle {
+    background-color: rgba(148, 163, 184, 0.15) !important;
+    color: #cbd5e1 !important;
+}
+
+/* --- AJUSTE EXCLUSIVO PARA RESOLUÇÃO 1366x768 --- */
+@media screen and (max-width: 1366px) and (max-height: 768px) {
+    html {
+        zoom: 0.67;
+    }
+    
+    @supports not (zoom: 1) {
+        html {
+            transform: scale(0.67);
+            transform-origin: top left;
+            width: 149.25% !important;
+            height: 149.25% !important;
+        }
+    }
+
+    /* Evita que o visualizador de PDF fique excessivamente encolhido */
+    #escala-pdf-container {
+        max-height: 600px !important;
     }
 }
