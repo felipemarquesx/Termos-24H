@@ -289,12 +289,12 @@ function verificarLembretesEscala() {
         return;
     }
     
-    // 3. Verifica o intervalo de 15 minutos (900000ms) desde o último lembrete disparado
+    // 3. Verifica o intervalo de 5 minutos (300000ms) desde o último lembrete disparado
     const chaveUltimoDisparo = `lembrete_ultimo_disparo_${turnoAtual}`;
     const ultimoDisparoStr = localStorage.getItem(chaveUltimoDisparo);
     const agoraTimestamp = agora.getTime();
     
-    if (!ultimoDisparoStr || (agoraTimestamp - parseInt(ultimoDisparoStr, 10)) >= 15 * 60 * 1000) {
+    if (!ultimoDisparoStr || (agoraTimestamp - parseInt(ultimoDisparoStr, 10)) >= 5 * 60 * 1000) {
         exibirToastLembrete(turnoAtual, mensagem, chaveLembreteConcluido, chaveUltimoDisparo, agoraTimestamp);
     }
 }
@@ -352,33 +352,12 @@ function exibirToastLembrete(turno, mensagem, chaveConcluido, chaveUltimoDisparo
             </div>
             <button type="button" class="btn-close ms-2" style="font-size: 0.75rem;"></button>
         </div>
-        <div class="toast-progress-bar-container">
-            <div id="toast-progress-bar" class="toast-progress-bar"></div>
-        </div>
     `;
     
     document.body.appendChild(toast);
     
-    // Inicia a redução da barra de progresso horizontal
-    setTimeout(() => {
-        const progressBar = toast.querySelector('#toast-progress-bar');
-        if (progressBar) {
-            progressBar.style.width = '0%';
-        }
-    }, 100);
-
-    // Configura o autodismiss automático em 15 segundos
-    const autodismissTimeout = setTimeout(() => {
-        toast.classList.add('toast-saida');
-        setTimeout(() => {
-            toast.remove();
-            pararAlertaTituloAba();
-        }, 400);
-    }, 15000);
-    
     // Event Listeners dos botões
     toast.querySelector('#btn-lembrete-escrever').addEventListener('click', () => {
-        clearTimeout(autodismissTimeout);
         navegarMenu('tela-escala-diaria');
         setTimeout(() => {
             const botaoTurno = document.querySelector(`.btn-turno[data-turno="${turno}"]`);
@@ -392,7 +371,6 @@ function exibirToastLembrete(turno, mensagem, chaveConcluido, chaveUltimoDisparo
     });
     
     toast.querySelector('#btn-lembrete-concluido').addEventListener('click', () => {
-        clearTimeout(autodismissTimeout);
         localStorage.setItem(chaveConcluido, 'true');
         toast.classList.add('toast-saida');
         setTimeout(() => {
@@ -402,7 +380,6 @@ function exibirToastLembrete(turno, mensagem, chaveConcluido, chaveUltimoDisparo
     });
 
     toast.querySelector('.btn-close').addEventListener('click', () => {
-        clearTimeout(autodismissTimeout);
         toast.classList.add('toast-saida');
         setTimeout(() => {
             toast.remove();
