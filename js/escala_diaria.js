@@ -313,6 +313,10 @@ function configurarBotaoPersistencia() {
         btnPersistir.classList.remove('salvo');
     }
 
+    // Evita duplicar o listener de clique ao re-entrar na tela (SPA)
+    if (btnPersistir.dataset.configurado) return;
+    btnPersistir.dataset.configurado = 'true';
+
     // Configura o evento de clique
     btnPersistir.addEventListener('click', () => {
         const estaSalvo = btnPersistir.classList.contains('salvo');

@@ -83,12 +83,7 @@ function mudarTela(deId, paraId) {
         }
     }
 
-    // Se estiver saindo da tela da escala diária, limpa
-    if (deId === 'tela-escala-diaria') {
-        if (typeof limparEscalaDiaria === 'function') {
-            limparEscalaDiaria();
-        }
-    }
+
 
     // Se estiver saindo da tela do formulário FUSMA/FUSEX, limpa para garantir segurança e privacidade
     if (deId === 'tela-formulario') {
