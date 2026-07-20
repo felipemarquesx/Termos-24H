@@ -54,6 +54,12 @@
 
                 <div class="menu-divider"></div>
 
+                <a href="#" id="menu-passagem" class="menu-item" onclick="return false;" style="cursor: default;" title="Em manutenção">
+                    <i class="bi bi-arrow-left-right"></i>
+                    <span>Passagem de Plantão</span>
+                    <span class="badge bg-warning text-dark ms-auto" style="font-size: 0.6rem; padding: 3px 6px; border-radius: 4px; font-weight: 700;">Manutenção</span>
+                </a>
+
                 <a href="#" class="menu-item" data-bs-toggle="modal" data-bs-target="#modal-adendos">
                     <i class="bi bi-info-circle-fill"></i>
                     <span>Adendos / LGPD</span>
@@ -113,61 +119,87 @@
                         </div>
                     </div>
 
-                    <div class="row justify-content-center align-items-center g-4 w-100 container-cards"
-                        style="margin: 0 auto; max-width: 1300px;">
+                    <div class="row justify-content-center align-items-stretch g-3 g-md-4 w-100 container-cards"
+                        style="margin: 0 auto; max-width: 1080px;">
                         <!-- Card Guias SADT -->
-                        <div class="col-12 col-md-6 col-lg-3 card-opcao card-sadt-menu text-center"
-                            onclick="navegarMenu('tela-sadt')">
-                            <div class="d-flex flex-column align-items-center">
-                                <span class="sub-forca mb-2">Operadoras de Saúde</span>
-                                <h2 class="mb-4 fw-bold">GUIAS SADT</h2>
-                                <div class="menu-icon-wrapper mb-3">
-                                    <i class="bi bi-file-earmark-medical display-1 text-primary"></i>
+                        <div class="col-12 col-md-4 d-flex align-items-stretch justify-content-center">
+                            <div class="card-opcao card-sadt-menu text-center w-100 h-100 d-flex flex-column justify-content-between" onclick="navegarMenu('tela-sadt')">
+                                <div class="d-flex flex-column align-items-center justify-content-center flex-grow-1 w-100">
+                                    <span class="sub-forca mb-1">Operadoras de Saúde</span>
+                                    <h2 class="mb-2 fw-bold">GUIAS SADT</h2>
+                                    <div class="menu-icon-wrapper my-2">
+                                        <i class="bi bi-file-earmark-medical text-primary"></i>
+                                    </div>
                                 </div>
-                                <p class="text-muted small px-3">Emissão e impressão inteligente de guias de exames e
-                                    consultas para operadoras de saúde</p>
+                                <div class="w-100 pt-2">
+                                    <p class="text-muted small px-2 mb-0">Emissão e impressão inteligente de guias de exames e consultas para operadoras de saúde</p>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Card Termos Militares -->
-                        <div class="col-12 col-md-6 col-lg-3 card-opcao card-termos-menu text-center"
-                            onclick="navegarMenu('tela-selecao-termos')">
-                            <div class="d-flex flex-column align-items-center">
-                                <span class="sub-forca mb-2">Convênios Militares</span>
-                                <h2 class="mb-4 fw-bold">TERMOS</h2>
-                                <div class="menu-icon-wrapper mb-3">
-                                    <i class="bi bi-file-earmark-text display-1 text-success"></i>
+                        <div class="col-12 col-md-4 d-flex align-items-stretch justify-content-center">
+                            <div class="card-opcao card-termos-menu text-center w-100 h-100 d-flex flex-column justify-content-between" onclick="navegarMenu('tela-selecao-termos')">
+                                <div class="d-flex flex-column align-items-center justify-content-center flex-grow-1 w-100">
+                                    <span class="sub-forca mb-1">Convênios Militares</span>
+                                    <h2 class="mb-2 fw-bold">TERMOS</h2>
+                                    <div class="menu-icon-wrapper my-2">
+                                        <i class="bi bi-file-earmark-text text-success"></i>
+                                    </div>
                                 </div>
-                                <p class="text-muted small px-3">Preenchimento automatizado de termos de
-                                    responsabilidade para FUSMA e FUSEX</p>
+                                <div class="w-100 pt-2">
+                                    <p class="text-muted small px-2 mb-0">Preenchimento automatizado de termos de responsabilidade para FUSMA e FUSEX</p>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Card Guia Internação -->
-                        <div class="col-12 col-md-6 col-lg-3 card-opcao card-internacao-menu text-center"
-                            onclick="navegarMenu('tela-guias-internacao')">
-                            <div class="d-flex flex-column align-items-center">
-                                <span class="sub-forca mb-2">Internação de Urgência</span>
-                                <h2 class="mb-4 fw-bold">GUIAS DE INTERNAÇÃO</h2>
-                                <div class="menu-icon-wrapper mb-3">
-                                    <i class="bi bi-hospital display-1" style="color: #fd7e14;"></i>
+                        <div class="col-12 col-md-4 d-flex align-items-stretch justify-content-center">
+                            <div class="card-opcao card-internacao-menu text-center w-100 h-100 d-flex flex-column justify-content-between" onclick="navegarMenu('tela-guias-internacao')">
+                                <div class="d-flex flex-column align-items-center justify-content-center flex-grow-1 w-100">
+                                    <span class="sub-forca mb-1">Internação de Urgência</span>
+                                    <h2 class="mb-2 fw-bold">GUIAS DE INTERNAÇÃO</h2>
+                                    <div class="menu-icon-wrapper my-2">
+                                        <i class="bi bi-hospital" style="color: #fd7e14;"></i>
+                                    </div>
                                 </div>
-                                <p class="text-muted small px-3">Acesso rápido e impressão direta de guias de internação
-                                    das operadoras de saúde</p>
+                                <div class="w-100 pt-2">
+                                    <p class="text-muted small px-2 mb-0">Acesso rápido e impressão direta de guias de internação das operadoras de saúde</p>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Card Escala Diária -->
-                        <div class="col-12 col-md-6 col-lg-3 card-opcao card-escala-menu text-center"
-                            onclick="navegarMenu('tela-escala-diaria')">
-                            <div class="d-flex flex-column align-items-center">
-                                <span class="sub-forca mb-2">Escala de Plantão</span>
-                                <h2 class="mb-4 fw-bold">ESCALA DIÁRIA</h2>
-                                <div class="menu-icon-wrapper mb-3" style="background-color: rgba(254, 211, 78, 0.08);">
-                                    <i class="bi bi-calendar-event display-1" style="color: #FED34E;"></i>
+                        <div class="col-12 col-md-4 d-flex align-items-stretch justify-content-center">
+                            <div class="card-opcao card-escala-menu text-center w-100 h-100 d-flex flex-column justify-content-between" onclick="navegarMenu('tela-escala-diaria')">
+                                <div class="d-flex flex-column align-items-center justify-content-center flex-grow-1 w-100">
+                                    <span class="sub-forca mb-1">Escala de Plantão</span>
+                                    <h2 class="mb-2 fw-bold">ESCALA DIÁRIA</h2>
+                                    <div class="menu-icon-wrapper my-2">
+                                        <i class="bi bi-calendar-event" style="color: #FED34E;"></i>
+                                    </div>
                                 </div>
-                                <p class="text-muted small px-3">Uma nova forma ágil e eficaz de preencher as escalas
-                                    dos médicos e recepcionistas do plantão</p>
+                                <div class="w-100 pt-2">
+                                    <p class="text-muted small px-2 mb-0">Uma nova forma ágil e eficaz de preencher as escalas dos médicos e recepcionistas do plantão</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Passagem de Plantão (Em Desenvolvimento) -->
+                        <div class="col-12 col-md-4 d-flex align-items-stretch justify-content-center">
+                            <div class="card-opcao card-passagem-menu text-center w-100 h-100 d-flex flex-column justify-content-between" style="cursor: default;" title="Em manutenção" onclick="event.stopPropagation(); return false;">
+                                <div class="d-flex flex-column align-items-center justify-content-center flex-grow-1 w-100">
+                                    <span class="text-warning fw-bold mb-1 d-flex align-items-center gap-1" style="font-size: 0.68rem; letter-spacing: 0.5px; color: #f59e0b !important;">
+                                        <i class="bi bi-wrench-adjustable" style="font-size: 0.75rem;"></i> EM DESENVOLVIMENTO
+                                    </span>
+                                    <h2 class="mb-2 fw-bold">PASSAGEM DE PLANTÃO</h2>
+                                    <div class="menu-icon-wrapper my-2">
+                                        <i class="bi bi-arrow-left-right text-secondary"></i>
+                                    </div>
+                                </div>
+                                <div class="w-100 pt-2">
+                                    <p class="text-muted small px-2 mb-0">Nova forma ágil e veloz de preencher de forma formalizada o que está ficando para o próximo plantão de plantonistas</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -389,105 +421,370 @@
 
                                     <!-- SUS -->
                                     <div class="col text-center">
-                                        <img src="assets/icons_operadoras_de_saude/SUS.jpg" alt="SUS"
-                                            class="internacao-logo" data-operadora="SUS" data-pdf="AIH - SUS.pdf">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'SUS')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'SUS')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'SUS')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="SUS" data-pdf="AIH - SUS.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/SUS.jpg" alt="SUS" class="internacao-logo-img">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- AMIL -->
                                     <div class="col text-center">
-                                        <img src="assets/icons_operadoras_de_saude/AMIL.png" alt="AMIL"
-                                            class="internacao-logo" data-operadora="AMIL" data-pdf="AMIL.pdf">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'AMIL')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'AMIL')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'AMIL')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="AMIL" data-pdf="AMIL.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/AMIL.png" alt="AMIL" class="internacao-logo-img">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- ASFAL -->
                                     <div class="col text-center">
-                                        <img src="assets/icons_operadoras_de_saude/ASFAL.png" alt="ASFAL"
-                                            class="internacao-logo" data-operadora="ASFAL" data-pdf="ASFAL.pdf">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'ASFAL')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'ASFAL')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'ASFAL')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="ASFAL" data-pdf="ASFAL.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/ASFAL.png" alt="ASFAL" class="internacao-logo-img">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- BRADESCO -->
                                     <div class="col text-center">
-                                        <img src="assets/icons_operadoras_de_saude/BRADESCO.png" alt="BRADESCO"
-                                            class="internacao-logo" data-operadora="BRADESCO" data-pdf="BRADESCO.pdf">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'BRADESCO')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'BRADESCO')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'BRADESCO')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="BRADESCO" data-pdf="BRADESCO.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/BRADESCO.png" alt="BRADESCO" class="internacao-logo-img">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- CAMED -->
                                     <div class="col text-center">
-                                        <img src="assets/icons_operadoras_de_saude/CAMED.png" alt="CAMED"
-                                            class="internacao-logo" data-operadora="CAMED" data-pdf="CAMED.pdf">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'CAMED')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'CAMED')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'CAMED')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="CAMED" data-pdf="CAMED.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/CAMED.png" alt="CAMED" class="internacao-logo-img">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- CAPSESP -->
                                     <div class="col text-center">
-                                        <img src="assets/icons_operadoras_de_saude/CAPESESP.jpg" alt="CAPSESP"
-                                            class="internacao-logo" data-operadora="CAPSESP" data-pdf="CAPSESP.pdf">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'CAPSESP')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'CAPSESP')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'CAPSESP')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="CAPSESP" data-pdf="CAPSESP.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/CAPESESP.jpg" alt="CAPSESP" class="internacao-logo-img">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- CASSI -->
                                     <div class="col text-center">
-                                        <img src="assets/icons_operadoras_de_saude/CASSI.png" alt="CASSI"
-                                            class="internacao-logo" data-operadora="CASSI" data-pdf="CASSI.pdf">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'CASSI')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'CASSI')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'CASSI')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="CASSI" data-pdf="CASSI.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/CASSI.png" alt="CASSI" class="internacao-logo-img">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- FUNCEF -->
                                     <div class="col text-center">
-                                        <img src="assets/icons_operadoras_de_saude/FUNCEF.png" alt="FUNCEF"
-                                            class="internacao-logo" data-operadora="FUNCEF" data-pdf="FUNCEF.pdf">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'FUNCEF')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'FUNCEF')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'FUNCEF')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="FUNCEF" data-pdf="FUNCEF.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/FUNCEF.png" alt="FUNCEF" class="internacao-logo-img">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- GEAP -->
                                     <div class="col text-center">
-                                        <img src="assets/icons_operadoras_de_saude/GEAP.png" alt="GEAP"
-                                            class="internacao-logo" data-operadora="GEAP" data-pdf="GEAP.pdf">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'GEAP')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'GEAP')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'GEAP')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="GEAP" data-pdf="GEAP.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/GEAP.png" alt="GEAP" class="internacao-logo-img">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- LIFE -->
                                     <div class="col text-center">
-                                        <img src="assets/icons_operadoras_de_saude/LIFE.jpg" alt="LIFE"
-                                            class="internacao-logo" data-operadora="LIFE" data-pdf="LIFE.pdf">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'LIFE')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'LIFE')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'LIFE')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="LIFE" data-pdf="LIFE.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/LIFE.jpg" alt="LIFE" class="internacao-logo-img">
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <!-- ASSEFAZ / PADRÃO -->
+                                    <!-- ASSEFAZ -->
                                     <div class="col text-center">
-                                        <div class="internacao-logo d-flex align-items-center justify-content-center p-2 bg-white rounded-4 border w-100"
-                                            data-operadora="ASSEFAZ / PADRÃO" data-pdf="PADRÃO.pdf"
-                                            style="cursor: pointer; height: 96px; transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); user-select: none;">
-                                            <div
-                                                class="d-flex align-items-center justify-content-center gap-1 w-100 h-100">
-                                                <img src="assets/icons_operadoras_de_saude/ASSEFAZ.jpg" alt="ASSEFAZ"
-                                                    style="height: 52px; max-width: 46%; object-fit: contain; pointer-events: none;">
-                                                <div
-                                                    style="width: 1px; height: 32px; background-color: rgba(30, 58, 95, 0.15); flex-shrink: 0; margin: 0 2px;">
-                                                </div>
-                                                <img src="assets/icons_operadoras_de_saude/PADRAO.png" alt="PADRÃO"
-                                                    style="height: 52px; max-width: 46%; object-fit: contain; pointer-events: none;">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'ASSEFAZ')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'ASSEFAZ')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'ASSEFAZ')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="ASSEFAZ" data-pdf="PADRÃO.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/ASSEFAZ.jpg" alt="ASSEFAZ" class="internacao-logo-img">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- PADRÃO -->
+                                    <div class="col text-center">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'PADRÃO')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'PADRÃO')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'PADRÃO')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="PADRÃO" data-pdf="PADRÃO.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/PADRAO.png" alt="PADRÃO" class="internacao-logo-img">
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- PETROBRAS -->
                                     <div class="col text-center">
-                                        <img src="assets/icons_operadoras_de_saude/PETROBRAS.png" alt="PETROBRAS"
-                                            class="internacao-logo" data-operadora="PETROBRAS" data-pdf="PETROBRAS.pdf">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'PETROBRAS')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'PETROBRAS')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'PETROBRAS')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="PETROBRAS" data-pdf="PETROBRAS.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/PETROBRAS.png" alt="PETROBRAS" class="internacao-logo-img">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- SMILE -->
                                     <div class="col text-center">
-                                        <img src="assets/icons_operadoras_de_saude/SMILE.jpg" alt="SMILE"
-                                            class="internacao-logo" data-operadora="SMILE" data-pdf="SMILE.pdf">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'SMILE')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'SMILE')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'SMILE')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="SMILE" data-pdf="SMILE.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/SMILE.jpg" alt="SMILE" class="internacao-logo-img">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- SUL AMERICA -->
                                     <div class="col text-center">
-                                        <img src="assets/icons_operadoras_de_saude/SULAMERICA.png" alt="SUL AMERICA"
-                                            class="internacao-logo" data-operadora="SUL AMERICA"
-                                            data-pdf="SUL AMERICA.pdf">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'SUL AMERICA')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'SUL AMERICA')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'SUL AMERICA')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="SUL AMERICA" data-pdf="SUL AMERICA.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/SULAMERICA.png" alt="SUL AMERICA" class="internacao-logo-img">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- UNIMED -->
                                     <div class="col text-center">
-                                        <img src="assets/icons_operadoras_de_saude/UNIMED.jpg" alt="UNIMED"
-                                            class="internacao-logo" data-operadora="UNIMED" data-pdf="UNIMED.pdf">
+                                        <div class="internacao-logo-card position-relative">
+                                            <button type="button" class="btn-operadora-plus-minimal" onclick="toggleOperadoraPopover(event, this)" title="Documentos Adicionais">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </button>
+                                            <div class="operadora-popover-menu shadow-sm">
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Guia OPME', 'UNIMED')">
+                                                    <i class="bi bi-file-earmark-medical text-primary"></i> Guia OPME
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Termo Cirúrgico', 'UNIMED')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Termo Cirúrgico
+                                                </button>
+                                                <button type="button" class="popover-option-btn" onclick="executarAcaoOperadora(event, 'Ambos (Termo + OPME)', 'UNIMED')">
+                                                    <i class="bi bi-wrench-adjustable text-warning"></i> Ambos (Termo + OPME)
+                                                </button>
+                                            </div>
+                                            <div class="internacao-logo-body" data-operadora="UNIMED" data-pdf="UNIMED.pdf">
+                                                <img src="assets/icons_operadoras_de_saude/UNIMED.jpg" alt="UNIMED" class="internacao-logo-img">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1044,9 +1341,51 @@
         </div>
     </div>
 
-
-
-    <!-- --- Dependências de JavaScript --- -->
+    <!-- Modal Passagem de Plantão: Em Manutenção -->
+    <div class="modal fade" id="modal-passagem-manutencao" tabindex="-1" aria-labelledby="modalPassagemLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content shadow-lg border-0" style="border-radius: 20px;">
+                <div class="modal-header border-0 bg-light text-dark"
+                    style="border-radius: 20px 20px 0 0; padding: 20px;">
+                    <h5 class="modal-title fw-bold" id="modalPassagemLabel"
+                        style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; color: #1e3a5f;">EM MANUTENÇÃO</h5>
+                </div>
+                <div class="modal-body p-4 text-center"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; line-height: 1.6; color: #4a5c70;">
+                    <i class="bi bi-wrench-adjustable text-warning display-4 mb-3 d-block"></i>
+                    <p class="mb-3 fw-bold text-dark" style="font-size: 1rem;">Funcionalidade em Desenvolvimento</p>
+                    <p class="mb-0">A funcionalidade de <strong>Passagem de Plantão</strong> está sendo desenvolvida e trará uma <strong>nova forma ágil e veloz de preencher de forma formalizada</strong> o que está ficando para o próximo plantão de plantonistas!</p>
+                </div>
+                <div class="modal-footer border-0 p-3" style="background-color: #f8f9fa; border-radius: 0 0 20px 20px;">
+                    <button type="button" class="btn btn-secondary w-100 py-2" data-bs-dismiss="modal"
+                        style="border-radius: 10px; font-size: 0.85rem;">Entendido</button>
+                </div>
+            </div>
+        </div>
+    <!-- Modal Termo Cirúrgico / Impressão Combinada: Em Manutenção -->
+    <div class="modal fade" id="modal-termo-manutencao" tabindex="-1" aria-labelledby="modalTermoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content shadow-lg border-0" style="border-radius: 20px;">
+                <div class="modal-header border-0 bg-light text-dark"
+                    style="border-radius: 20px 20px 0 0; padding: 20px;">
+                    <h5 class="modal-title fw-bold" id="modalTermoLabel"
+                        style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; color: #1e3a5f;">EM MANUTENÇÃO</h5>
+                </div>
+                <div class="modal-body p-4 text-center"
+                    style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; line-height: 1.6; color: #4a5c70;">
+                    <i class="bi bi-wrench-adjustable text-warning display-4 mb-3 d-block"></i>
+                    <p class="mb-3 fw-bold text-dark" style="font-size: 1rem;">Funcionalidade em Desenvolvimento</p>
+                    <p class="mb-0">A funcionalidade do <strong>Termo Cirúrgico</strong> está em desenvolvimento e manutenção. Utilize a emissão direta da <strong>Guia OPME</strong> que está operando normalmente!</p>
+                </div>
+                <div class="modal-footer border-0 p-3" style="background-color: #f8f9fa; border-radius: 0 0 20px 20px;">
+                    <button type="button" class="btn btn-secondary w-100 py-2" data-bs-dismiss="modal"
+                        style="border-radius: 10px; font-size: 0.85rem;">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- --- Scripts do Sistema Modularizados (Ordem Sequencial de Escopo) --- -->
     <script src="js/core.js"></script>

@@ -32,8 +32,8 @@ O sistema está hospedado no **GitHub Pages** e pode ser acessado diretamente de
 6. **Assistente Postal e Integração de E-mail**  
    Mecanismo integrado ao checklist que detecta dinamicamente o convênio ativo (FUSMA com Valentin ou FUSEX com Gmail) e trava os endereços de destino corretos. Isso **evita falhas de envio e elimina erros operacionais**. Um clique no botão dispara a abertura do Webmail Seguro (Roundcube) em uma nova aba com o assunto formatado de forma profissional e marca automaticamente a conclusão da tarefa no checklist.
 
-7. **Página de Emissão de Guias de Internação (Novo!)**  
-   Página dedicada para a emissão rápida e direta de guias de internação de urgência de 15 operadoras de saúde (incluindo o SUS). Sem burocracia ou campos obrigatórios de preenchimento, basta um clique sobre o logotipo do convênio para disparar a **impressão silenciosa direta e automática** da respectiva guia pelo iframe oculto, otimizando o tempo no atendimento de pacientes graves.
+7. **Página de Emissão de Guias de Internação e OPME**  
+   Página dedicada para a emissão rápida e direta de guias de internação de urgência e guias OPME de 16 operadoras de saúde (incluindo SUS, ASSEFAZ e PADRÃO em cartões individuais). Sem burocracia ou campos obrigatórios de preenchimento, um clique sobre o logotipo dispara a impressão silenciosa da guia de internação. O botão de atalho superior abre o menu popover com acesso rápido à emissão de Guias OPME específicas por operadora e Termos Cirúrgicos.
 
 8. **Sistema de Escala Diária de Plantonistas**  
    Estrutura completa para o gerenciamento e preenchimento visual das escalas diárias dos médicos e recepcionistas do plantão. O operador conta com uma prancheta de visualização dinâmica com hotspots clicáveis vinculados a um formulário inteligente passo a passo. O sistema realiza o preenchimento em tempo real e permite a exportação do arquivo finalizado em formatos PDF e JPG com nomenclatura automatizada e temporal.
@@ -52,8 +52,7 @@ Para elevar a experiência do usuário e garantir conformidade rígida de segura
 | **Preenchimento Automático (Autofill)** | O Chrome e outros navegadores bloqueavam a tela com popups oferecendo dados antigos de outros pacientes e davam alertas de "conexão insegura" no campo de validade. | **Bloqueio Total de Heurísticas!** Renomeamos o ID do campo de validade para evitar alertas falsos de cartão e alteramos a propriedade de autocomplete de todos os campos para `one-time-code`, desativando qualquer dropdown intrusivo do navegador. |
 | **Design dos Inputs (Cápsulas)** | Usavam caixas de texto separadas de seus botões de atalho, com divisão visual marcada e sem destaque do foco do usuário. | **Cápsula Unificada!** Inputs e botões integrados se fundem em um visual elegante de "pílula única", com destaque de foco por brilho na cor tema correspondente a cada convênio (Azul para FUSMA, Verde para FUSEX). |
 | **Ergonomia e Área de Trabalho** | O botão de cópia rápida do FUSEX ocupava um espaço gigante no rodapé, mudando o layout e forçando o operador a scrollar a tela constantemente. | **Foco e Ergonomia!** Os 4 campos necessários para cópia foram agrupados lado a lado no início. O botão de copiar dados retornou ao cabeçalho em tamanho discreto, destravando e mudando de cor dinamicamente com base nas validações. |
-| **Limite de Digitação** | Campos de data e hora
- do atendimento permitiam digitação infinita de caracteres, desconfigurando os PDFs finais. | **Travas de Comprimento e Máscara!** Inclusão de `maxlength` rígido (10 para data, 5 para hora) combinados com máscara automática de hora no JS (insere `:` automaticamente ao digitar). |
+| **Limite de Digitação** | Campos de data e hora do atendimento permitiam digitação infinita de caracteres, desconfigurando os PDFs finais. | **Travas de Comprimento e Máscara!** Inclusão de `maxlength` rígido (10 para data, 5 para hora) combinados com máscara automática de hora no JS (insere `:` automaticamente ao digitar). |
 | **Responsividade Vertical** | O Dashboard inicial exigia barra de rolagem vertical em monitores antigos ou telas menores como 1366x768. | **Compactação Responsiva sem Scroll!** Media queries baseadas na altura do monitor encolhem os ícones e margens de forma inteligente para que o painel principal caiba 100% na tela de qualquer monitor sem barra de rolagem. |
 
 ### Comparação Visual de Telas (Antes vs. Depois)
@@ -119,15 +118,16 @@ termos-24h/
 ├── js/
 │   ├── core.js         # Gerenciamento central do aplicativo (SPA, relógio, lembretes de escala, tema global)
 │   ├── escala_diaria.js # Lógica de hotspots, formulário passo a passo, renderização e download da escala diária
-│   ├── guias_medicas.js # Validação, máscaras de inputs e preenchimento de guias de internação e SADT
+│   ├── guias_medicas.js # Validação, máscaras de inputs e preenchimento de guias de internação, OPME e SADT
 │   └── termos_militares.js # Preenchimento, checklist e exportação de termos militares (FUSEX/FUSMA)
 └── assets/
     ├── escala_diaria/  # Imagens de turno, template PDF e PDFs de visualização
     ├── fusma/          # Capa FUSMA.jpg, favicon FusmaPage.png e template termo_fusma_preenchivel.pdf
     ├── fusex/          # Capa FUSEX.jpg, favicon FusexPage.png e template termo_fusex_preenchivel.pdf
-    ├── guias internacao/ # Templates oficiais PDF das 15 operadoras de internação de urgência
+    ├── guias_opme/     # Templates oficiais PDF das guias OPME por operadora
+    ├── guias internacao/ # Templates oficiais PDF das operadoras de internação de urgência
     ├── guias sadt/     # Templates oficiais PDF preenchíveis das 16 operadoras de saúde
-    ├── icons_operadoras_de_saude/ # Logotipos das operadoras (incluindo as novas SUS.jpg e EMBRATEL.jpg)
+    ├── icons_operadoras_de_saude/ # Logotipos das operadoras (incluindo SUS.jpg e EMBRATEL.jpg)
     ├── Initial.png     # Logotipo/Favicon padrão do site
     └── screenshots/    # Capturas de tela da aplicação para o README
 ```

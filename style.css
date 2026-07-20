@@ -90,16 +90,21 @@ h6 {
 /* Definição de estilo dos cards de seleção (layout glassmorphic) */
 .card-opcao {
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 28px;
-    padding: 35px 25px 25px 25px;
-    margin: 15px;
-    /* Espaçamento de segurança maior entre os cards */
-    max-width: 440px;
-    /* Largura padrão grande confortável */
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 24px;
+    padding: 20px 16px 16px 16px;
+    margin: 0 auto;
+    max-width: 330px;
     width: 100%;
+    height: 100%;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
     /* Curva de transição e animação baseada em cubic-bezier */
     transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
         box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
@@ -557,51 +562,37 @@ h6 {
     }
 
     .titulo-principal {
-        font-size: 2.4rem !important;
-    }
-
-    .card-opcao {
-        padding: 25px 20px 20px 20px;
-        margin: 15px;
-        border-radius: 24px;
-        max-width: 310px;
-        /* Card mais robusto na largura */
-        width: 100%;
-    }
-
-    .card-opcao::before {
-        border-radius: 24px 24px 0 0;
+        font-size: clamp(1.4rem, 2vw, 2.2rem) !important;
     }
 
     .card-opcao h2 {
-        font-size: 1.45rem;
-        margin-bottom: 12px !important;
+        font-size: clamp(1.05rem, 1.25vw, 1.35rem) !important;
+        margin-bottom: clamp(0.2rem, 0.4vh, 0.4rem) !important;
     }
 
     .imagem-a4-completa {
-        height: 380px;
-        /* Imagem A4 alta e elegante */
+        height: 320px;
         width: auto;
     }
 
     /* Otimizações para o Dashboard Principal */
     #tela-menu-principal > .d-flex.justify-content-between.mb-5 {
-        margin-bottom: 2rem !important;
+        margin-bottom: clamp(0.6rem, 1vh, 1.25rem) !important;
     }
 
     .menu-icon-wrapper {
-        width: 115px !important;
-        height: 115px !important;
-        margin-bottom: 0.8rem !important;
+        width: clamp(55px, 4.5vw, 75px) !important;
+        height: clamp(55px, 4.5vw, 75px) !important;
+        margin-bottom: clamp(0.25rem, 0.5vh, 0.5rem) !important;
     }
 
     .menu-icon-wrapper i {
-        font-size: 3.2rem !important;
+        font-size: clamp(1.6rem, 2vw, 2.3rem) !important;
     }
 
     .card-opcao p {
-        font-size: 0.76rem !important;
-        line-height: 1.4 !important;
+        font-size: clamp(0.68rem, 0.75vw, 0.78rem) !important;
+        line-height: 1.3 !important;
     }
 }
 
@@ -614,12 +605,10 @@ h6 {
 
     .container-titulo {
         margin-bottom: 45px !important;
-        /* Afastamento bacana e bem visível */
     }
 
     .container-cards {
         max-width: 1100px !important;
-        /* Espalha os cards nas laterais com maior amplitude */
     }
 
     .titulo-principal {
@@ -627,40 +616,37 @@ h6 {
     }
 
     .card-opcao {
-        padding: 24px 20px 20px 20px;
-        margin: 15px;
-        border-radius: 24px;
-        max-width: 360px;
-        /* Card substancialmente maior para preencher a tela */
+        padding: 16px 14px 14px 14px !important;
+        margin: 6px auto !important;
+        border-radius: 20px !important;
+        max-width: 360px !important;
         width: 100%;
     }
 
     .card-opcao::before {
-        border-radius: 24px 24px 0 0;
+        border-radius: 20px 20px 0 0;
     }
 
     .card-opcao h2 {
-        font-size: 1.55rem;
-        margin-bottom: 15px !important;
+        font-size: 1.15rem !important;
+        margin-bottom: 6px !important;
     }
 
     .sub-forca {
-        font-size: 0.65rem;
-        letter-spacing: 1px;
+        font-size: 0.62rem !important;
+        letter-spacing: 0.8px;
+        margin-bottom: 3px !important;
     }
 
     .imagem-a4-completa {
-        height: 420px;
-        /* Altura generosa que preenche perfeitamente a tela curta */
+        height: 380px;
         width: auto;
     }
 
-    /* Reduz o topo do contêiner de botões para não sobrepor o título */
     .container-botoes-topo {
         top: 12px;
     }
 
-    /* Ajuste dos logotipos SADT para caber na tela curta dos monitores AOC */
     .sadt-logo {
         height: 70px !important;
         padding: 8px !important;
@@ -677,44 +663,43 @@ h6 {
         padding: 16px !important;
     }
 
-    /* Otimizações severas para o Dashboard Principal em 1366x768 */
     .conteudo-principal {
-        padding: 16px 30px 16px 30px !important;
+        padding: 12px 24px 12px 24px !important;
     }
 
     #tela-menu-principal {
-        padding-bottom: 5px !important;
+        padding-bottom: 0px !important;
     }
 
     #tela-menu-principal > .d-flex.justify-content-between.mb-5 {
-        margin-bottom: 1.25rem !important; /* Reduz espaço sob o título */
+        margin-bottom: 0.75rem !important;
     }
 
     .titulo-principal {
-        font-size: 1.8rem !important;
+        font-size: 1.6rem !important;
     }
 
     .card-relogio {
-        padding: 8px 16px !important;
+        padding: 6px 14px !important;
     }
 
     .card-relogio #dashboard-relogio {
-        font-size: 1.4rem !important;
+        font-size: 1.25rem !important;
     }
 
     .menu-icon-wrapper {
-        width: 90px !important;
-        height: 90px !important;
-        margin-bottom: 0.5rem !important;
+        width: 60px !important;
+        height: 60px !important;
+        margin-bottom: 6px !important;
     }
 
     .menu-icon-wrapper i {
-        font-size: 2.5rem !important;
+        font-size: 1.8rem !important;
     }
 
     .card-opcao p {
-        font-size: 0.72rem !important;
-        line-height: 1.3 !important;
+        font-size: 0.70rem !important;
+        line-height: 1.25 !important;
         margin-bottom: 0 !important;
         padding-left: 0 !important;
         padding-right: 0 !important;
@@ -900,6 +885,156 @@ h6 {
     filter: drop-shadow(0 4px 8px rgba(13, 110, 253, 0.25));
 }
 
+/* Card Minimalista de Operadora de Saúde (Baseado na Referência Visual) */
+.internacao-logo-card {
+    height: 100px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 22px;
+    border: 1px solid rgba(30, 58, 95, 0.06);
+    box-shadow: 0 10px 25px rgba(30, 58, 95, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    user-select: none;
+}
+
+.internacao-logo-card:hover {
+    transform: scale(1.04) translateY(-3px);
+    box-shadow: 0 16px 32px rgba(13, 110, 253, 0.18);
+    border-color: rgba(13, 110, 253, 0.25);
+}
+
+/* Botão de Mais (+) Azul Minimalista no Canto Superior Direito */
+.btn-operadora-plus-minimal {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: #0d6efd;
+    font-size: 1.25rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 2px 4px;
+    line-height: 1;
+    z-index: 10;
+    transition: all 0.2s ease;
+}
+
+.btn-operadora-plus-minimal:hover {
+    color: #0a58ca;
+    transform: scale(1.3);
+}
+
+/* Área Interna para Exibição e Clique do Logotipo */
+.internacao-logo-body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.internacao-logo-img {
+    max-height: 58px;
+    max-width: 82%;
+    object-fit: contain;
+    pointer-events: none;
+    transition: transform 0.25s ease;
+}
+
+.internacao-logo-card:hover .internacao-logo-img {
+    transform: scale(1.05);
+}
+
+.internacao-logo-card.popover-open,
+.operadora-card-container.popover-open {
+    z-index: 1050 !important;
+}
+
+/* Popover Ultra-Minimalista Elegante Flutuando Para CIMA (Compacto) */
+.operadora-popover-menu {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    right: 0;
+    z-index: 2000;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 5px;
+    border: 1px solid rgba(13, 110, 253, 0.15);
+    box-shadow: 0 12px 28px rgba(30, 58, 95, 0.14), 0 3px 8px rgba(0, 0, 0, 0.05);
+    display: none;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 148px;
+    opacity: 0;
+    transform: translateY(6px) scale(0.96);
+    transition: opacity 0.2s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    pointer-events: none;
+}
+
+.operadora-popover-menu.active {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Seta indicadora apontando para o cartão */
+.operadora-popover-menu::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #ffffff transparent transparent transparent;
+}
+
+.popover-option-btn {
+    background: transparent;
+    border: none;
+    padding: 5px 8px;
+    border-radius: 7px;
+    font-size: 0.73rem;
+    font-weight: 600;
+    color: #1e3a5f;
+    text-align: left;
+    transition: all 0.18s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.popover-option-btn i {
+    font-size: 0.82rem;
+    color: #0d6efd;
+    transition: transform 0.18s ease;
+}
+
+.popover-option-btn:hover {
+    background-color: #edf5ff;
+    color: #0d6efd;
+    transform: translateX(3px);
+}
+
+.popover-option-btn:hover i {
+    transform: scale(1.15);
+}
+
+.popover-option-btn:hover {
+    background-color: rgba(13, 110, 253, 0.08);
+    color: #0d6efd;
+    transform: translateX(2px);
+}
+
 /* --- Sistema de Transição de Páginas (Fade + Zoom) --- */
 .container-paginas {
     display: grid;
@@ -929,16 +1064,20 @@ h6 {
 
 /* --- Cards do Menu Principal --- */
 .menu-icon-wrapper {
-    background: rgba(248, 249, 250, 0.8);
+    background: rgba(248, 249, 250, 0.85);
     border-radius: 50%;
-    width: 140px;
-    height: 140px;
+    width: 70px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(0, 0, 0, 0.03);
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.menu-icon-wrapper i {
+    font-size: 2.1rem;
 }
 
 .card-opcao:hover .menu-icon-wrapper {
@@ -984,6 +1123,17 @@ h6 {
 
 .card-escala-menu:hover h2 {
     color: #FED34E !important;
+}
+
+/* Card Passagem de Plantão Customizado (Roxo #8b5cf6) */
+.card-passagem-menu:hover {
+    border-color: rgba(139, 92, 246, 0.3) !important;
+    box-shadow: 0 30px 60px rgba(139, 92, 246, 0.08),
+        0 0 40px rgba(139, 92, 246, 0.04) !important;
+}
+
+.card-passagem-menu:hover h2 {
+    color: #8b5cf6 !important;
 }
 
 /* ==========================================================================
@@ -2983,30 +3133,7 @@ body.modo-escuro-global .btn-confirmar-nao-popover:hover {
 
     /* Conteúdo Principal e Dashboard */
     .conteudo-principal {
-        padding: 16px 24px 24px 24px !important;
-    }
-    #tela-menu-principal > .d-flex {
-        margin-bottom: 1.5rem !important; /* mb-5 reduzido */
-    }
-    .container-cards {
-        gap: 1rem !important;
-    }
-    .card-opcao {
-        padding: 16px !important;
-    }
-    .card-opcao h2 {
-        font-size: 1.35rem !important;
-        margin-bottom: 0.5rem !important;
-    }
-    .card-opcao .menu-icon-wrapper {
-        margin-bottom: 0.5rem !important;
-    }
-    .card-opcao .menu-icon-wrapper i {
-        font-size: 3rem !important;
-    }
-    .card-opcao p {
-        font-size: 0.7rem !important;
-        padding: 0 5px !important;
+        padding: clamp(10px, 1.5vh, 20px) clamp(16px, 2vw, 32px) !important;
     }
 
     /* Ajuste da Imagem do Termo Militar no Dashboard */

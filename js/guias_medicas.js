@@ -276,10 +276,15 @@ function abrirWebmailAutomatico() {
 // ==========================================================================
 
 function inicializarInternacao() {
-    const cardsInternacao = document.querySelectorAll('.internacao-logo');
+    const cardsInternacao = document.querySelectorAll('.internacao-logo-body, .operadora-card-body, .internacao-logo');
 
     cardsInternacao.forEach(card => {
-        card.addEventListener('click', async () => {
+        card.addEventListener('click', async (e) => {
+            // Evita disparar ao clicar no botão de mais ou no menu popover
+            if (e.target.closest('.btn-operadora-plus-minimal') || e.target.closest('.btn-operadora-plus-integrated') || e.target.closest('.operadora-popover-menu')) {
+                return;
+            }
+
             const nomeOperadora = card.getAttribute('data-operadora');
             const nomeArquivoPDF = card.getAttribute('data-pdf');
 
@@ -343,4 +348,126 @@ function obterIframeImpressao() {
     }
     return iframe;
 }
+
+// ==========================================================================
+// POPOVER MINIMALISTA DE OPÇÕES ADICIONAIS DA OPERADORA (PMI, BAST, TERMO CIRÚRGICO)
+// ==========================================================================
+
+function toggleOperadoraPopover(event, btnElement) {
+    event.stopPropagation(); // Impede a propagação do clique para o corpo do card
+    
+    const wrapper = btnElement.closest('.internacao-logo-card, .operadora-card-container, .internacao-card-wrapper');
+    if (!wrapper) return;
+
+    const popover = wrapper.querySelector('.operadora-popover-menu');
+    if (!popover) return;
+
+    const estaAtivo = popover.classList.contains('active');
+
+    // Fecha todos os outros popovers abertos na tela
+    fecharTodosPopoversOperadora();
+
+    if (!estaAtivo) {
+        popover.classList.add('active');
+        wrapper.classList.add('popover-open');
+    }
+}
+
+function fecharTodosPopoversOperadora() {
+    document.querySelectorAll('.operadora-popover-menu.active').forEach(pop => {
+        pop.classList.remove('active');
+    });
+    document.querySelectorAll('.popover-open').forEach(wrap => {
+        wrap.classList.remove('popover-open');
+    });
+}
+
+async function imprimirGuiaOpme(operadoraNome) {
+    const mapaOpme = {
+        'AMIL': 'OPME AMIL.pdf',
+        'ASSEFAZ': 'OPME ASSEFAZ.pdf',
+        'BRADESCO': 'OPME BRADESCO.pdf',
+        'CAMED': 'OPME CAMED.pdf',
+        'CAPSESP': 'OPME CAPE.pdf',
+        'CASSI': 'OPME CASSI.pdf',
+        'GEAP': 'OPME GEAP.pdf',
+        'PETROBRAS': 'OPME PETROBRAS.pdf',
+        'SMILE': 'OPME SMILE.pdf',
+        'UNIMED': 'OPME UNIMED.pdf',
+        'PADRÃO': 'OPME PADRÃO.pdf'
+    };
+
+    const nomeArquivoPDF = mapaOpme[operadoraNome] || 'OPME PADRÃO.pdf';
+    const urlPDF = `./assets/guias_opme/${encodeURIComponent(nomeArquivoPDF)}`;
+
+    try {
+        const resposta = await fetch(urlPDF);
+        if (!resposta.ok) {
+            throw new Error(`Arquivo '${nomeArquivoPDF}' não foi encontrado no diretório de guias OPME.`);
+        }
+
+        const arrayBufferPDF = await resposta.arrayBuffer();
+        const blobPDF = new Blob([arrayBufferPDF], { type: 'application/pdf' });
+        const urlBlobFinal = URL.createObjectURL(blobPDF);
+
+        const iframeOculto = obterIframeImpressao();
+
+        iframeOculto.onload = function() {
+            setTimeout(function() {
+                try {
+                    iframeOculto.contentWindow.focus();
+                    iframeOculto.contentWindow.print();
+                } catch (e) {
+                    console.error("[OPME] Falha ao tentar imprimir diretamente pelo iframe:", e);
+                    window.open(urlBlobFinal, '_blank');
+                }
+            }, 300);
+        };
+
+        iframeOculto.src = urlBlobFinal;
+
+    } catch (erroGeral) {
+        console.error("Erro ao imprimir a Guia OPME:", erroGeral);
+        const urlFallback = `./assets/guias_opme/${encodeURIComponent(nomeArquivoPDF)}`;
+        window.open(urlFallback, '_blank');
+    }
+}
+
+function executarAcaoOperadora(event, acaoNome, operadoraNome) {
+    event.stopPropagation();
+    fecharTodosPopoversOperadora();
+
+    if (acaoNome === 'Guia OPME') {
+        imprimirGuiaOpme(operadoraNome);
+        return;
+    }
+
+    if (acaoNome === 'Termo Cirúrgico') {
+        const modalEl = document.getElementById('modal-termo-manutencao');
+        if (modalEl) {
+            const modalBs = new bootstrap.Modal(modalEl);
+            modalBs.show();
+        }
+        return;
+    }
+
+    if (acaoNome === 'Ambos (Termo + OPME)') {
+        imprimirGuiaOpme(operadoraNome);
+        const modalEl = document.getElementById('modal-termo-manutencao');
+        if (modalEl) {
+            const modalBs = new bootstrap.Modal(modalEl);
+            modalBs.show();
+        }
+        return;
+    }
+
+    console.log(`Ação executada: ${acaoNome} para ${operadoraNome}`);
+}
+
+// Listener para fechar popovers abertos ao clicar fora do container
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.internacao-logo-card, .operadora-card-container, .internacao-card-wrapper')) {
+        fecharTodosPopoversOperadora();
+    }
+});
 
